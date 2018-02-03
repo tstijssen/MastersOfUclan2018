@@ -17,6 +17,8 @@ public class PlayerOneControl : MonoBehaviour
     public string fire = "Fire1";
     public string brake = "Brake1";
 
+    public int vehicle = 0;
+
     // Use this for initialization
     void Start () {
        
