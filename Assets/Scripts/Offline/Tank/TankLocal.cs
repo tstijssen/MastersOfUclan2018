@@ -22,9 +22,9 @@ public class TankLocal : MonoBehaviour {
     public GameObject m_Turret;       // reference to the child turret object
 
     private float m_ReloadTimer;       // counts down to 0, tank can only shoot when not counting down
-   
+
     public string m_PlayerName;
-    
+
     // Use this for initialization
     void Start ()
     {
