@@ -62,18 +62,19 @@ public class PlayerSelect : MonoBehaviour {
 
 
 
-        if (dPadVert > 0.5f && selection == 0)
+        if (Input.GetAxis("DpadVert") > 0.5f && selection == 0)
         {
             vehicleText.text = "Car";
             selection++;
-            playerSelect.vehicleChoice = selection;
+            PlayerPrefs.SetFloat("P1Choice", selection);
+            //playerSelect.GetComponent<PlayerOneControl>().vehicle = selection;
         }
 
-        if (dPadVert < -0.5f && selection == 1)
+        if (Input.GetAxis("DpadVert") < -0.5f && selection == 1)
         {
             vehicleText.text = "Tank";
             selection--;
-            playerSelect.vehicle = selection;
+            PlayerPrefs.SetFloat("P1Choice", selection);
         }
 
 

@@ -19,12 +19,14 @@ public class GameController : MonoBehaviour {
 
         playerSelect = GameObject.Find("Player1").GetComponent<PlayerOneControl>();
 
-        if (playerSelect.vehicle == 0)
+        GameObject.Find("Player1").transform.position = new Vector3(0f, 9f, 0f);
+
+        if (PlayerPrefs.GetFloat("P1Choice") == 1)
         {
             Instantiate(car, GameObject.Find("Player1").transform);
         }
 
-        if (playerSelect.vehicle == 1)
+        if (PlayerPrefs.GetFloat("P1Choice") == 0)
         {
             Instantiate(Tank, GameObject.Find("Player1").transform);
         }

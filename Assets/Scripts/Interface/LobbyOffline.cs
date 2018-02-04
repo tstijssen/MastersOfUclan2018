@@ -16,13 +16,21 @@ public class LobbyOffline : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+        PlayerPrefs.SetInt("P1Choice", 0);
+        PlayerPrefs.SetInt("P2Choice", 0);
+
+
         DontDestroyOnLoad(PlayerOne);
     }
 
     // Update is called once per frame
     void Update()
     {
-    
+
+        
+
+
+
         // both players select vehicles
         // activate level select
         // set go option
