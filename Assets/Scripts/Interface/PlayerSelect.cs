@@ -27,6 +27,7 @@ public class PlayerSelect : MonoBehaviour {
     void Start ()
     {
         m_PlayerName = transform.parent.name;
+        playerSelect = gameObject.transform.parent.gameObject;
     }
 	
 	// Update is called once per frame
@@ -35,8 +36,7 @@ public class PlayerSelect : MonoBehaviour {
         //Get Controller
         switch (m_PlayerName)
         {
-            case "Player1":
-                playerSelect =      GameObject.Find("Player1");
+            case "Player1":               
                 moveVertical =      playerSelect.GetComponent<PlayerOneControl>().moveVertical;
                 turning =           playerSelect.GetComponent<PlayerOneControl>().turning;
                 shootHorizontal =   playerSelect.GetComponent<PlayerOneControl>().shootHorizontal;
@@ -62,7 +62,7 @@ public class PlayerSelect : MonoBehaviour {
 
 
 
-        if (Input.GetAxis("DpadVert") > 0.5f && selection == 0)
+        if (dPadVert > 0.5f && selection == 0)
         {
             vehicleText.text = "Car";
             selection++;
@@ -70,7 +70,7 @@ public class PlayerSelect : MonoBehaviour {
             //playerSelect.GetComponent<PlayerOneControl>().vehicle = selection;
         }
 
-        if (Input.GetAxis("DpadVert") < -0.5f && selection == 1)
+        if (dPadVert < -0.5f && selection == 1)
         {
             vehicleText.text = "Tank";
             selection--;

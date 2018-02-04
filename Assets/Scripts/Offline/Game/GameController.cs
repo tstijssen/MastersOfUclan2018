@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour {
 
-    PlayerOneControl playerSelect;
+    
 
     public GameObject car;
     public GameObject Tank;
@@ -17,7 +17,7 @@ public class GameController : MonoBehaviour {
     void Start ()
     {
 
-        playerSelect = GameObject.Find("Player1").GetComponent<PlayerOneControl>();
+        
 
         GameObject.Find("Player1").transform.position = new Vector3(0f, 9f, 0f);
 

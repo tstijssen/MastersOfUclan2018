@@ -18,9 +18,6 @@ public class LobbyOffline : MonoBehaviour {
     {
         PlayerPrefs.SetInt("P1Choice", 0);
         PlayerPrefs.SetInt("P2Choice", 0);
-
-
-        DontDestroyOnLoad(PlayerOne);
     }
 
     // Update is called once per frame
