@@ -10,6 +10,10 @@ public class PlayerTwoControl : MonoBehaviour
     public float turning;
     public float shootHorizontal;
     public float shootVertical;
+    public float dPadVert;
+    public float dPadHor;
+
+    public string brake = "Brake2";
     public string fire = "Fire2";
 
     // Use this for initialization
@@ -22,6 +26,8 @@ public class PlayerTwoControl : MonoBehaviour
         moveVertical = Input.GetAxis("Accelerate2");
         turning = Input.GetAxis("Horizontal2");
         shootHorizontal = Input.GetAxis("RightStick X2");
-        shootVertical = Input.GetAxis("RightStick Y2"); ;
+        shootVertical = Input.GetAxis("RightStick Y2");
+        dPadHor = Input.GetAxis("DpadHor2");
+        dPadVert = Input.GetAxis("DpadVert2");
     }
 }
