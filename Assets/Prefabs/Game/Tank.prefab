@@ -71,7 +71,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1563600101141370}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4756969263074100}
@@ -85,7 +85,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1720050464342146}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.05, y: -0.63, z: 8.57}
+  m_LocalPosition: {x: 0.05, y: -0.63, z: 15.13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4756969263074100}
@@ -200,7 +200,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 4
+  m_Constraints: 84
   m_CollisionDetection: 0
 --- !u!64 &64190815530451832
 MeshCollider:
@@ -232,8 +232,8 @@ MonoBehaviour:
   m_TurretRotate: 50
   m_Barrel: {fileID: 1720050464342146}
   ded: 0
-  m_HoverSpeed: 10
   m_Turret: {fileID: 1913028777555114}
+  m_Outline: {fileID: 2100000, guid: 54842dab40e1c544fa4275985805fd85, type: 2}
   m_PlayerName: 
 --- !u!114 &114940426561078146
 MonoBehaviour:

@@ -16,6 +16,7 @@ public class TestCarMovement : MonoBehaviour {
     public List<AxleInfo> axleInfos; // the information about each individual axle
     public float maxMotorTorque; // maximum torque the motor can apply to wheel
     public float maxSteeringAngle; // maximum steer angle the wheel can have
+    static Color[] Colors = new Color[] { Color.magenta, Color.red, Color.cyan, Color.blue, Color.green, Color.yellow };
 
     float moveVertical;
     float turning;
@@ -25,13 +26,15 @@ public class TestCarMovement : MonoBehaviour {
 
     float brakes = 0;
     public string m_PlayerName;
+    public Material m_Outline;
 
-    public Vector3 CenterOfMass;
+    //public Vector3 CenterOfMass;
     public Rigidbody rb;
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        rb.centerOfMass = CenterOfMass;
+        Rigidbody m_Vehicle = GetComponent<Rigidbody>();
+        m_Outline.SetColor("_OutlineColor", Colors[PlayerPrefs.GetInt("P1Colour")]);
+        Debug.Log(Colors[PlayerPrefs.GetInt("P1Colour")].ToString());
     }
     public void FixedUpdate()
     {
@@ -46,13 +49,13 @@ public class TestCarMovement : MonoBehaviour {
                 shootVertical = transform.parent.GetComponent<PlayerOneControl>().shootVertical;
                 fire = transform.parent.GetComponent<PlayerOneControl>().fire;
                 break;
-            case "Player2":
-                moveVertical = transform.parent.GetComponent<PlayerTwoControl>().moveVertical;
-                turning = transform.parent.GetComponent<PlayerTwoControl>().turning;
-                shootHorizontal = transform.parent.GetComponent<PlayerTwoControl>().shootHorizontal;
-                shootVertical = transform.parent.GetComponent<PlayerTwoControl>().shootVertical;
-                fire = transform.parent.GetComponent<PlayerTwoControl>().fire;
-                break;
+            //case "Player2":
+            //    moveVertical = transform.parent.GetComponent<PlayerTwoControl>().moveVertical;
+            //    turning = transform.parent.GetComponent<PlayerTwoControl>().turning;
+            //    shootHorizontal = transform.parent.GetComponent<PlayerTwoControl>().shootHorizontal;
+            //    shootVertical = transform.parent.GetComponent<PlayerTwoControl>().shootVertical;
+            //    fire = transform.parent.GetComponent<PlayerTwoControl>().fire;
+            //    break;
         }
         float motor = maxMotorTorque * moveVertical * speed;
         float steering = maxSteeringAngle * turning;

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TankLocal : MonoBehaviour {
 
+    static Color[] Colors = new Color[] { Color.magenta, Color.red, Color.cyan, Color.blue, Color.green, Color.yellow };
+
     float moveVertical;
     float turning;
     float shootHorizontal;
@@ -20,7 +22,7 @@ public class TankLocal : MonoBehaviour {
 
     private Rigidbody m_Vehicle;       // reference to the tank's physics component
     public GameObject m_Turret;       // reference to the child turret object
-
+    public Material m_Outline;
     private float m_ReloadTimer;       // counts down to 0, tank can only shoot when not counting down
 
     public string m_PlayerName;
@@ -29,6 +31,9 @@ public class TankLocal : MonoBehaviour {
     void Start ()
     {
         m_Vehicle = GetComponent<Rigidbody>();
+        m_Outline.SetColor("_OutlineColor",Colors[PlayerPrefs.GetInt("P1Colour")]);
+        Debug.Log(Colors[PlayerPrefs.GetInt("P1Colour")].ToString());
+        
     }
 	
 	// Update is called once per frame
@@ -138,7 +143,7 @@ public class TankLocal : MonoBehaviour {
         if(other.gameObject.tag == "Ground")
         {
             Debug.Log("hit");
-            m_Vehicle.transform.position = new Vector3(m_Vehicle.transform.position.x, 6f, m_Vehicle.transform.position.z);
+            m_Vehicle.transform.position = new Vector3(m_Vehicle.transform.position.x, 2f, m_Vehicle.transform.position.z);
         }
     }
 }

@@ -13,14 +13,19 @@ public class PlayerSelect : MonoBehaviour {
     float shootVertical;
     float DpadHor;
     float dPadVert;
+    string colorChange;
     int vehicleChoice;
     string fire;
 
     int selection = 0;
 
-    public Text vehicleText;
+    static Color[] Colors = new Color[] { Color.magenta, Color.red, Color.cyan, Color.blue, Color.green, Color.yellow };
+    static List<int> _colorInUse = new List<int>();
 
-    
+
+    public Text vehicleText;
+    public Image vehicleColour;
+    public Color playerColour;
     public string m_PlayerName;
 
     // Use this for initialization
@@ -45,6 +50,7 @@ public class PlayerSelect : MonoBehaviour {
                 DpadHor =           playerSelect.GetComponent<PlayerOneControl>().dPadHor;
                 dPadVert =          playerSelect.GetComponent<PlayerOneControl>().dPadVert;
                 vehicleChoice =     playerSelect.GetComponent<PlayerOneControl>().vehicle;
+                colorChange =       playerSelect.GetComponent<PlayerOneControl>().brake;
 
                 break;
             case "Player2":
@@ -77,15 +83,55 @@ public class PlayerSelect : MonoBehaviour {
             PlayerPrefs.SetFloat("P1Choice", selection);
         }
 
-
-
         if (Input.GetButtonDown("Brake"))
         {
-            SceneManager.LoadScene("Menu");
+            ChangeColour();
+            //SceneManager.LoadScene("Menu");
         }
         if (Input.GetButtonDown("Fire1"))
         {
             SceneManager.LoadScene("Battle Offline");
         }
+    }
+
+    void ChangeColour()
+    {
+        int idx = System.Array.IndexOf(Colors, playerColour);
+
+        int inUseIdx = _colorInUse.IndexOf(idx);
+
+        if (idx < 0) idx = 0;
+
+        idx = (idx + 1) % Colors.Length;
+
+        bool alreadyInUse = false;
+
+        do
+        {
+            alreadyInUse = false;
+            for (int i = 0; i < _colorInUse.Count; ++i)
+            {
+                if (_colorInUse[i] == idx)
+                {//that color is already in use
+                    alreadyInUse = true;
+                    idx = (idx + 1) % Colors.Length;
+                }
+            }
+        }
+        while (alreadyInUse);
+
+        if (inUseIdx >= 0)
+        {//if we already add an entry in the colorTabs, we change it
+            _colorInUse[inUseIdx] = idx;
+        }
+        else
+        {//else we add it
+            _colorInUse.Add(idx);
+        }
+
+        playerColour = Colors[idx];
+        Debug.Log(playerColour.ToString());
+        PlayerPrefs.SetInt("P1Colour", idx);
+        vehicleColour.color = playerColour;
     }
 }

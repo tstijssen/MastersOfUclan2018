@@ -36,6 +36,8 @@ public class ShellTravel : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
+        ResetBullet();
+
         if (other.gameObject.CompareTag("Ground"))
         {           
             ResetBullet();

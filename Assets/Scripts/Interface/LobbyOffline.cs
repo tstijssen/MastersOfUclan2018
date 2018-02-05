@@ -8,6 +8,7 @@ public class LobbyOffline : MonoBehaviour {
 
     public bool player1Picked = false;
     public bool player2Picked = false;
+    static Color[] Colors = new Color[] { Color.magenta, Color.red, Color.cyan, Color.blue, Color.green, Color.yellow };
 
     public GameObject PlayerOne;
 
