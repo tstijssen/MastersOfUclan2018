@@ -15,7 +15,6 @@ public class PlayerSelect : MonoBehaviour {
     float dPadVert;
     string colorChange;
     int vehicleChoice;
-    string playerSelection;
     string fire;
 
     int selection = 0;
@@ -50,23 +49,18 @@ public class PlayerSelect : MonoBehaviour {
                 fire =              playerSelect.GetComponent<PlayerOneControl>().fire;
                 DpadHor =           playerSelect.GetComponent<PlayerOneControl>().dPadHor;
                 dPadVert =          playerSelect.GetComponent<PlayerOneControl>().dPadVert;
-<<<<<<< HEAD
                 vehicleChoice =     playerSelect.GetComponent<PlayerOneControl>().vehicle;
                 colorChange =       playerSelect.GetComponent<PlayerOneControl>().brake;
 
-=======
-                playerSelection =   "P1Choice";
->>>>>>> a9faf662d0ba521532139a0f700a48e659004813
                 break;
             case "Player2":
-                moveVertical =      playerSelect.GetComponent<PlayerTwoControl>().moveVertical;
-                turning =           playerSelect.GetComponent<PlayerTwoControl>().turning;
-                shootHorizontal =   playerSelect.GetComponent<PlayerTwoControl>().shootHorizontal;
-                shootVertical =     playerSelect.GetComponent<PlayerTwoControl>().shootVertical;
-                fire =              playerSelect.GetComponent<PlayerTwoControl>().fire;
-                DpadHor =           playerSelect.GetComponent<PlayerTwoControl>().dPadHor;
-                dPadVert =          playerSelect.GetComponent<PlayerTwoControl>().dPadVert;
-                playerSelection =   "P2Choice";
+                //moveVertical = transform.parent.GetComponent<PlayerTwoControl>().moveVertical;
+                //turning = transform.parent.GetComponent<PlayerTwoControl>().turning;
+                //shootHorizontal = transform.parent.GetComponent<PlayerTwoControl>().shootHorizontal;
+                //shootVertical = transform.parent.GetComponent<PlayerTwoControl>().shootVertical;
+                //fire = transform.parent.GetComponent<PlayerTwoControl>().fire;
+                //DpadHor = transform.parent.GetComponent<PlayerTwoControl>().dPadHor;
+                //dPadVert = transform.parent.GetComponent<PlayerTwoControl>().dPadVert;
                 break;
         }
 
@@ -78,14 +72,15 @@ public class PlayerSelect : MonoBehaviour {
         {
             vehicleText.text = "Car";
             selection++;
-            PlayerPrefs.SetFloat(playerSelection, selection);
+            PlayerPrefs.SetFloat("P1Choice", selection);
+            //playerSelect.GetComponent<PlayerOneControl>().vehicle = selection;
         }
 
         if (dPadVert < -0.5f && selection == 1)
         {
             vehicleText.text = "Tank";
             selection--;
-            PlayerPrefs.SetFloat(playerSelection, selection);
+            PlayerPrefs.SetFloat("P1Choice", selection);
         }
 
         if (Input.GetButtonDown("Brake"))

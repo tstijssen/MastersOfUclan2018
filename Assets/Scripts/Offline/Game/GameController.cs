@@ -22,7 +22,7 @@ public class GameController : MonoBehaviour {
 
         
 
-        GameObject.Find("Player1").transform.position = new Vector3(-30f, 9f, 0f);
+        GameObject.Find("Player1").transform.position = new Vector3(0f, 9f, 0f);
 
         if (PlayerPrefs.GetFloat("P1Choice") == 1)
         {
@@ -33,20 +33,6 @@ public class GameController : MonoBehaviour {
         {
             Instantiate(Tank, GameObject.Find("Player1").transform);
         }
-
-        GameObject.Find("Player2").transform.position = new Vector3(30f, 9f, 0f);
-
-        if (PlayerPrefs.GetFloat("P2Choice") == 1)
-        {
-            Instantiate(car, GameObject.Find("Player2").transform);
-        }
-
-        if (PlayerPrefs.GetFloat("P2Choice") == 0)
-        {
-            Instantiate(Tank, GameObject.Find("Player2").transform);
-        }
-
-
     }
 	
 	// Update is called once per frame
