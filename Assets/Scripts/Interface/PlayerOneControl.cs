@@ -25,7 +25,8 @@ public class PlayerOneControl : MonoBehaviour
     }
 	
 	// Update is called once per frame
-	void FixedUpdate () {
+	void FixedUpdate ()
+    {
         moveVertical = Input.GetAxis("Accelerate");
         turning = Input.GetAxis("Horizontal");
         shootHorizontal = Input.GetAxis("RightStick X");
