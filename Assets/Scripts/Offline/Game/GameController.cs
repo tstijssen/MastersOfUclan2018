@@ -8,7 +8,15 @@ public class GameController : MonoBehaviour {
     public GameObject selector;
     private int selectionCount = 0;
 
-    public GameObject car;
+    public GameObject Player1;
+    public GameObject Player2;
+    public GameObject Player3;
+    public GameObject Player4;
+
+    //level list
+    public GameObject Tilt;
+
+    //public GameObject car;
     public GameObject Tank;
 
     public GameObject InGameMenu;
@@ -19,19 +27,42 @@ public class GameController : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-
-        
-
-        GameObject.Find("Player1").transform.position = new Vector3(0f, 9f, 0f);
-
-        if (PlayerPrefs.GetFloat("P1Choice") == 1)
+        if(PlayerPrefs.GetInt("P2In") == 1)
         {
-            Instantiate(car, GameObject.Find("Player1").transform);
+            Player2.SetActive(true);
+        }
+        if (PlayerPrefs.GetInt("P3In") == 1)
+        {
+            Player3.SetActive(true);
+        }
+        if (PlayerPrefs.GetInt("P4In") == 1)
+        {
+            Player4.SetActive(true);
+        }
+
+
+
+        if (PlayerPrefs.GetInt("Level") == 0)
+        {
+            Instantiate(Tilt, GameObject.Find("Level").transform);
         }
 
         if (PlayerPrefs.GetFloat("P1Choice") == 0)
         {
-            Instantiate(Tank, GameObject.Find("Player1").transform);
+            Instantiate(Tank, Player1.transform);
+        }
+
+        if (PlayerPrefs.GetFloat("P2Choice") == 0)
+        {
+            Instantiate(Tank, Player2.transform);
+        }
+        if (PlayerPrefs.GetFloat("P3Choice") == 0)
+        {
+            Instantiate(Tank, Player3.transform);
+        }
+        if (PlayerPrefs.GetFloat("P4Choice") == 0)
+        {
+            Instantiate(Tank, Player4.transform);
         }
     }
 	
