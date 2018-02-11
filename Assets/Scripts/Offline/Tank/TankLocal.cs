@@ -11,6 +11,7 @@ public class TankLocal : MonoBehaviour {
     float shootHorizontal;
     float shootVertical;
     string fire;
+    int lives = 5;
 
     public float m_RotSpeed;           // tank rotation speed modifier
     public float m_Speed;              // tank movement speed modifier
@@ -19,6 +20,8 @@ public class TankLocal : MonoBehaviour {
 
     public bool ded = false;
 
+    GameObject Player;
+    GameController control;
 
     private Rigidbody m_Vehicle;       // reference to the tank's physics component
     public GameObject m_Turret;       // reference to the child turret object
@@ -30,6 +33,7 @@ public class TankLocal : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+        control = GameObject.Find("GameController").GetComponent<GameController>();
         m_Vehicle = GetComponent<Rigidbody>();
         m_Outline.SetColor("_OutlineColor",Colors[PlayerPrefs.GetInt("P1Colour")]);
         Debug.Log(Colors[PlayerPrefs.GetInt("P1Colour")].ToString());
@@ -57,11 +61,12 @@ public class TankLocal : MonoBehaviour {
         switch (m_PlayerName)
         {
             case "Player1":
-                moveVertical =    transform.parent.GetComponent<PlayerOneControl>().moveVertical;
-                turning =         transform.parent.GetComponent<PlayerOneControl>().turning;
-                shootHorizontal = transform.parent.GetComponent<PlayerOneControl>().shootHorizontal;
-                shootVertical =   transform.parent.GetComponent<PlayerOneControl>().shootVertical;
-                fire =            transform.parent.GetComponent<PlayerOneControl>().fire;
+                Player =          transform.parent.gameObject;
+                moveVertical =    Player.GetComponent<PlayerOneControl>().moveVertical;
+                turning =         Player.GetComponent<PlayerOneControl>().turning;
+                shootHorizontal = Player.GetComponent<PlayerOneControl>().shootHorizontal;
+                shootVertical =   Player.GetComponent<PlayerOneControl>().shootVertical;
+                fire =            Player.GetComponent<PlayerOneControl>().fire;               
                 break;
             case "Player2":
                 moveVertical = transform.parent.GetComponent<PlayerTwoControl>().moveVertical;
@@ -144,6 +149,26 @@ public class TankLocal : MonoBehaviour {
         {
             Debug.Log("hit");
             m_Vehicle.transform.position = new Vector3(m_Vehicle.transform.position.x, 2f, m_Vehicle.transform.position.z);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "DeathPlane")
+        {
+            lives--;
+            switch (m_PlayerName)
+            {
+                case "Player1":
+                    PlayerPrefs.SetInt("P1Lives", lives);
+                    break;
+                case "Player2":
+                    break;
+            }
+
+            control.UpdateText();
+            Debug.Log("hit");
+            m_Vehicle.transform.position = new Vector3(0f, 0f, 0f); //Set Position to a respawn point
         }
     }
 }

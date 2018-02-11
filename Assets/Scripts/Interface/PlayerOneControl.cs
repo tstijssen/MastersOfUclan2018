@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerOneControl : MonoBehaviour
 {
 
-
+   
     public float moveVertical;
     public float turning;
     public float shootHorizontal;
@@ -20,8 +20,9 @@ public class PlayerOneControl : MonoBehaviour
     public int vehicle = 0;
 
     // Use this for initialization
-    void Start () {
-       
+    void Start ()
+    {
+        PlayerPrefs.SetInt("P1Lives", 5);    
     }
 	
 	// Update is called once per frame

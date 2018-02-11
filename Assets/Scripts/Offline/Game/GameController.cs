@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
@@ -12,6 +13,11 @@ public class GameController : MonoBehaviour {
     public GameObject Player2;
     public GameObject Player3;
     public GameObject Player4;
+
+    public Text Player1Lives;
+    public Text Player2Lives;
+    public Text Player3Lives;
+    public Text Player4Lives;
 
     //level list
     public GameObject Tilt;
@@ -130,5 +136,10 @@ public class GameController : MonoBehaviour {
             Time.timeScale = 1f;
         }
 
+    }
+
+    public void UpdateText()
+    {
+        Player1Lives.text = "Stock: " + PlayerPrefs.GetInt("P1Lives").ToString();
     }
 }
