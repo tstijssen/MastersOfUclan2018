@@ -73,8 +73,6 @@ public class LobbyOffline : MonoBehaviour {
     void Update()
     {
         
-
-
         //Player select vehicle
         if (Input.GetAxis("Vertical") > 0.3f || Input.GetAxis("DpadVert") > 0.3f)
         {
@@ -235,9 +233,11 @@ public class LobbyOffline : MonoBehaviour {
                     switch (PlayerPrefs.GetInt("Level"))
                     {
                         case 0:
+                            //PlayerPrefs.SetInt("Level", 1);
                             levelText.text = "Tilt";
                             break;
                         case 1:
+                            //PlayerPrefs.SetInt("Level", 0);
                             levelText.text = "Future";
                             break;
                     }
@@ -253,9 +253,6 @@ public class LobbyOffline : MonoBehaviour {
         {
             nextScrnText.text = "";
         }
-
-        
-        
         // both players select vehicles
         // activate level select
         // set go option

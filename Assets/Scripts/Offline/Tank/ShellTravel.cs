@@ -36,8 +36,8 @@ public class ShellTravel : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
+        other.gameObject.GetComponent<TankLocal>().TakeDamage();
         ResetBullet();
-
         if (other.gameObject.CompareTag("Ground"))
         {           
             ResetBullet();
