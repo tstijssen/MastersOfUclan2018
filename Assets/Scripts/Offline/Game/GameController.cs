@@ -62,14 +62,14 @@ public class GameController : MonoBehaviour {
         {
             Instantiate(Tank, Player2.transform);
         }
-        if (PlayerPrefs.GetFloat("P3Choice") == 0)
-        {
-            Instantiate(Tank, Player3.transform);
-        }
-        if (PlayerPrefs.GetFloat("P4Choice") == 0)
-        {
-            Instantiate(Tank, Player4.transform);
-        }
+        //if (PlayerPrefs.GetFloat("P3Choice") == 0)
+        //{
+        //    Instantiate(Tank, Player3.transform);
+        //}
+        //if (PlayerPrefs.GetFloat("P4Choice") == 0)
+        //{
+        //    Instantiate(Tank, Player4.transform);
+        //}
     }
 	
 	// Update is called once per frame

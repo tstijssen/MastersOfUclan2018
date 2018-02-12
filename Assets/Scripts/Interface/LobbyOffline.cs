@@ -231,7 +231,7 @@ public class LobbyOffline : MonoBehaviour {
             {
                 if (Input.GetAxis("Vertical") > 0 || Input.GetAxis("DpadVert") > 0)
                 {
-                    PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level") + 1);
+                 //   PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level") + 1);
                     switch (PlayerPrefs.GetInt("Level"))
                     {
                         case 0:
