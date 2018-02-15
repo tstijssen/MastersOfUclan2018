@@ -36,7 +36,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1014983968272224}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+<<<<<<< HEAD
   m_LocalPosition: {x: 29.610443, y: 13.6012, z: 19.010038}
+=======
+  m_LocalPosition: {x: -6.2271748, y: 7.789138, z: -2.4865305}
+>>>>>>> 637c6a3589ee6767d7e17b759e05f8aa6f8c7790
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -54,8 +58,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidBody: {fileID: 0}
-  explosionRadius: 10
-  explosionPower: 750
+  explosionRadius: 2
+  explosionPower: 200
 --- !u!198 &198627326247833390
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -63,9 +67,9 @@ ParticleSystem:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1014983968272224}
   serializedVersion: 5
-  lengthInSec: 2
+  lengthInSec: 1
   simulationSpeed: 10
-  stopAction: 2
+  stopAction: 0
   looping: 0
   prewarm: 0
   playOnAwake: 1
@@ -512,7 +516,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 1
-    maxNumParticles: 1000
+    maxNumParticles: 50
     size3D: 0
     rotation3D: 0
     gravityModifier:
@@ -2423,7 +2427,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 1
+    enabled: 0
     serializedVersion: 3
     type: 1
     collisionMode: 0

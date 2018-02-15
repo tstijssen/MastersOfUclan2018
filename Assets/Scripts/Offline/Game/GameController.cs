@@ -46,11 +46,11 @@ public class GameController : MonoBehaviour {
             Player4.SetActive(true);
         }
 
+        Instantiate(Tilt, GameObject.Find("Level").transform);
 
 
         if (PlayerPrefs.GetInt("Level") == 0)
         {
-            Instantiate(Tilt, GameObject.Find("Level").transform);
         }
 
         if (PlayerPrefs.GetFloat("P1Choice") == 0)
@@ -79,9 +79,6 @@ public class GameController : MonoBehaviour {
         {
             paused = !paused;
         }
-
-
-
 
         if (paused)
         {
@@ -127,15 +124,12 @@ public class GameController : MonoBehaviour {
                 }
             }
             
-
-
         }
         else
         {
             InGameMenu.SetActive(false);
             Time.timeScale = 1f;
         }
-
     }
 
     public void UpdateText()

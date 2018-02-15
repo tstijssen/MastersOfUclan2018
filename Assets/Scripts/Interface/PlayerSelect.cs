@@ -64,10 +64,6 @@ public class PlayerSelect : MonoBehaviour {
                 break;
         }
 
-
-
-
-
         if (dPadVert > 0.5f && selection == 0)
         {
             vehicleText.text = "Car";

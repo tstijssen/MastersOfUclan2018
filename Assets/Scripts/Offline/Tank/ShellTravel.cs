@@ -36,15 +36,13 @@ public class ShellTravel : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        ResetBullet();
-
-        if (other.gameObject.CompareTag("Ground"))
-        {           
+        if (other.gameObject.CompareTag("Player"))
+        {
+            other.gameObject.GetComponent<TankLocal>().TakeDamage();
             ResetBullet();
         }
-
-        if (other.gameObject.CompareTag("Player 2"))
-        {           
+        else
+        {
             ResetBullet();
         }
     }
