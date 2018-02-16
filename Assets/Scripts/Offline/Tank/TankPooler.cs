@@ -5,11 +5,11 @@ using UnityEngine;
 public class TankPooler : MonoBehaviour
 {
 
-    public static TankPooler SharedInstance;
-    void Awake()
-    {
-        SharedInstance = this;
-    }
+    //public static TankPooler SharedInstance;
+    //void Awake()
+    //{
+    //    SharedInstance = this;
+    //}
     public List<GameObject> pooledObjects;
     public GameObject objectToPool;
     public int amountToPool;
@@ -21,7 +21,7 @@ public class TankPooler : MonoBehaviour
 
         for (int i = 0; i < amountToPool; ++i)
         {
-            GameObject obj = (GameObject)Instantiate(objectToPool);
+            GameObject obj = (GameObject)Instantiate(objectToPool, transform.parent);
             obj.SetActive(false);
             pooledObjects.Add(obj);
         }

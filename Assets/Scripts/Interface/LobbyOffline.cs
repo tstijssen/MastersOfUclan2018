@@ -66,6 +66,9 @@ public class LobbyOffline : MonoBehaviour {
         PlayerPrefs.SetInt("P3In", 0);
         PlayerPrefs.SetInt("P4In", 0);
 
+        PlayerPrefs.SetInt("GameLives", 3);
+        p1Text.text = "Tank";
+        p2Text.text = "Tank";
         playersIn = 1;
     }
 
@@ -73,70 +76,72 @@ public class LobbyOffline : MonoBehaviour {
     void Update()
     {
         
+
+
         //Player select vehicle
-        if (Input.GetAxis("Vertical") > 0.3f || Input.GetAxis("DpadVert") > 0.3f)
-        {
-            p1Pick++;
-            switch (p1Pick)
-            {
-                case 0:
-                    p1Text.text = "Tank";
-                    break;
-                case 1:
-                    p1Text.text = "Car";
-                    break;
-            } 
+        //if (Input.GetAxis("Vertical") > 0.3f || Input.GetAxis("DpadVert") > 0.3f)
+        //{
+        //    p1Pick++;
+        //    switch (p1Pick)
+        //    {
+        //        case 0:
+        //            p1Text.text = "Tank";
+        //            break;
+        //        case 1:
+        //            p1Text.text = "Car";
+        //            break;
+        //    } 
             
-            if(p1Pick > 1)
-            {
-                p1Pick = 0;
-            }
-        }
-        if (Input.GetAxis("Vertical2") > 0.3f || Input.GetAxis("DpadVert2") > 0.3f)
-        {
-            p2Pick++;
-            switch (p2Pick)
-            {
-                case 0:
-                    p2Text.text = "Tank";
-                    break;
-            }
+        //    if(p1Pick > 1)
+        //    {
+        //        p1Pick = 0;
+        //    }
+        //}
+        //if (Input.GetAxis("Vertical2") > 0.3f || Input.GetAxis("DpadVert2") > 0.3f)
+        //{
+        //    p2Pick++;
+        //    switch (p2Pick)
+        //    {
+        //        case 0:
+        //            p2Text.text = "Tank";
+        //            break;
+        //    }
 
-            if (p2Pick > 1)
-            {
-                p2Pick = 0;
-            }
-        }
-        if (Input.GetAxis("Vertical3") > 0.3f || Input.GetAxis("DpadVert3") > 0.3f)
-        {
-            p3Pick++;
-            switch (p3Pick)
-            {
-                case 0:
-                    p3Text.text = "Tank";
-                    break;
-            }
+        //    if (p2Pick > 1)
+        //    {
+        //        p2Pick = 0;
+        //    }
+        //}
+        //if (Input.GetAxis("Vertical3") > 0.3f || Input.GetAxis("DpadVert3") > 0.3f)
+        //{
+        //    p3Pick++;
+        //    switch (p3Pick)
+        //    {
+        //        case 0:
+        //            p3Text.text = "Tank";
+        //            break;
+        //    }
 
-            if (p3Pick > 1)
-            {
-                p3Pick = 0;
-            }
-        }
-        if (Input.GetAxis("Vertical4") > 0.3f || Input.GetAxis("DpadVert4") > 0.3f)
-        {
-            p4Pick++;
-            switch (p4Pick)
-            {
-                case 0:
-                    p4Text.text = "Tank";
-                    break;
-            }
+        //    if (p3Pick > 1)
+        //    {
+        //        p3Pick = 0;
+        //    }
+        //}
+        //if (Input.GetAxis("Vertical4") > 0.3f || Input.GetAxis("DpadVert4") > 0.3f)
+        //{
+        //    p4Pick++;
+        //    switch (p4Pick)
+        //    {
+        //        case 0:
+        //            p4Text.text = "Tank";
+        //            break;
+        //    }
 
-            if (p4Pick > 1)
-            {
-                p4Pick = 0;
-            }
-        }
+        //    if (p4Pick > 1)
+        //    {
+        //        p4Pick = 0;
+        //    }
+        //}
 
         //Players set ready
         //Ready
@@ -233,11 +238,9 @@ public class LobbyOffline : MonoBehaviour {
                     switch (PlayerPrefs.GetInt("Level"))
                     {
                         case 0:
-                            //PlayerPrefs.SetInt("Level", 1);
                             levelText.text = "Tilt";
                             break;
                         case 1:
-                            //PlayerPrefs.SetInt("Level", 0);
                             levelText.text = "Future";
                             break;
                     }
@@ -253,6 +256,9 @@ public class LobbyOffline : MonoBehaviour {
         {
             nextScrnText.text = "";
         }
+
+        
+        
         // both players select vehicles
         // activate level select
         // set go option

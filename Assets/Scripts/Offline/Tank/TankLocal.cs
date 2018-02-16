@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-
 public class TankLocal : MonoBehaviour {
 
     static Color[] Colors = new Color[] { Color.magenta, Color.red, Color.cyan, Color.blue, Color.green, Color.yellow };
@@ -27,12 +25,6 @@ public class TankLocal : MonoBehaviour {
     public float m_TurretRotate;
     public GameObject m_Barrel;        // location for spawning shot projectiles
 
-    public List<Transform> HoverPoints = new List<Transform>();
-    public float HoverHeight = 7;
-    public float HoverForceFront = 200;
-    public float HoverForceBack = 400;
-    public bool isGrounded = false;
-
     public bool ded = false;
 
     GameObject Player;
@@ -52,36 +44,14 @@ public class TankLocal : MonoBehaviour {
         m_Vehicle = GetComponent<Rigidbody>();
         m_Outline.SetColor("_OutlineColor",Colors[PlayerPrefs.GetInt("P1Colour")]);
         Debug.Log(Colors[PlayerPrefs.GetInt("P1Colour")].ToString());
-
-        m_PlayerName = transform.parent.name;
-
-        switch (m_PlayerName)
-        {
-            case "Player1":
-                m_Outline.SetColor("_OutlineColor", Colors[PlayerPrefs.GetInt("P1Colour")]);
-                Debug.Log(Colors[PlayerPrefs.GetInt("P1Colour")].ToString());
-                break;
-            case "Player2":
-                m_Outline.SetColor("_OutlineColor", Colors[PlayerPrefs.GetInt("P2Colour")]);
-                Debug.Log(Colors[PlayerPrefs.GetInt("P2Colour")].ToString());
-                break;
-        }
-
+        
     }
 	
 	// Update is called once per frame
 	void FixedUpdate () {
 
-
         Move();
         Shoot();
-        Hover();
-
-        if(Input.GetButtonDown("Reset"))
-        {
-            transform.rotation = Quaternion.identity;
-            Debug.Log("1");
-        }
 
         if (ded)
         {
@@ -98,12 +68,12 @@ public class TankLocal : MonoBehaviour {
         switch (m_PlayerName)
         {
             case "Player1":
-                Player = transform.parent.gameObject;
-                moveVertical = Player.GetComponent<PlayerOneControl>().moveVertical;
-                turning = Player.GetComponent<PlayerOneControl>().turning;
+                Player =          transform.parent.gameObject;
+                moveVertical =    Player.GetComponent<PlayerOneControl>().moveVertical;
+                turning =         Player.GetComponent<PlayerOneControl>().turning;
                 shootHorizontal = Player.GetComponent<PlayerOneControl>().shootHorizontal;
-                shootVertical = Player.GetComponent<PlayerOneControl>().shootVertical;
-                fire = Player.GetComponent<PlayerOneControl>().fire;
+                shootVertical =   Player.GetComponent<PlayerOneControl>().shootVertical;
+                fire =            Player.GetComponent<PlayerOneControl>().fire;               
                 break;
             case "Player2":
                 moveVertical = transform.parent.GetComponent<PlayerTwoControl>().moveVertical;
@@ -114,10 +84,7 @@ public class TankLocal : MonoBehaviour {
                 break;
         }
 
-<<<<<<< HEAD
-=======
         Vector3 turretRotate = new Vector3(0f, shootHorizontal * m_TurretRotate * Time.deltaTime, 0f);
->>>>>>> 637c6a3589ee6767d7e17b759e05f8aa6f8c7790
 
         Vector3 move = new Vector3(0f, 0f, moveVertical * m_Speed * Time.deltaTime);
         Vector3 turnRot = new Vector3(0f, turning * m_RotSpeed * Time.deltaTime, 0f);
@@ -158,37 +125,6 @@ public class TankLocal : MonoBehaviour {
         }
     }
 
-    private void Hover()
-    {
-
-
-        //Lift
-        for (int i = 0; i < 4; i++)
-        {
-            RaycastHit Hit;
-            if (i > 1)
-            {
-                if (Physics.Raycast(HoverPoints[i].position, HoverPoints[i].TransformDirection(Vector3.down), out Hit, HoverHeight))
-                    m_Vehicle.AddForceAtPosition((Vector3.up * HoverForceBack * Time.deltaTime) * Mathf.Abs(1 - (Vector3.Distance(Hit.point, HoverPoints[i].position) / HoverHeight)), HoverPoints[i].position);
-                if (Hit.point != Vector3.zero)
-                    Debug.DrawLine(HoverPoints[i].position, Hit.point, Color.blue);
-            }
-            else
-            {
-                if (Physics.Raycast(HoverPoints[i].position, HoverPoints[i].TransformDirection(Vector3.down), out Hit, HoverHeight))
-                    m_Vehicle.AddForceAtPosition((Vector3.up * HoverForceFront * Time.deltaTime) * Mathf.Abs(1 - (Vector3.Distance(Hit.point, HoverPoints[i].position) / HoverHeight)), HoverPoints[i].position);
-                if (Hit.point != Vector3.zero)
-                    Debug.DrawLine(HoverPoints[i].position, Hit.point, Color.red);
-            }
-            if (Hit.point != Vector3.zero)
-                isGrounded = true;
-            else
-                isGrounded = false;
-        }
-
-    }
-
-
     public GameObject FindFurthestTarget(string trgt)
     {
         GameObject[] gos = GameObject.FindGameObjectsWithTag(trgt);
@@ -210,7 +146,6 @@ public class TankLocal : MonoBehaviour {
 
         return furthest;       
     }
-
 
     private void OnTriggerStay(Collider other)
     {
@@ -269,26 +204,9 @@ public class TankLocal : MonoBehaviour {
     {
         if (other.gameObject.tag == "DeathPlane")
         {
-<<<<<<< HEAD
-            lives--;
-            switch (m_PlayerName)
-            {
-                case "Player1":
-                    PlayerPrefs.SetInt("P1Lives", lives);
-                    break;
-                case "Player2":
-                    PlayerPrefs.SetInt("P2Lives", lives);
-                    break;
-            }
-
-            control.UpdateText();
-            Debug.Log("hit");
-            m_Vehicle.transform.position = new Vector3(0f, 20f, 0f); //Set Position to a respawn point
-=======
             OnDeath();
             Debug.Log("Deathplane");
 
->>>>>>> 637c6a3589ee6767d7e17b759e05f8aa6f8c7790
         }
     }
 }
