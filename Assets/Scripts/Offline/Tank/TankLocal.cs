@@ -68,10 +68,18 @@ public class TankLocal : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 
+        if (!isGrounded)
+        {
+            m_Speed = 0f;
+        }
+        else
+        {
+            m_Speed = 50f;
+        }
 
+        Hover();
         Move();
         Shoot();
-        Hover();
 
         if(Input.GetButtonDown("Reset"))
         {
@@ -215,7 +223,7 @@ public class TankLocal : MonoBehaviour {
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "DeathPlane")
         {

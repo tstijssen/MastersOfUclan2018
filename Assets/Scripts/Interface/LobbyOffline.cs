@@ -42,6 +42,7 @@ public class LobbyOffline : MonoBehaviour {
     int p2Pick;
     int p3Pick;
     int p4Pick;
+    int levelSelect = 0;
 
     public Text nextScrnText;
 
@@ -60,7 +61,7 @@ public class LobbyOffline : MonoBehaviour {
         PlayerPrefs.SetInt("P3Choice", 0);
         PlayerPrefs.SetInt("P4Choice", 0);
 
-        PlayerPrefs.SetInt("Level", 0);
+        PlayerPrefs.SetInt("Level", 1);
 
         PlayerPrefs.SetInt("P2In", 0);
         PlayerPrefs.SetInt("P3In", 0);
@@ -232,22 +233,31 @@ public class LobbyOffline : MonoBehaviour {
             }
             else
             {
-                if (Input.GetAxis("Vertical") > 0 || Input.GetAxis("DpadVert") > 0)
+                if (Input.GetAxis("DpadVert") > 0 && levelSelect < 1)
                 {
-                 //   PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level") + 1);
-                    switch (PlayerPrefs.GetInt("Level"))
-                    {
-                        case 0:
-                            levelText.text = "Tilt";
-                            break;
-                        case 1:
-                            levelText.text = "Future";
-                            break;
-                    }
+                    levelSelect++;
                 }
+                else if (Input.GetAxis("DpadVert") < 0 && levelSelect > 0)
+                {
+                    levelSelect--;
+                }
+                    
+                switch (levelSelect)
+                {
+                    case 0:
+                        levelText.text = "Tilt";
+                        break;
+                    case 1:
+                        levelText.text = "Beach";
+                        break;
+                }
+
+                
+                
 
                 if (Input.GetButtonDown("Pause"))
                 {
+                    PlayerPrefs.SetInt("Level", levelSelect);  
                     SceneManager.LoadScene("Battle Offline");
                 }
             }           

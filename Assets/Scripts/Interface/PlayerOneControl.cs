@@ -22,7 +22,7 @@ public class PlayerOneControl : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        PlayerPrefs.SetInt("P1Lives", 5);    
+
     }
 	
 	// Update is called once per frame

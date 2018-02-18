@@ -19,10 +19,10 @@ public class GameController : MonoBehaviour {
     public Text Player2Lives;
     public Text Player3Lives;
     public Text Player4Lives;
-
-
+    
     //level list
     public GameObject Tilt;
+    public GameObject Beach;
 
     //public GameObject car;
     public GameObject Tank;
@@ -36,26 +36,35 @@ public class GameController : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+        //Activate and place Players
+
         if(PlayerPrefs.GetInt("P2In") == 1)
         {
             Player2.SetActive(true);
+            Player2.transform.position = new Vector3(0f, 7f, 10f);
         }
         if (PlayerPrefs.GetInt("P3In") == 1)
         {
             Player3.SetActive(true);
+            Player3.transform.position = new Vector3(10f, 7f, 0f);
         }
         if (PlayerPrefs.GetInt("P4In") == 1)
         {
             Player4.SetActive(true);
+            Player4.transform.position = new Vector3(0f, 7f, -10f);
         }
 
-
-
+        //Load Level
         if (PlayerPrefs.GetInt("Level") == 0)
         {
             Instantiate(Tilt, GameObject.Find("Level").transform);
         }
-
+        if (PlayerPrefs.GetInt("Level") == 1)
+        {
+            Instantiate(Beach, GameObject.Find("Level").transform);
+        }
+        Player1.transform.position = GameObject.Find("p1Start").transform.position;
+        //Load Player Vehicles
         if (PlayerPrefs.GetFloat("P1Choice") == 0)
         {
             Instantiate(Tank, Player1.transform);
@@ -65,16 +74,8 @@ public class GameController : MonoBehaviour {
         {
             Instantiate(Tank, Player2.transform);
         }
-        //if (PlayerPrefs.GetFloat("P3Choice") == 0)
-        //{
-        //    Instantiate(Tank, Player3.transform);
-        //}
-        //if (PlayerPrefs.GetFloat("P4Choice") == 0)
-        //{
-        //    Instantiate(Tank, Player4.transform);
-        //}
         
-
+        //Set Lives
         PlayerPrefs.SetInt("P1Lives", PlayerPrefs.GetInt("GameLives"));
         PlayerPrefs.SetInt("P2Lives", PlayerPrefs.GetInt("GameLives"));
         UpdateText();
