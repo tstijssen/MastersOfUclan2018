@@ -52,8 +52,10 @@ public class ShellTravel : MonoBehaviour {
     // reset bullet life counter and return it to the object pool for reuse
     private void ResetBullet()
     {
-        Splode.transform.position = transform.position;
-        Instantiate(Splode);        
+        GameObject explode = GetComponent<ObjectPooler>().GetPooledObject();
+        explode.transform.position = transform.position;
+        explode.SetActive(true);
+        //Instantiate(Splode);        
         m_BulletLife = m_LifeReset;
         this.gameObject.SetActive(false);
     }

@@ -230,6 +230,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -245,6 +246,7 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -262,6 +264,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -277,6 +280,7 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -342,7 +346,7 @@ MonoBehaviour:
   pooledObjects: []
   objectToPool: {fileID: 1848206745034070, guid: 9fa446a956a2caa4db4764318366e2a8,
     type: 2}
-  amountToPool: 1
+  amountToPool: 5
 --- !u!114 &114636129346388186
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -354,8 +358,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a3a31cbb83cf0744923210921e70b68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RotSpeed: 100
-  m_Speed: 10000
+  m_RotSpeed: 150
+  m_Speed: 200
   m_TurretRotate: 50
   m_Barrel: {fileID: 1873452127363392}
   HoverPoints:
@@ -363,9 +367,9 @@ MonoBehaviour:
   - {fileID: 4037395237787958}
   - {fileID: 4010099015073640}
   - {fileID: 4484553795679940}
-  HoverHeight: 10
-  HoverForceFront: 400
-  HoverForceBack: 400
+  HoverHeight: 15
+  HoverForceFront: 1000
+  HoverForceBack: 1000
   isGrounded: 0
   ded: 0
   m_Turret: {fileID: 1114355361052436}

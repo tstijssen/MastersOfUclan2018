@@ -19,13 +19,15 @@ public class TankLocal : MonoBehaviour {
     public float m_Speed;              // tank movement speed modifier
     public float m_TurretRotate;
     public GameObject m_Barrel;        // location for spawning shot projectiles
+    float actualSpeed;
+    float lockPos = 0.0f;
 
     public List<Transform> HoverPoints = new List<Transform>();
     public float HoverHeight = 7;
     public float HoverForceFront = 200;
     public float HoverForceBack = 400;
     public bool isGrounded = false;
-
+    Quaternion groundRotation;
     public bool ded = false;
 
     GameObject Player;
@@ -76,11 +78,11 @@ public class TankLocal : MonoBehaviour {
 
         if (!isGrounded)
         {
-            m_Speed = 0f;
+            actualSpeed = 0f;
         }
         else
         {
-            m_Speed = 50f;
+            actualSpeed = m_Speed;
         }
 
         Hover();
@@ -133,7 +135,16 @@ public class TankLocal : MonoBehaviour {
         m_Turret.transform.Rotate(turretRotate);       
         transform.Rotate(turnRot);
 
-        m_Vehicle.AddRelativeForce(move * m_Speed);
+        m_Vehicle.AddRelativeForce(move * actualSpeed);
+
+        //if(isGrounded)
+        //{
+        //    transform.rotation = new Quaternion ( -groundRotation.x, transform.rotation.y, -groundRotation.z, transform.rotation.w);
+        //}
+        //else
+        //{
+            transform.rotation = Quaternion.Euler(lockPos, transform.rotation.eulerAngles.y, lockPos);
+        //}
     }
 
     private void Shoot()
@@ -177,19 +188,25 @@ public class TankLocal : MonoBehaviour {
             if (i > 1)
             {
                 if (Physics.Raycast(HoverPoints[i].position, HoverPoints[i].TransformDirection(Vector3.down), out Hit, HoverHeight))
+                {
                     m_Vehicle.AddForceAtPosition((Vector3.up * HoverForceBack * Time.deltaTime) * Mathf.Abs(1 - (Vector3.Distance(Hit.point, HoverPoints[i].position) / HoverHeight)), HoverPoints[i].position);
+                }
                 if (Hit.point != Vector3.zero)
                     Debug.DrawLine(HoverPoints[i].position, Hit.point, Color.blue);
             }
             else
             {
                 if (Physics.Raycast(HoverPoints[i].position, HoverPoints[i].TransformDirection(Vector3.down), out Hit, HoverHeight))
+                {
                     m_Vehicle.AddForceAtPosition((Vector3.up * HoverForceFront * Time.deltaTime) * Mathf.Abs(1 - (Vector3.Distance(Hit.point, HoverPoints[i].position) / HoverHeight)), HoverPoints[i].position);
+                }
                 if (Hit.point != Vector3.zero)
                     Debug.DrawLine(HoverPoints[i].position, Hit.point, Color.red);
             }
             if (Hit.point != Vector3.zero)
+            {
                 isGrounded = true;
+            }
             else
                 isGrounded = false;
         }
