@@ -11,6 +11,10 @@ public class Menu : MonoBehaviour {
     //public GameObject p3;
     //public GameObject p4;
 
+    AudioSource soundSource;
+    public AudioClip moveSelect;
+    public AudioClip accept;
+
     public Image pointer;
 
     public int selection = 0;
@@ -21,7 +25,7 @@ public class Menu : MonoBehaviour {
     void Start ()
     {
         DontDestroyOnLoad(p1);
-
+        soundSource = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -29,18 +33,21 @@ public class Menu : MonoBehaviour {
     {
 		if(Input.GetAxis("DpadVert") > 0.5f && selection == 0)
         {
+            soundSource.PlayOneShot(moveSelect);
             pointer.transform.position = pointer.transform.position - selectionOffset;
             selection++;
         }
 
         if (Input.GetAxis("DpadVert") < -0.5f && selection == 1)
         {
+            soundSource.PlayOneShot(moveSelect);
             pointer.transform.position = pointer.transform.position + selectionOffset;
             selection--;
         }
 
         if (Input.GetButtonDown("Fire1"))
         {
+            soundSource.PlayOneShot(accept);
             switch (selection)
             {
                 case 0:
