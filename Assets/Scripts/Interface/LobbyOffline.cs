@@ -4,10 +4,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+[System.Serializable]
+public struct PlayerColourInfo
+{
+//    public Text vehicleText;
+    public Image vehicleColour;
+    public Color playerColour;
+}
+
+
 public class LobbyOffline : MonoBehaviour {
 
     //Player Variables
     static Color[] Colors = new Color[] { Color.magenta, Color.red, Color.cyan, Color.blue, Color.green, Color.yellow };
+    static List<int> _colorInUse = new List<int>();
+    public PlayerColourInfo[] colourInfos = new PlayerColourInfo[4];
 
     public int playersIn = 1;
     public int playersReady = 0;
@@ -76,73 +87,26 @@ public class LobbyOffline : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        
 
 
-        //Player select vehicle
-        //if (Input.GetAxis("Vertical") > 0.3f || Input.GetAxis("DpadVert") > 0.3f)
-        //{
-        //    p1Pick++;
-        //    switch (p1Pick)
-        //    {
-        //        case 0:
-        //            p1Text.text = "Tank";
-        //            break;
-        //        case 1:
-        //            p1Text.text = "Car";
-        //            break;
-        //    } 
-            
-        //    if(p1Pick > 1)
-        //    {
-        //        p1Pick = 0;
-        //    }
-        //}
-        //if (Input.GetAxis("Vertical2") > 0.3f || Input.GetAxis("DpadVert2") > 0.3f)
-        //{
-        //    p2Pick++;
-        //    switch (p2Pick)
-        //    {
-        //        case 0:
-        //            p2Text.text = "Tank";
-        //            break;
-        //    }
 
-        //    if (p2Pick > 1)
-        //    {
-        //        p2Pick = 0;
-        //    }
-        //}
-        //if (Input.GetAxis("Vertical3") > 0.3f || Input.GetAxis("DpadVert3") > 0.3f)
-        //{
-        //    p3Pick++;
-        //    switch (p3Pick)
-        //    {
-        //        case 0:
-        //            p3Text.text = "Tank";
-        //            break;
-        //    }
-
-        //    if (p3Pick > 1)
-        //    {
-        //        p3Pick = 0;
-        //    }
-        //}
-        //if (Input.GetAxis("Vertical4") > 0.3f || Input.GetAxis("DpadVert4") > 0.3f)
-        //{
-        //    p4Pick++;
-        //    switch (p4Pick)
-        //    {
-        //        case 0:
-        //            p4Text.text = "Tank";
-        //            break;
-        //    }
-
-        //    if (p4Pick > 1)
-        //    {
-        //        p4Pick = 0;
-        //    }
-        //}
+        //Player select colour
+        if (Input.GetButtonDown("Brake") && !player1Picked)
+        {
+            PlayerPrefs.SetInt("P1Colour", ChangeColour(0));
+        }
+        if (Input.GetButtonDown("Brake2") && !player2Picked)
+        {
+            PlayerPrefs.SetInt("P2Colour", ChangeColour(1));
+        }
+        if (Input.GetButtonDown("Brake3") && !player3Picked)
+        {
+            PlayerPrefs.SetInt("P3Colour", ChangeColour(2));
+        }
+        if (Input.GetButtonDown("Brake4") && !player4Picked)
+        {
+            PlayerPrefs.SetInt("P4Colour", ChangeColour(3));
+        }
 
         //Players set ready
         //Ready
@@ -280,4 +244,46 @@ public class LobbyOffline : MonoBehaviour {
         LevelScreen.SetActive(true);
         levelText.text = "Tilt";
     }
+
+    int ChangeColour(int playerNum)
+    {
+        int idx = System.Array.IndexOf(Colors, colourInfos[playerNum].playerColour);
+
+        int inUseIdx = _colorInUse.IndexOf(idx);
+
+        if (idx < 0) idx = 0;
+
+        idx = (idx + 1) % Colors.Length;
+
+        bool alreadyInUse = false;
+
+        do
+        {
+            alreadyInUse = false;
+            for (int i = 0; i < _colorInUse.Count; ++i)
+            {
+                if (_colorInUse[i] == idx)
+                {//that color is already in use
+                    alreadyInUse = true;
+                    idx = (idx + 1) % Colors.Length;
+                }
+            }
+        }
+        while (alreadyInUse);
+
+        if (inUseIdx >= 0)
+        {//if we already add an entry in the colorTabs, we change it
+            _colorInUse[inUseIdx] = idx;
+        }
+        else
+        {//else we add it
+            _colorInUse.Add(idx);
+        }
+
+        colourInfos[playerNum].playerColour = Colors[idx];
+        Debug.Log(colourInfos[playerNum].playerColour.ToString());
+        colourInfos[playerNum].vehicleColour.color = colourInfos[playerNum].playerColour;
+        return idx;
+    }
 }
+

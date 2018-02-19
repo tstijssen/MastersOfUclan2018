@@ -43,22 +43,28 @@ public class TankLocal : MonoBehaviour {
     {
         control = GameObject.Find("GameController").GetComponent<GameController>();
         m_Vehicle = GetComponent<Rigidbody>();
-        m_Outline.SetColor("_OutlineColor",Colors[PlayerPrefs.GetInt("P1Colour")]);
-        Debug.Log(Colors[PlayerPrefs.GetInt("P1Colour")].ToString());
-
+        //m_Outline.SetColor("_OutlineColor",Colors[PlayerPrefs.GetInt("P1Colour")]);
+        //Debug.Log(Colors[PlayerPrefs.GetInt("P1Colour")].ToString());
+        m_Outline = GetComponent<Renderer>().material;
         m_PlayerName = transform.parent.name;
-
+        
         switch (m_PlayerName)
         {
             case "Player1":
-                PlayerPrefs.SetInt("P1Colour", 1);
                 m_Outline.SetColor("_OutlineColor", Colors[PlayerPrefs.GetInt("P1Colour")]);
-
+                Debug.Log(Colors[PlayerPrefs.GetInt("P1Colour")].ToString());
                 break;
             case "Player2":
-                PlayerPrefs.SetInt("P1Colour", 1);
                 m_Outline.SetColor("_OutlineColor", Colors[PlayerPrefs.GetInt("P2Colour")]);
-
+                Debug.Log(Colors[PlayerPrefs.GetInt("P2Colour")].ToString());
+                break;
+            case "Player3":
+                m_Outline.SetColor("_OutlineColor", Colors[PlayerPrefs.GetInt("P3Colour")]);
+                Debug.Log(Colors[PlayerPrefs.GetInt("P3Colour")].ToString());
+                break;
+            case "Player4":
+                m_Outline.SetColor("_OutlineColor", Colors[PlayerPrefs.GetInt("P4Colour")]);
+                Debug.Log(Colors[PlayerPrefs.GetInt("P4Colour")].ToString());
                 break;
         }
         lives = PlayerPrefs.GetInt("GameLives");
