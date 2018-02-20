@@ -92,12 +92,12 @@ public class GameController : MonoBehaviour {
 
         if (EndMenu.activeInHierarchy)
         {
+            Time.timeScale = 0f;
             if (!selectionReset)
             {
             selectionCount = 0;
                 selectionReset = true;
             }
-            Time.timeScale = 0f;
 
             float axis = Input.GetAxis("DpadVert");
 

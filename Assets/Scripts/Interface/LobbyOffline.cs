@@ -79,8 +79,7 @@ public class LobbyOffline : MonoBehaviour {
         PlayerPrefs.SetInt("P4In", 0);
 
         PlayerPrefs.SetInt("GameLives", 3);
-        p1Text.text = "Tank";
-        p2Text.text = "Tank";
+
         playersIn = 1;
     }
 
@@ -187,47 +186,39 @@ public class LobbyOffline : MonoBehaviour {
         if (playersIn == playersReady)
         {
             nextScrnText.text = "Press Start to Advance";
-            if (!allPlayersReady)
+            LevelScreen.SetActive(true);
+
+            levelText.text = "Tilt";
+            allPlayersReady = false;       
+         
+            if (Input.GetAxis("DpadVert") > 0 && levelSelect < 1)
             {
-                if (Input.GetButtonDown("Pause"))
-                {
-                    allPlayersReady = true;
-                    LevelSelect();
-                }
+                levelSelect++;
             }
-            else
+            else if (Input.GetAxis("DpadVert") < 0 && levelSelect > 0)
             {
-                if (Input.GetAxis("DpadVert") > 0 && levelSelect < 1)
-                {
-                    levelSelect++;
-                }
-                else if (Input.GetAxis("DpadVert") < 0 && levelSelect > 0)
-                {
-                    levelSelect--;
-                }
-                    
-                switch (levelSelect)
-                {
-                    case 0:
-                        levelText.text = "Tilt";
-                        break;
-                    case 1:
-                        levelText.text = "Beach";
-                        break;
-                }
-
+                levelSelect--;
+            }
                 
-                
+            switch (levelSelect)
+            {
+                case 0:
+                    levelText.text = "Tilt";
+                    break;
+                case 1:
+                    levelText.text = "Beach";
+                    break;
+            }              
 
-                if (Input.GetButtonDown("Pause"))
-                {
-                    PlayerPrefs.SetInt("Level", levelSelect);  
-                    SceneManager.LoadScene("Battle Offline");
-                }
-            }           
+            if (Input.GetButtonDown("Pause"))
+            {
+                PlayerPrefs.SetInt("Level", levelSelect);  
+                SceneManager.LoadScene("Battle Offline");
+            }                   
         }
         else
         {
+            LevelScreen.SetActive(false);
             nextScrnText.text = "";
         }
 
@@ -240,7 +231,7 @@ public class LobbyOffline : MonoBehaviour {
 
     void LevelSelect()
     {
-        vehiclePickScreen.SetActive(false);
+        //vehiclePickScreen.SetActive(false);
         LevelScreen.SetActive(true);
         levelText.text = "Tilt";
     }
