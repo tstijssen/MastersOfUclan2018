@@ -11,6 +11,13 @@ public class Menu : MonoBehaviour {
     //public GameObject p3;
     //public GameObject p4;
 
+    public Button startBtn;
+    public Button settingsBtn;
+    public Button quitBtn;
+
+    public Button apply;
+    public Button cancel;
+
     public GameObject menuPanel;
     public GameObject settingsPanel;
 
@@ -18,7 +25,8 @@ public class Menu : MonoBehaviour {
     public AudioClip moveSelect;
     public AudioClip accept;
 
-    public Image pointer;
+    public Image menuPointer;
+    public Image settingPointer;
 
     public int selection = 0;
 
@@ -27,21 +35,26 @@ public class Menu : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+        //Add Button listeners
+        startBtn.onClick.AddListener(StartGame);
+        settingsBtn.onClick.AddListener(Settings);
+        quitBtn.onClick.AddListener(QuitGame);
+        apply.onClick.AddListener(AcceptSettings);
+        cancel.onClick.AddListener(CancelSettings);
+
+
         DontDestroyOnLoad(p1);
         soundSource = GetComponent<AudioSource>();
+
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        //Check if axis is in use
-        if (Input.GetAxis("DpadVert") > 0.5f || Input.GetAxis("DpadVert") < -0.5f)
-            axisInUse = true;
-        else
-            axisInUse = false;
 
         //Selcetor moving up
-        if (Input.GetAxis("DpadVert") > 0.5f && !axisInUse)
+        if ((Input.GetAxis("DpadVert") > 0.5f || Input.GetAxis("Vertical") > 0.5f)
+            && !axisInUse)
         {
             selection++;
             if (selection > 2)
@@ -51,13 +64,14 @@ public class Menu : MonoBehaviour {
             else
             {
                 soundSource.PlayOneShot(moveSelect);
-                pointer.transform.position = pointer.transform.position - selectionOffset;
+                menuPointer.transform.position = menuPointer.transform.position - selectionOffset;
 
             }
         }
 
         //Selector moving down
-        if (Input.GetAxis("DpadVert") < -0.5f && !axisInUse)
+        if ((Input.GetAxis("DpadVert") < -0.5f || Input.GetAxis("Vertical") < -0.5f) 
+            && !axisInUse)
         {
             selection--;
             if (selection < 0)
@@ -67,11 +81,61 @@ public class Menu : MonoBehaviour {
             else
             {
                 soundSource.PlayOneShot(moveSelect);
-                pointer.transform.position = pointer.transform.position + selectionOffset;
+                menuPointer.transform.position = menuPointer.transform.position + selectionOffset;
 
             }
         }
 
+        if ((Input.GetAxis("DpadHor") < -0.5f || Input.GetAxis("Horizontal") < -0.5f)
+            && !axisInUse)
+        {
+            selection++;
+            if (selection < 0)
+            {
+                selection = 0;
+            }
+            else
+            {
+                soundSource.PlayOneShot(moveSelect);
+                menuPointer.transform.position = menuPointer.transform.position + selectionOffset;
+
+            }
+        }
+
+        if ((Input.GetAxis("DpadVert") > 0.5f || Input.GetAxis("Vertical") > 0.5f)
+            && !axisInUse)
+        {
+            selection--;
+            if (selection < 0)
+            {
+                selection = 0;
+            }
+            else
+            {
+                soundSource.PlayOneShot(moveSelect);
+                menuPointer.transform.position = menuPointer.transform.position - selectionOffset;
+
+            }
+        }
+
+        if (menuPanel.activeInHierarchy)
+        {
+
+        }
+
+        if (settingsPanel.activeInHierarchy)
+        {
+
+        }
+
+
+
+        //Check if axis is in use
+        if ((Input.GetAxis("DpadVert") > 0.5f || Input.GetAxis("DpadVert") < -0.5f) || (Input.GetAxis("Vertical") > 0.5f || Input.GetAxis("Vertical") < -0.5f))
+            axisInUse = true;
+        else
+            axisInUse = false;
+       
         //Selection made
         if (Input.GetButtonDown("Fire1"))
         {
@@ -83,21 +147,61 @@ public class Menu : MonoBehaviour {
                     break;
                 case 1:
                     //load Settings
-                    settingsPanel.SetActive(true);
-                    menuPanel.SetActive(false);
+                    SettingMenuToggle();
                     break;
                 case 2:
                     Application.Quit();
                     break;
             }
         }
-
-       
-
-
     }
 
+    void Selector(Image pointer)
+    {
+        selection++;
+        if (selection > 2)
+        {
+            selection = 2;
+        }
+        else
+        {
+            soundSource.PlayOneShot(moveSelect);
+            menuPointer.transform.position = menuPointer.transform.position - selectionOffset;
 
+        }
+    }
 
+    void SettingMenuToggle()
+    {
+        settingsPanel.SetActive(!settingsPanel.activeInHierarchy);
+        menuPanel.SetActive(!menuPanel.activeInHierarchy);
+    }
 
+    //Button Listeners
+    void StartGame()
+    {
+        SceneManager.LoadScene("Lobby Offline");
+    }
+
+    void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    void Settings()
+    {
+        SettingMenuToggle();
+    }
+
+    void AcceptSettings()
+    {
+        //Set playerPrefs for volume settings
+
+        SettingMenuToggle();
+    }
+
+    void CancelSettings()
+    {
+        SettingMenuToggle();
+    }
 }
