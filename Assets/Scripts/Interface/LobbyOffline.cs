@@ -191,11 +191,11 @@ public class LobbyOffline : MonoBehaviour {
             levelText.text = "Tilt";
             allPlayersReady = false;       
          
-            if (Input.GetAxis("DpadVert") > 0 && levelSelect < 1)
+            if (Input.GetAxis("DpadHor") > 0 && levelSelect < 1)
             {
                 levelSelect++;
             }
-            else if (Input.GetAxis("DpadVert") < 0 && levelSelect > 0)
+            else if (Input.GetAxis("DpadHor") < 0 && levelSelect > 0)
             {
                 levelSelect--;
             }
