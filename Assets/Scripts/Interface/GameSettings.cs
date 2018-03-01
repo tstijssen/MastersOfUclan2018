@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class GameSettings : MonoBehaviour {
 
+    public GameObject mainMenu;
 
     public Button apply;
     public Button cancel;
