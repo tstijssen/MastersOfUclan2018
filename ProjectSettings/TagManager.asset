@@ -12,6 +12,7 @@ TagManager:
   - Pickup
   - Bullet
   - Hazard
+  - Scenery
   layers:
   - Default
   - TransparentFX

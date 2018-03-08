@@ -12,7 +12,7 @@ public class BulletTravel : MonoBehaviour {
                                 //private TeamNames m_Team;   // identifies team of the player that shot this bullet instance
 
     public bool m_Active;
-
+    bool m_Resetting;
     private GameObject ScoreInfo;
 
     private GameObject enemy;
@@ -22,12 +22,8 @@ public class BulletTravel : MonoBehaviour {
     void Start () {
         m_LifeReset = m_BulletLife;
         m_Active = false;
+        m_Resetting = false;
     }
-
-    //public void SetTeam(TeamNames newTeam)
-    //{
-    //    m_Team = newTeam;
-    //}
 
     // Update is called once per frame
     void Update () {
@@ -41,21 +37,30 @@ public class BulletTravel : MonoBehaviour {
         }
     }
 
+    //private void OnEnable()
+    //{
+    //    m_Resetting = false;
+    //}
+
     private void OnTriggerExit(Collider other)
     {
         // exited player's collision space, bullet now active
-        if(other.tag == "Player")
+        if(!m_Active && (other.tag == "Player 1" || other.tag == "Player 2"))
         {
             Debug.Log("BulletActive");
             m_Active = true;
         }
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log("BulletCollides");
-        //if (m_Active)
-        //    ResetBullet();
+        Debug.Log(other.tag);
+        if (other.tag == "Scenery")
+        {
+            ResetBullet();
+            Debug.Log("BulletReset");
+
+        }
     }
 
     // reset bullet life counter and return it to the object pool for reuse
@@ -64,6 +69,7 @@ public class BulletTravel : MonoBehaviour {
         m_BulletLife = m_LifeReset;
         m_Active = false;
         gameObject.SetActive(false);
+        Debug.Log(gameObject.activeInHierarchy);
     }
     
 }
