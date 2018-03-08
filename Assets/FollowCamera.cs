@@ -21,6 +21,6 @@ public class FollowCamera : MonoBehaviour {
         Quaternion rotation = Quaternion.Euler(0, angle, 0);
         transform.position = target.transform.position - (rotation * offset);
 
-        transform.LookAt(target.transform);
+        //transform.LookAt(target.transform);
     }
 }

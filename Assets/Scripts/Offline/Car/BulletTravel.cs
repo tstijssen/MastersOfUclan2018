@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class BulletTravel : MonoBehaviour {
 
+    public float m_Damage;    // once per bullet
     public float m_BulletSpeed; 
     public float m_BulletLife;  // timer until bullet sel-deactivates
     public float m_ReloadSpeed; // accessed by tank when shooting bullet, used to set reload timer
     private float m_LifeReset;  // used to reset bulletLife var when returning bullet to object pool
-    //private TeamNames m_Team;   // identifies team of the player that shot this bullet instance
+                                //private TeamNames m_Team;   // identifies team of the player that shot this bullet instance
+
+    public bool m_Active;
 
     private GameObject ScoreInfo;
 
@@ -18,7 +21,7 @@ public class BulletTravel : MonoBehaviour {
     // Use this for initialization
     void Start () {
         m_LifeReset = m_BulletLife;
-
+        m_Active = false;
     }
 
     //public void SetTeam(TeamNames newTeam)
@@ -38,26 +41,28 @@ public class BulletTravel : MonoBehaviour {
         }
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Ground"))
+        // exited player's collision space, bullet now active
+        if(other.tag == "Player")
         {
-            ResetBullet();
-        }
-
-        if (other.gameObject.CompareTag("Player 1"))
-        {
-            enemy = other.gameObject;
-            enemyscript = enemy.GetComponent<TankLocal>();
-            enemyscript.ded = true;
-            ResetBullet();
+            Debug.Log("BulletActive");
+            m_Active = true;
         }
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        //Debug.Log("BulletCollides");
+        //if (m_Active)
+        //    ResetBullet();
+    }
+
     // reset bullet life counter and return it to the object pool for reuse
-    private void ResetBullet()
+    public void ResetBullet()
     {
         m_BulletLife = m_LifeReset;
+        m_Active = false;
         gameObject.SetActive(false);
     }
     

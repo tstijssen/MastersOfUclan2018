@@ -59,7 +59,6 @@ public class LobbyOffline : MonoBehaviour {
 
     GameObject vehiclePickScreen;
 
-
     //Level Variables
     public GameObject LevelScreen;
     public Text levelText;
@@ -87,6 +86,9 @@ public class LobbyOffline : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+
+
+
         //Player select colour
         if (Input.GetButtonDown("Brake") && !player1Picked)
         {
@@ -189,11 +191,11 @@ public class LobbyOffline : MonoBehaviour {
             levelText.text = "Tilt";
             allPlayersReady = false;       
          
-            if (Input.GetAxis("DpadHor") > 0 && levelSelect < 1)
+            if (Input.GetAxis("DpadVert") > 0 && levelSelect < 1)
             {
                 levelSelect++;
             }
-            else if (Input.GetAxis("DpadHor") < 0 && levelSelect > 0)
+            else if (Input.GetAxis("DpadVert") < 0 && levelSelect > 0)
             {
                 levelSelect--;
             }
@@ -214,18 +216,18 @@ public class LobbyOffline : MonoBehaviour {
                 SceneManager.LoadScene("Battle Offline");
             }                   
         }
-        //else
-        //{
-        //    LevelScreen.SetActive(false);
-        //    nextScrnText.text = "";
-        //}
-            
+        else
+        {
+            LevelScreen.SetActive(false);
+            nextScrnText.text = "";
+        }
+
+        
+        
         // both players select vehicles
         // activate level select
         // set go option
     }
-
-
 
     void LevelSelect()
     {
@@ -233,8 +235,6 @@ public class LobbyOffline : MonoBehaviour {
         LevelScreen.SetActive(true);
         levelText.text = "Tilt";
     }
-
-
 
     int ChangeColour(int playerNum)
     {

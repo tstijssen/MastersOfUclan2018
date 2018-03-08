@@ -8,6 +8,10 @@ TagManager:
   - Player 2
   - Player 1
   - DeathPlane
+  - Beam
+  - Pickup
+  - Bullet
+  - Hazard
   layers:
   - Default
   - TransparentFX
