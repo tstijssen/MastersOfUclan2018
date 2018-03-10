@@ -26,9 +26,13 @@ namespace UnityStandardAssets.Vehicles.Car
             float v = CrossPlatformInputManager.GetAxis("Vertical2");
 
             bool fire = CrossPlatformInputManager.GetButton("FireTwo");
+            bool fireRelease = CrossPlatformInputManager.GetButtonUp("FireTwo");
 
             if(fire)
                 m_FireControl.Shoot();
+
+            if (fireRelease)
+                m_FireControl.ShootRelease();
 
 #if !MOBILE_INPUT
             float handbrake = CrossPlatformInputManager.GetAxis("Jump2");

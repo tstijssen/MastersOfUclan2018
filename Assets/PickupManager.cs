@@ -10,9 +10,12 @@ public class PickupManager : MonoBehaviour {
     private float m_SpawnTimer;
     Vector3 targetPos;
     bool validSpawn;
+    bool validPickup;
+    GameObject newPickup;
     // Use this for initialization
     void Start () {
         m_SpawnTimer = m_SpawnDelay;
+        validPickup = false;
     }
 	
     void GetRandomPos()
@@ -33,30 +36,42 @@ public class PickupManager : MonoBehaviour {
         }
         else
         {
-            GetRandomPos();
-            m_SpawnTimer = m_SpawnDelay;
-            int type = Random.Range(0, 3);
-
-            GameObject newPickup = m_PickupPools[type].GetPooledObject();
-
-            if (newPickup != null)
+            // get pickup from object pool, retry until one is obtained
+            if(!validPickup)
             {
-                newPickup.transform.position = targetPos;
-                newPickup.SetActive(true);
+                int type = Random.Range(0, 3);
+                newPickup = m_PickupPools[type].GetPooledObject();    
+                if (newPickup != null)
+                    validPickup = true;
             }
-            //RaycastHit hitInfo;
-            //if (Physics.Linecast(new Vector3(targetPos.x, 5.0f, targetPos.z), targetPos, out hitInfo))
-            //{
-            //    Debug.Log(hitInfo.transform.tag);
-            //    if(hitInfo.transform.tag == "Ground")
-            //    {
-            //        validSpawn = true;
-            //    }
-            //}
-            //if(validSpawn)
-            //{
 
-            //}
+            // got pickup object, get random location and spawn
+            if (validPickup)
+            {
+                GetRandomPos();
+                Debug.Log("Got pickup obj");
+                // raycast to ground to find empty spot to spawn, retry random positions until one is found
+                RaycastHit hitInfo;
+                if (Physics.Linecast(new Vector3(targetPos.x, 5.0f, targetPos.z), new Vector3(targetPos.x, -6.0f, targetPos.z), out hitInfo))
+                {
+                    Debug.Log(hitInfo.transform.tag);
+                    if (hitInfo.transform.tag == "Ground")
+                    {
+                        validSpawn = true;
+                    }
+                }
+
+                if (validSpawn)
+                {
+                    m_SpawnTimer = m_SpawnDelay;
+
+                    newPickup.transform.position = targetPos;
+                    newPickup.SetActive(true);
+                    validPickup = false;
+                }
+            }
+            
+            
         }
     }
 }

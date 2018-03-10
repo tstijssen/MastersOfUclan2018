@@ -6,31 +6,54 @@ using UnityEngine.UI;
 [System.Serializable]
 public enum FireType {TwinGuns, Beam, Cannon };
 
-public class CarFireControl : MonoBehaviour {
+[System.Serializable]
+public struct HeatFunction
+{
+    public Slider HealthSlider;
+    public Slider HeatSlider;
+    public Image HealthImage;
+    public Image HeatImage;
 
+    public float BeamHeat;
+    public float BulletHeat;
+    public float HeatDrain;
+}
+
+[System.Serializable]
+public struct GunData
+{
     public FireType gunType;
 
-    public GameObject m_Barrel1;        // location for spawning shot projectiles
-    public GameObject m_Barrel2;        // location for spawning shot projectiles
-    private CarPooler m_BulletPool;
+    public GameObject Barrel1;        // location for spawning shot projectiles
+    public GameObject Barrel2;        // location for spawning shot projectiles
+    public CarPooler BulletPool;
 
-    public Slider m_HealthSlider;
-    public Image m_SliderFillImage;
-    public GameObject m_DamageParticles;
-    public GameObject m_DeathParticles;
-    public AudioClip m_HitSound;
+    public GameObject BeamBarrel;
+    public bool altguns;
+    public bool fired;
+    public float ReloadTwinGuns;
+}
 
-    public Text m_DeathCounter;
+[System.Serializable]
+public struct CarData
+{
+    public float Health;
+    public float RespawnDuration;
+    public GameObject DamageParticles;
+    public GameObject DeathParticles;
+    public AudioClip HitSound;
 
-    public GameObject m_BeamBarrel;
-    public GameObject m_Shield;
-    public Transform m_Spawnpoint;
-    public float m_Health = 100;
-    public float m_RespawnDuration;
+    public Text DeathCounter;
 
-    public bool altguns = false;
-    public bool fired = false;
-    private float m_ReloadTimer;       // counts down to 0, tank can only shoot when not counting down
+    public GameObject Shield;
+}
+
+public class CarFireControl : MonoBehaviour {
+
+    public CarData m_CarData;
+    public GunData m_GunData;
+    public HeatFunction m_HeatFunction;
+
     private float m_SpawnTimer;
     private bool m_Alive;
 
@@ -40,10 +63,9 @@ public class CarFireControl : MonoBehaviour {
     private bool m_ReloadPowerUp;
     private float m_ReloadMultiplier;     // used by powerups to speed up reloading
     private float m_ReloadPowerUpTimer;
+    private float m_ReloadTimer;       // counts down to 0, tank can only shoot when not counting down
 
-    public float ReloadTwinGuns = 0.1f;
-    public float ReloadBeamGun = 2.0f;
-    public float BeamTime = 2.0f;
+    private float m_Heat;
 
     private float volLowRange = .75f;
     private float volHighRange = 1.0f;
@@ -52,54 +74,67 @@ public class CarFireControl : MonoBehaviour {
     public void Shoot()
     {
         //Shooting
-        if (!fired && m_Alive)
+        if (m_Alive)
         {
-            if (gunType == FireType.TwinGuns)
+            if (m_GunData.gunType == FireType.TwinGuns)
             {
-                GameObject bullet = m_BulletPool.GetPooledObject();  // get bullet object from pool
+                GameObject bullet = m_GunData.BulletPool.GetPooledObject();  // get bullet object from pool
                 if (bullet != null) // check if object pool returned a bullet
                 {
-                    if (m_ReloadTimer <= 0.0f)    // only shoot if not waiting for reload
+                    if (m_ReloadTimer <= 0.0f && m_Heat < m_HeatFunction.HeatSlider.maxValue)    // only shoot if not waiting for reload
                     {
                         Debug.Log("Shooting");
                         float vol = Random.Range(volLowRange, volHighRange);
 
-                        if (altguns)
+                        if (m_GunData.altguns)
                         {
-                            m_Barrel1.GetComponent<AudioSource>().volume = vol;
-                            m_Barrel1.GetComponent<AudioSource>().Play();
-                            bullet.transform.position = m_Barrel1.transform.position;
-                            bullet.transform.rotation = m_Barrel1.transform.rotation;
-                            altguns = !altguns;
+                            m_GunData.Barrel1.GetComponent<AudioSource>().volume = vol;
+                            m_GunData.Barrel1.GetComponent<AudioSource>().Play();
+                            bullet.transform.position = m_GunData.Barrel1.transform.position;
+                            bullet.transform.rotation = m_GunData.Barrel1.transform.rotation;
+                            m_GunData.altguns = !m_GunData.altguns;
                         }
                         else
                         {
-                            m_Barrel2.GetComponent<AudioSource>().volume = vol;
-                            m_Barrel2.GetComponent<AudioSource>().Play();
-                            bullet.transform.position = m_Barrel2.transform.position;
-                            bullet.transform.rotation = m_Barrel2.transform.rotation;
-                            altguns = !altguns;
+                            m_GunData.Barrel2.GetComponent<AudioSource>().volume = vol;
+                            m_GunData.Barrel2.GetComponent<AudioSource>().Play();
+                            bullet.transform.position = m_GunData.Barrel2.transform.position;
+                            bullet.transform.rotation = m_GunData.Barrel2.transform.rotation;
+                            m_GunData.altguns = !m_GunData.altguns;
                         }
-
-                        fired = true;
                         bullet.SetActive(true);
-                        m_ReloadTimer = ReloadTwinGuns;   // reset reload speed
+                        m_ReloadTimer = m_GunData.ReloadTwinGuns;   // reset reload speed
+
+                        m_Heat += m_HeatFunction.BulletHeat;
                     }
                 }
             }
             // solid beam from front of vehicle
-            if (gunType == FireType.Beam)
+            if (m_GunData.gunType == FireType.Beam)
             {
-                if (m_ReloadTimer <= 0.0f)    // only shoot if not waiting for reload
+                if (m_Heat < m_HeatFunction.HeatSlider.maxValue && !m_GunData.fired)    // only shoot if not waiting for reload
                 {
                     Debug.Log("Shooting");
-                    m_BeamBarrel.SetActive(true);
-                    m_BeamBarrel.GetComponent<AudioSource>().Play();
-                    fired = true;
-
-                    m_ReloadTimer = BeamTime;   // reset reload speed       
+                    m_GunData.BeamBarrel.SetActive(true);
+                    if(!m_GunData.BeamBarrel.GetComponent<AudioSource>().isPlaying)
+                    {
+                        m_GunData.BeamBarrel.GetComponent<AudioSource>().Play();
+                    }
+                    m_GunData.fired = true;
                 }
             }
+        }
+    }
+
+    public void ShootRelease()
+    {
+        if(m_GunData.gunType == FireType.Beam && m_GunData.fired)
+        {
+            if(m_Heat < (m_HeatFunction.HeatSlider.maxValue / 4) * 3)
+                m_GunData.fired = false;
+            m_GunData.BeamBarrel.GetComponent<AudioSource>().Stop();
+
+            m_GunData.BeamBarrel.SetActive(false);
         }
     }
 
@@ -115,20 +150,20 @@ public class CarFireControl : MonoBehaviour {
                 switch (pickup.Type)
                 {
                     case PickupType.Health:
-                        if(m_Health < 100.0f)
+                        if(m_CarData.Health < 100.0f)
                         {
-                            if (m_Health + pickup.Value > 100.0f)
-                                m_Health = 100.0f;
+                            if (m_CarData.Health + pickup.Value > 100.0f)
+                                m_CarData.Health = 100.0f;
                             else
-                                m_Health += pickup.Value;
+                                m_CarData.Health += pickup.Value;
                         }
                         Debug.Log("HP picked up!");
 
                         break;
 
                     case PickupType.Shield:
-                        m_Shield.SetActive(true);
-                        m_SliderFillImage.color = Color.cyan;
+                        m_CarData.Shield.SetActive(true);
+                        m_HeatFunction.HealthImage.color = Color.cyan;
                         m_ShieldHealth = pickup.Value;
                         m_ShieldPowerUp = true;
                         Debug.Log("Shield picked up!");
@@ -155,14 +190,14 @@ public class CarFireControl : MonoBehaviour {
             {
                 if (other.GetComponent<BulletTravel>().m_Active)
                 {
-                    GetComponent<AudioSource>().PlayOneShot(m_HitSound, 1);
+                    GetComponent<AudioSource>().PlayOneShot(m_CarData.HitSound, 1);
                     if (m_ShieldPowerUp)
                     {
                         m_ShieldHealth -= other.GetComponent<BulletTravel>().m_Damage;
                     }
                     else
                     {
-                        m_Health -= other.GetComponent<BulletTravel>().m_Damage;
+                        m_CarData.Health -= other.GetComponent<BulletTravel>().m_Damage;
                     }
                     Debug.Log("bullethit");
                     other.GetComponent<BulletTravel>().ResetBullet();
@@ -189,7 +224,7 @@ public class CarFireControl : MonoBehaviour {
                 }
                 else
                 {
-                    m_Health -= (other.GetComponent<laserScript>().m_Damage * Time.deltaTime);
+                    m_CarData.Health -= (other.GetComponent<laserScript>().m_Damage * Time.deltaTime);
                 }
             }
         }
@@ -199,32 +234,34 @@ public class CarFireControl : MonoBehaviour {
     // Use this for initialization
     void Start () {
         m_ReloadTimer = 0.0f;
-        m_BulletPool = GetComponent<CarPooler>();
-        m_SliderFillImage.color = Color.green;
+        m_GunData.BulletPool = GetComponent<CarPooler>();
+        m_HeatFunction.HealthImage.color = Color.green;
         m_Alive = true;
         rb = GetComponent<Rigidbody>();
     }
 
     private void Death()
     {
-        m_DeathCounter.text += "I ";
+        m_CarData.DeathCounter.text += "I ";
         m_Alive = false;
         m_ShieldHealth = 0.0f;
-        m_Health = 0.0f;
+        m_CarData.Health = 0.0f;
+        m_Heat = 0.0f;
         m_ReloadPowerUpTimer = 0.0f;
-        m_SpawnTimer = m_RespawnDuration;
-        m_DeathParticles.SetActive(true);
+        m_SpawnTimer = m_CarData.RespawnDuration;
+        m_CarData.DeathParticles.SetActive(true);
     }
 
     private void Respawn()
     {
         m_Alive = true;
-        m_Health = 100.0f;
-        m_DeathParticles.SetActive(false);
-        transform.position = FindFurthestTarget("Respawn").transform.position;
+        m_CarData.Health = 100.0f;
+        m_CarData.DeathParticles.SetActive(false);
+        Transform respawnTarget = FindFurthestTarget("Respawn").transform;
+        transform.position = respawnTarget.position;
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
-        transform.rotation = Quaternion.identity;
+        transform.rotation = respawnTarget.rotation;
     }
 
     private void Update()
@@ -232,35 +269,35 @@ public class CarFireControl : MonoBehaviour {
         if(m_Alive)
         {
             // went off edge
-            if (transform.position.y < -1.0f || m_Health <= 0.0f)
+            if (transform.position.y < -1.0f || m_CarData.Health <= 0.0f)
             {
                 Death();
             }
 
             // activate smoke
-            if (m_Health < 50.0f)
+            if (m_CarData.Health < 50.0f)
             {
-                m_DamageParticles.SetActive(true);
+                m_CarData.DamageParticles.SetActive(true);
             }
             else
             {
-                m_DamageParticles.SetActive(false);
+                m_CarData.DamageParticles.SetActive(false);
             }
 
             // update health slider
             if (m_ShieldPowerUp)
             {
-                m_HealthSlider.value = m_ShieldHealth;
+                m_HeatFunction.HealthSlider.value = m_ShieldHealth;
                 if (m_ShieldHealth <= 0.0f)
                 {
                     Debug.Log("Deactivate Shield!");
-                    m_Shield.SetActive(false);
-                    m_SliderFillImage.color = Color.green;
+                    m_CarData.Shield.SetActive(false);
+                    m_HeatFunction.HealthImage.color = Color.green;
                     m_ShieldPowerUp = false;
                 }
             }
             else
-                m_HealthSlider.value = m_Health;
+                m_HeatFunction.HealthSlider.value = m_CarData.Health;
 
             // power up timer
             if (m_ReloadPowerUp)
@@ -272,6 +309,37 @@ public class CarFireControl : MonoBehaviour {
                 }
             }
 
+            if(m_GunData.gunType == FireType.Beam && m_GunData.BeamBarrel.activeInHierarchy && m_Heat < m_HeatFunction.HeatSlider.maxValue)
+            {
+                m_Heat += m_HeatFunction.BeamHeat * Time.deltaTime;
+                if(m_Heat > m_HeatFunction.HeatSlider.maxValue)
+                {
+                    ShootRelease();
+                }
+            }
+
+            // cooldown
+            if (m_Heat > 0.0f)
+            {
+                if (m_ReloadPowerUp)
+                    m_Heat -= m_HeatFunction.HeatDrain * Time.deltaTime * m_ReloadMultiplier;
+                else
+                    m_Heat -= m_HeatFunction.HeatDrain * Time.deltaTime;
+            }
+            else
+                m_Heat = 0.0f;
+
+            m_HeatFunction.HeatSlider.value = m_Heat;
+
+            if(m_Heat < (m_HeatFunction.HeatSlider.maxValue / 4) * 3)
+            {
+                m_HeatFunction.HeatImage.color = Color.yellow;
+            }
+            else
+            {
+                m_HeatFunction.HeatImage.color = Color.red;
+            }
+
             //Reloading
             if (m_ReloadTimer > 0.0f)
             {
@@ -281,16 +349,8 @@ public class CarFireControl : MonoBehaviour {
                     m_ReloadTimer -= Time.deltaTime;
             }
             else
-            {
-                if (gunType == FireType.Beam && fired)
-                {
-                    m_ReloadTimer = ReloadBeamGun;
-                    m_BeamBarrel.SetActive(false);
-                    fired = false;
-                    return;
-                }
+            {            
                 m_ReloadTimer = 0.0f;
-                fired = false;
             }
         }
         // count down respawn
@@ -317,13 +377,16 @@ public class CarFireControl : MonoBehaviour {
         Vector3 position = transform.position;
         foreach (GameObject go in gos)
         {
-            Vector3 diff = go.transform.position + position;
-            float curDistance = diff.sqrMagnitude;
-
-            if (curDistance < distance)
+            if(go.name.Substring(go.name.Length - 1, 1) == tag.Substring(tag.Length - 1, 1))
             {
-                furthest = go;
-                distance = curDistance;
+                Vector3 diff = go.transform.position + position;
+                float curDistance = diff.sqrMagnitude;
+
+                if (curDistance < distance)
+                {
+                    furthest = go;
+                    distance = curDistance;
+                }
             }
         }
 
