@@ -4,60 +4,204 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
+
 public class Menu : MonoBehaviour {
+    enum Menus {Splash, Main, OfflineLobby, Loading};
+    Menus menuUp = Menus.Splash; //Which menu is active
 
-    public GameObject p1;
-    //public GameObject p2;
-    //public GameObject p3;
-    //public GameObject p4;
+    public float timer;
 
+    //DEV
+    public Text stateText;
+
+    //Splash
+    GameObject splashTitle;
+
+    //Sound
     AudioSource soundSource;
     public AudioClip moveSelect;
     public AudioClip accept;
 
-    public Image pointer;
+    //Main Menu
+    public Button offline;
+    public Button quit;
+    public GameObject menuPanel;
 
-    public int selection = 0;
+    //Transitions
+    float transitionSpd;
+    public GameObject shutter;
+    public AudioClip shutterNoise;
+    public AudioClip shutterNoiseOpen;
 
-    private Vector3 selectionOffset = new Vector3(0f, 50f, 0f);
+    //Lobby Offline
+    public Button back;
+    public Button launch;
+    public GameObject offlineLobby;
+
+    //Loading
+    public GameObject loadingGif;
+    public Text loadText;
+    public Image loadAnim;
+    AsyncOperation loadLevel;
+    bool loading = false;
+
 
     // Use this for initialization
     void Start ()
     {
-        DontDestroyOnLoad(p1);
+        //DEV
+        stateText.text = menuUp.ToString();
+
+        //Splash
+        splashTitle = GameObject.Find("DevSplash");
+
+        //Timing
+        timer = 0f;
+
+        //Audio
         soundSource = GetComponent<AudioSource>();
+
+        //Main Menu
+        offline.onClick.AddListener(LaunchOffline);
+        quit.onClick.AddListener(QuitGame);
+
+        //Lobby
+        back.onClick.AddListener(ToMenu);
+        launch.onClick.AddListener(LaunchGame);
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-		if(Input.GetAxis("DpadVert") > 0.5f && selection == 0)
+        switch (menuUp)
         {
-            soundSource.PlayOneShot(moveSelect);
-            pointer.transform.position = pointer.transform.position - selectionOffset;
-            selection++;
-        }
+            case Menus.Splash:
+        timer += Time.deltaTime;
+                if(timer > 3f)
+                {
+                    transitionSpd = 3000f;
+                    menuUp = Menus.Main;
+                    stateText.text = menuUp.ToString();
+                    soundSource.PlayOneShot(shutterNoise);
+                }
+                break;
+            case Menus.Main:
 
-        if (Input.GetAxis("DpadVert") < -0.5f && selection == 1)
-        {
-            soundSource.PlayOneShot(moveSelect);
-            pointer.transform.position = pointer.transform.position + selectionOffset;
-            selection--;
-        }
+                if (!menuPanel.activeInHierarchy)
+                    menuPanel.SetActive(true);
 
-        if (Input.GetButtonDown("Fire1"))
-        {
-            soundSource.PlayOneShot(accept);
-            switch (selection)
-            {
-                case 0:
-                    SceneManager.LoadScene("Lobby Offline");
-                    break;
-                case 1:
-                    Application.Quit();
-                    break;
-            }
+                if (shutter.GetComponent<RectTransform>().position.y < Screen.height /1.6)
+                {
+                    transitionSpd = 0f;
+                    shutter.GetComponent<RectTransform>().localPosition = new Vector3(0f, 0f, 0f);
+                    splashTitle.SetActive(false);
+                }
+
+                shutter.GetComponent<RectTransform>().Translate((-Vector3.up * transitionSpd) * Time.deltaTime);
+
+                break;
+            case Menus.OfflineLobby:
+                if (!offlineLobby.activeInHierarchy)
+                    offlineLobby.SetActive(true);
+
+                if (shutter.GetComponent<RectTransform>().position.y > Screen.height * 2)
+                    transitionSpd = 0f;
+
+                shutter.GetComponent<RectTransform>().Translate((Vector3.up * transitionSpd) * Time.deltaTime);
+                break;
+            case Menus.Loading:
+
+                if (menuPanel.activeInHierarchy)
+                    menuPanel.SetActive(false);
+
+                if (!loadingGif.activeInHierarchy)
+                    loadingGif.SetActive(true);
+
+
+
+                if (shutter.GetComponent<RectTransform>().position.y < Screen.height / 1.6)
+                {
+
+                    transitionSpd = 0f;
+                    shutter.GetComponent<RectTransform>().localPosition = new Vector3(0f, 0f, 0f);
+                }
+
+                shutter.GetComponent<RectTransform>().Translate((-Vector3.up * transitionSpd) * Time.deltaTime);
+                
+
+
+
+                if (!loading)
+                {
+                    loadText.text = "Loading";
+                    StartCoroutine(AsynchronousLoad("Level1"));
+                }
+                break;
         }
-        
     }
+
+
+    IEnumerator AsynchronousLoad(string scene)
+    {
+        loading = true;
+        yield return null;
+
+        AsyncOperation ao = SceneManager.LoadSceneAsync(scene);
+        ao.allowSceneActivation = false;
+
+        while (!ao.isDone)
+        {
+            // [0, 0.9] > [0, 1]
+            float progress = Mathf.Clamp01(ao.progress / 0.9f);
+            Debug.Log("Loading progress: " + (progress * 100) + "%");
+
+            // Loading completed
+            if (ao.progress == 0.9f)
+            {
+                Debug.Log("Press Q key to start");
+                loadText.text = "Press Q key to start";
+                if (Input.GetKey(KeyCode.Q))
+                    ao.allowSceneActivation = true;
+            }
+
+            yield return null;
+        }
+    }
+
+
+    //Button Listeners
+    void LaunchOffline()
+    {
+        transitionSpd = 3000f;
+        soundSource.PlayOneShot(accept);
+        soundSource.PlayOneShot(shutterNoiseOpen);
+        menuUp = Menus.OfflineLobby;
+        stateText.text = menuUp.ToString();
+    }
+
+    void ToMenu()
+    {
+        transitionSpd = 3000f;
+        soundSource.PlayOneShot(accept);
+        soundSource.PlayOneShot(shutterNoise);
+        menuUp = Menus.Main;
+        stateText.text = menuUp.ToString();
+    }
+
+    void LaunchGame()
+    {
+        transitionSpd = 3000f;
+        soundSource.PlayOneShot(accept);
+        soundSource.PlayOneShot(shutterNoise);
+        menuUp = Menus.Loading;
+        stateText.text = menuUp.ToString();
+    }
+
+    void QuitGame()
+    {
+        soundSource.PlayOneShot(accept);
+        Application.Quit();
+    }
+
 }
