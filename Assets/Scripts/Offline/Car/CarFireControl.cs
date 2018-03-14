@@ -67,6 +67,10 @@ public class CarFireControl : MonoBehaviour {
 
     private float m_Heat;
 
+    private float m_DeathZoneDuration = 2.0f;
+    private float m_DeathZoneTimer;
+    private bool m_InDeathZone = false;
+
     private float volLowRange = .75f;
     private float volHighRange = 1.0f;
     Rigidbody rb;
@@ -208,8 +212,14 @@ public class CarFireControl : MonoBehaviour {
             {
                 Death();
             }
+            // start countdown to death
+            else if (other.tag == "DeathZone")
+            {
+                m_InDeathZone = true;
+                m_DeathZoneTimer = m_DeathZoneDuration;
+                Debug.Log("In Death Zone");
+            }
         }
-        
     }
 
     private void OnTriggerStay(Collider other)
@@ -268,6 +278,16 @@ public class CarFireControl : MonoBehaviour {
     {
         if(m_Alive)
         {
+            if(m_InDeathZone)
+            {
+                m_DeathZoneTimer -= Time.deltaTime;
+                if (m_DeathZoneTimer < 0.0f)
+                {
+                    m_InDeathZone = false;
+                    Death();
+                }
+            }
+
             // went off edge
             if (transform.position.y < -1.0f || m_CarData.Health <= 0.0f)
             {

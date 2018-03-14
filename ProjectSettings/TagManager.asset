@@ -13,6 +13,8 @@ TagManager:
   - Bullet
   - Hazard
   - Scenery
+  - Fire
+  - DeathZone
   layers:
   - Default
   - TransparentFX
