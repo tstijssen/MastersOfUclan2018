@@ -15,6 +15,7 @@ TagManager:
   - Scenery
   - Fire
   - DeathZone
+  - TrainScoop
   layers:
   - Default
   - TransparentFX

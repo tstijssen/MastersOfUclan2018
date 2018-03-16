@@ -8,7 +8,7 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: HexgonSphereMat
   m_Shader: {fileID: 4800000, guid: f56c26a8cea318848893b1f7c65265fa, type: 3}
-  m_ShaderKeywords: F_OFF
+  m_ShaderKeywords: F_OFF _EMISSION
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -80,6 +80,7 @@ Material:
     - _OcclusionStrength: 1
     - _Offset: 0
     - _Op: 0
+    - _Outline: 0
     - _Parallax: 0.02
     - _Range: 0.2
     - _RimPower: 51
@@ -104,6 +105,7 @@ Material:
     - _Color0: {r: 1, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _MainColor: {r: 0.1459775, g: 0.35567063, b: 0.44117647, a: 0.441}
+    - _OutlineColor: {r: 1, g: 1, b: 1, a: 1}
     - _intersectColor: {r: 1, g: 0, b: 0, a: 1}
     - _node_4016: {r: 0.034482475, g: 0, b: 1, a: 1}
     - _node_5050: {r: 0, g: 0, b: 0, a: 0}

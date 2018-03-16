@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [System.Serializable]
-public enum FireType {TwinGuns, Beam, Cannon };
+public enum FireType {TwinGuns, Beam, Cannon, Ram };
 
 [System.Serializable]
 public struct HeatFunction
@@ -16,6 +16,7 @@ public struct HeatFunction
 
     public float BeamHeat;
     public float BulletHeat;
+    public float RamHeat;
     public float HeatDrain;
 }
 
@@ -29,6 +30,7 @@ public struct GunData
     public CarPooler BulletPool;
 
     public GameObject BeamBarrel;
+    public GameObject RamCollider;
     public bool altguns;
     public bool fired;
     public float ReloadTwinGuns;
@@ -61,9 +63,9 @@ public class CarFireControl : MonoBehaviour {
     private float m_ShieldHealth;
 
     private bool m_ReloadPowerUp;
+    private float m_ReloadTimer;          // counts down to 0, tank can only shoot when not counting down
     private float m_ReloadMultiplier;     // used by powerups to speed up reloading
     private float m_ReloadPowerUpTimer;
-    private float m_ReloadTimer;       // counts down to 0, tank can only shoot when not counting down
 
     private float m_Heat;
 
@@ -127,6 +129,18 @@ public class CarFireControl : MonoBehaviour {
                     m_GunData.fired = true;
                 }
             }
+
+            // start windup
+            if(m_GunData.gunType == FireType.Ram)
+            {
+                if (m_Heat < m_HeatFunction.HeatSlider.maxValue && !m_GunData.fired)    // only shoot if not waiting for reload
+                {
+                    m_GunData.RamCollider.SetActive(true);
+                    m_GunData.fired = true;
+
+                }
+                //GetComponent<UnityStandardAssets.Vehicles.Car.CarController>().Move(0, 100.0f, 0.0f, 0.0f);
+            }
         }
     }
 
@@ -139,6 +153,13 @@ public class CarFireControl : MonoBehaviour {
             m_GunData.BeamBarrel.GetComponent<AudioSource>().Stop();
 
             m_GunData.BeamBarrel.SetActive(false);
+        }
+
+        // shoot forward
+        if (m_GunData.gunType == FireType.Ram && m_GunData.fired)
+        {
+            m_GunData.RamCollider.SetActive(false);
+            m_GunData.fired = false;
         }
     }
 
@@ -208,6 +229,10 @@ public class CarFireControl : MonoBehaviour {
 
                 }
             }
+            else if (other.tag == "TrainScoop")
+            {
+                Death();
+            }
             else if (other.tag == "Hazard")
             {
                 Death();
@@ -248,12 +273,15 @@ public class CarFireControl : MonoBehaviour {
         m_HeatFunction.HealthImage.color = Color.green;
         m_Alive = true;
         rb = GetComponent<Rigidbody>();
+        m_GunData.RamCollider.SetActive(false);
+
     }
 
     private void Death()
     {
         m_CarData.DeathCounter.text += "I ";
         m_Alive = false;
+        m_InDeathZone = false;
         m_ShieldHealth = 0.0f;
         m_CarData.Health = 0.0f;
         m_Heat = 0.0f;
@@ -283,7 +311,6 @@ public class CarFireControl : MonoBehaviour {
                 m_DeathZoneTimer -= Time.deltaTime;
                 if (m_DeathZoneTimer < 0.0f)
                 {
-                    m_InDeathZone = false;
                     Death();
                 }
             }
@@ -333,6 +360,15 @@ public class CarFireControl : MonoBehaviour {
             {
                 m_Heat += m_HeatFunction.BeamHeat * Time.deltaTime;
                 if(m_Heat > m_HeatFunction.HeatSlider.maxValue)
+                {
+                    ShootRelease();
+                }
+            }
+
+            if(m_GunData.gunType == FireType.Ram && m_GunData.RamCollider.activeInHierarchy)
+            {
+                m_Heat += m_HeatFunction.RamHeat * Time.deltaTime;
+                if (m_Heat > m_HeatFunction.HeatSlider.maxValue)
                 {
                     ShootRelease();
                 }
