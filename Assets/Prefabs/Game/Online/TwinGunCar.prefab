@@ -529,9 +529,11 @@ GameObject:
   - component: {fileID: 114859280796887486}
   - component: {fileID: 114783101217974446}
   - component: {fileID: 65940344226384470}
+  - component: {fileID: 114352132595817326}
+  - component: {fileID: 114477662295832596}
   m_Layer: 0
   m_Name: TwinGunCar
-  m_TagString: Player 1
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2747,6 +2749,59 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SkidTrailPrefab: {fileID: 4755796404044304}
   skidParticles: {fileID: 0}
+--- !u!114 &114352132595817326
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1657827691245122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 189
+    i1: 30
+    i2: 62
+    i3: 15
+    i4: 238
+    i5: 103
+    i6: 6
+    i7: 68
+    i8: 186
+    i9: 119
+    i10: 101
+    i11: 232
+    i12: 88
+    i13: 144
+    i14: 2
+    i15: 3
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 1
+--- !u!114 &114477662295832596
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1657827691245122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 3
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
 --- !u!114 &114535894125242908
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2976,6 +3031,7 @@ MonoBehaviour:
     Barrel2: {fileID: 1317758612762082}
     BulletPool: {fileID: 114783101217974446}
     BeamBarrel: {fileID: 0}
+    RamCollider: {fileID: 0}
     altguns: 0
     fired: 0
     ReloadTwinGuns: 0.1
@@ -2986,6 +3042,7 @@ MonoBehaviour:
     HeatImage: {fileID: 114977625525486874}
     BeamHeat: 100
     BulletHeat: 7.5
+    RamHeat: 0
     HeatDrain: 15
 --- !u!114 &114885974703551080
 MonoBehaviour:

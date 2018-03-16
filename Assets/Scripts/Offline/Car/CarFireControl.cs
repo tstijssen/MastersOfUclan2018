@@ -273,7 +273,8 @@ public class CarFireControl : MonoBehaviour {
         m_HeatFunction.HealthImage.color = Color.green;
         m_Alive = true;
         rb = GetComponent<Rigidbody>();
-        m_GunData.RamCollider.SetActive(false);
+        if(m_GunData.gunType == FireType.Ram)
+            m_GunData.RamCollider.SetActive(false);
 
     }
 

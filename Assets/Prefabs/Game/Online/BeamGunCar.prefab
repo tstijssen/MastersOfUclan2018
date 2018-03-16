@@ -561,10 +561,12 @@ GameObject:
   - component: {fileID: 114972518108713044}
   - component: {fileID: 114401450541156270}
   - component: {fileID: 114039457353940362}
-  - component: {fileID: 114253454769564914}
+  - component: {fileID: 114827790764170496}
+  - component: {fileID: 114718366317015040}
+  - component: {fileID: 114103111732053108}
   m_Layer: 0
   m_Name: BeamGunCar
-  m_TagString: Player 2
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2723,6 +2725,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionForce: 20
+--- !u!114 &114103111732053108
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1530111432599490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 367268284b1ca034cb392b088cef1b89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114114878621630112
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2763,17 +2776,6 @@ MonoBehaviour:
   m_Damage: 10
   startPoint: {fileID: 4910203457759304}
   endPoint: {fileID: 4198069238158680}
---- !u!114 &114253454769564914
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1530111432599490}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbd3345b677ca83448c0fabfa87097e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114314807887996194
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3079,6 +3081,27 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+--- !u!114 &114718366317015040
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1530111432599490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 3
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
 --- !u!114 &114744388223316756
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3091,6 +3114,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multiplier: 1
+--- !u!114 &114827790764170496
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1530111432599490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 189
+    i1: 119
+    i2: 235
+    i3: 182
+    i4: 122
+    i5: 233
+    i6: 72
+    i7: 84
+    i8: 89
+    i9: 231
+    i10: 215
+    i11: 195
+    i12: 50
+    i13: 191
+    i14: 177
+    i15: 222
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 1
 --- !u!114 &114841748647347596
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3198,6 +3253,7 @@ MonoBehaviour:
     Barrel2: {fileID: 0}
     BulletPool: {fileID: 0}
     BeamBarrel: {fileID: 1495037327534366}
+    RamCollider: {fileID: 0}
     altguns: 0
     fired: 0
     ReloadTwinGuns: 0
@@ -3208,6 +3264,7 @@ MonoBehaviour:
     HeatImage: {fileID: 114685452180304626}
     BeamHeat: 100
     BulletHeat: 10
+    RamHeat: 0
     HeatDrain: 15
 --- !u!114 &114999548077985712
 MonoBehaviour:
