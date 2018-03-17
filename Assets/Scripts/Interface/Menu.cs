@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-
-
 public class Menu : MonoBehaviour {
     enum Menus {Splash, Main, OfflineLobby, Loading};
     Menus menuUp = Menus.Splash; //Which menu is active
@@ -135,7 +133,13 @@ public class Menu : MonoBehaviour {
                 if (!loading)
                 {
                     loadText.text = "Loading";
-                    StartCoroutine(AsynchronousLoad("Level1"));
+                    switch (PlayerPrefs.GetInt("Level"))
+                    {
+                        case 1:
+                            StartCoroutine(AsynchronousLoad("Tilt"));
+
+                            break;
+                    }
                 }
                 break;
         }
