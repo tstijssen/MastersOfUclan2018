@@ -11,6 +11,12 @@ namespace UnityStandardAssets.Vehicles.Car
         private CarController m_Car; // the car controller we want to use
         private CarFireControl m_FireControl;
 
+        float h;
+        float v;
+
+        bool fire = false;
+        bool fireRelease = false;
+
         private void Awake()
         {
             // get the car controller
@@ -26,11 +32,24 @@ namespace UnityStandardAssets.Vehicles.Car
                 return;
             }
             // pass the input to the car!
-            float h = CrossPlatformInputManager.GetAxis("Horizontal");
-            float v = CrossPlatformInputManager.GetAxis("Vertical");
 
-            bool fire = CrossPlatformInputManager.GetButton("Fire1");
-            bool fireRelease = CrossPlatformInputManager.GetButtonUp("Fire1");
+           
+
+            if (transform.parent.name == "Player1")
+            {
+              h = CrossPlatformInputManager.GetAxis("Horizontal");
+              v = CrossPlatformInputManager.GetAxis("Vertical");
+              fire = CrossPlatformInputManager.GetButton("Fire1");
+              fireRelease = CrossPlatformInputManager.GetButtonUp("Fire1");
+            }
+
+            if (transform.parent.name == "Player2")
+            {
+                h = CrossPlatformInputManager.GetAxis("Horizontal2");
+                v = CrossPlatformInputManager.GetAxis("Vertical2");
+                fire = CrossPlatformInputManager.GetButton("FireTwo");
+                fireRelease = CrossPlatformInputManager.GetButtonUp("FireTwo");
+            }
 
             if (fire)
                 m_FireControl.Shoot();

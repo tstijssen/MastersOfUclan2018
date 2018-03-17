@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class P1LobbyController : MonoBehaviour {
 
     Sprite[] spriteArray;
-    Image carImg;
+    public Image carImg;
     public Image teamImg;
 
     public Text p1Car;
@@ -24,7 +24,7 @@ public class P1LobbyController : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        carImg = GameObject.Find("VehiclePic").GetComponent<Image>();
+        //carImg = GameObject.Find("VehiclePic").GetComponent<Image>();
         //teamImg = GameObject.Find("Team").GetComponent<Image>();
         spriteArray = GameObject.Find("OfflineLobby").GetComponent<LobbyOverlord>().spriteList;
         carImg.sprite = spriteArray[p1CarChoice];

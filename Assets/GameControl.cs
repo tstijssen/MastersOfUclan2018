@@ -5,6 +5,11 @@ using UnityEngine;
 public class GameControl : MonoBehaviour
 {
 
+    int playerNum = 0;
+
+    GameObject player1;
+    GameObject player2;
+
     public GameObject pauseMenu;
     public GameObject pausePanel;
 
@@ -13,6 +18,19 @@ public class GameControl : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        playerNum = PlayerPrefs.GetInt("NoPlayers", 2);
+
+        player1 = GameObject.Find("Player1");
+        player2 = GameObject.Find("Player2");
+
+        for(int i = 0; i < playerNum; i++)
+        {
+
+
+
+
+
+        }
 
     }
 

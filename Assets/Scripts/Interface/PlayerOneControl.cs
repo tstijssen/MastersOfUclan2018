@@ -36,21 +36,6 @@ public class PlayerOneControl : MonoBehaviour
             shootHorizontal = Input.GetAxis("RightStick X");
             shootVertical = Input.GetAxis("RightStick Y");
 
-            dPadHor = Input.GetAxis("DpadHor");
-            dPadVert = Input.GetAxis("DpadVert");
         }
-        // keyboard controls
-        else
-        {
-            moveVertical = Input.GetAxis("VerticalKeyB");
-            turning = Input.GetAxis("HorizontalKeyB");
-            shootHorizontal = Input.GetAxis("TurretHorizontalKeyB");
-            shootVertical = Input.GetAxis("TurretVerticalKeyB");
-
-            dPadHor = Input.GetAxis("TurretHorizontalKeyB");
-            dPadVert = Input.GetAxis("TurretVerticalKeyB");
-            fire = "FireKeyB";
-        }
-
     }
 }
