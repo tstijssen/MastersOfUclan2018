@@ -2837,7 +2837,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11475086, guid: c0978251ff7b10d4fb954a4b56acd9f0, type: 2}
       propertyPath: m_SpawnPrefabs.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22459552, guid: c0978251ff7b10d4fb954a4b56acd9f0, type: 2}
       propertyPath: m_LocalPosition.x
@@ -3003,7 +3003,7 @@ Prefab:
     - target: {fileID: 11475086, guid: c0978251ff7b10d4fb954a4b56acd9f0, type: 2}
       propertyPath: m_GamePlayerPrefab
       value: 
-      objectReference: {fileID: 1121650045372984, guid: 2a7d3cdc2b0b7bf48b103c5e331e8bc6,
+      objectReference: {fileID: 1381665972579900, guid: 3606eb4db5f51284a98a3dfc406a1299,
         type: 2}
     - target: {fileID: 11475086, guid: c0978251ff7b10d4fb954a4b56acd9f0, type: 2}
       propertyPath: m_PlayerSpawnMethod
@@ -3932,6 +3932,11 @@ Prefab:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11475086, guid: c0978251ff7b10d4fb954a4b56acd9f0, type: 2}
+      propertyPath: m_SpawnPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 1381665972579900, guid: 3606eb4db5f51284a98a3dfc406a1299,
+        type: 2}
     m_RemovedComponents:
     - {fileID: 11460916, guid: c0978251ff7b10d4fb954a4b56acd9f0, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: c0978251ff7b10d4fb954a4b56acd9f0, type: 2}

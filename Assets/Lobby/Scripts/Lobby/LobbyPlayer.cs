@@ -199,7 +199,7 @@ namespace Prototype.NetworkLobby
 
         public void OnPlayerListChanged(int idx)
         { 
-            GetComponent<Image>().color = (idx % 2 == 0) ? EvenRowColor : OddRowColor;
+            //GetComponent<Image>().color = (idx % 2 == 0) ? EvenRowColor : OddRowColor;
         }
 
         ///===== callback from sync var
@@ -329,7 +329,7 @@ namespace Prototype.NetworkLobby
         [Command]
         public void CmdVehicleLeft()
         {
-            GetComponent<P1LobbyController>().DecCar();
+            GetComponent<VisualLobbyController>().DecCar();
             playerVehicle = (playerVehicle + 1) % 4;
 
             Debug.Log("Selected vehicle = " + playerVehicle);
@@ -339,7 +339,7 @@ namespace Prototype.NetworkLobby
         [Command]
         public void CmdVehicleRight()
         {
-            GetComponent<P1LobbyController>().IncCar();
+            GetComponent<VisualLobbyController>().IncCar();
             playerVehicle = (playerVehicle + 1) % 4;
             Debug.Log("Selected vehicle = " + playerVehicle);
 
