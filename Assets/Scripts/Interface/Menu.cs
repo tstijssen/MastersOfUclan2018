@@ -98,11 +98,22 @@ public class Menu : MonoBehaviour {
                 if (!menuPanel.activeInHierarchy)
                     menuPanel.SetActive(true);
 
+                
+
+
                 if (shutter.GetComponent<RectTransform>().position.y < Screen.height /1.6)
                 {
                     transitionSpd = 0f;
-                    splashTitle.SetActive(false);
                     shutter.GetComponent<RectTransform>().localPosition = new Vector3(0f, 0f, 0f);
+
+                    if(splashTitle.activeInHierarchy)
+                        splashTitle.SetActive(false);
+
+                    if (offlineLobby.activeInHierarchy)
+                        offlineLobby.SetActive(false);
+
+                    if (onlineLobby.activeInHierarchy)
+                        onlineLobby.SetActive(false);
 
                 }
 

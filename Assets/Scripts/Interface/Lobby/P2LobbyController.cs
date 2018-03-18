@@ -71,9 +71,7 @@ public class P2LobbyController : MonoBehaviour {
                 p2Team.text = "Green";
                 teamImg.color = Color.green;
                 break;
-        }
-
-        
+        }    
 
         PlayerPrefs.SetInt("P2Car", p2CarChoice);
         PlayerPrefs.SetInt("P2Team", p2TeamChoice);

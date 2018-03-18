@@ -26,6 +26,10 @@ public class GameController : MonoBehaviour
     public GameObject EndMenu;
     public Text endText;
     public GameObject InGameMenu;
+    public Button resume;
+    public Button restart;
+    public Button quitToLobby;
+
 
     public bool paused = false;
     public bool AxisInUse = false;
@@ -34,6 +38,11 @@ public class GameController : MonoBehaviour
     void Start ()
     {
         //Activate and place Players
+
+        resume.onClick.AddListener(ResumeGame);
+        restart.onClick.AddListener(RestartGame);
+        quitToLobby.onClick.AddListener(LoadLobby);
+
 
         if(PlayerPrefs.GetInt("P2In") == 1)
         {
@@ -94,10 +103,43 @@ public class GameController : MonoBehaviour
 	void Update ()
     {
 
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            paused = !paused;
+           
+        }
 
-   
+
+        if (paused)
+        {
+            InGameMenu.SetActive(true);
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            InGameMenu.SetActive(false);
+            Time.timeScale = 1f;
+        }
 
 
     }
+
+
+    void ResumeGame()
+    {
+        paused = !paused;
+    }
+
+    void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
+    }
+
+    void LoadLobby()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
+
 }
 
