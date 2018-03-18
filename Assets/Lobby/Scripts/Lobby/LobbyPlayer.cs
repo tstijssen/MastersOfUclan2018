@@ -11,13 +11,16 @@ namespace Prototype.NetworkLobby
     //Any LobbyHook can then grab it and pass those value to the game player prefab (see the Pong Example in the Samples Scenes)
     public class LobbyPlayer : NetworkLobbyPlayer
     {
-        static Color[] Colors = new Color[] { Color.magenta, Color.red, Color.cyan, Color.blue, Color.green, Color.yellow };
+        static Color[] Colors = new Color[] { Color.red, Color.blue, Color.green, Color.yellow };
         //used on server to avoid assigning the same color to two player
         static List<int> _colorInUse = new List<int>();
 
-        public Button colorButton;
-        public Button carSelect;
-        public InputField nameInput;
+        //public Button colorButton;
+        public Image colorImage;
+        public Button carLeftSelect;
+        public Button carRightSelect;
+
+        //public InputField nameInput;
         public Button readyButton;
         public Button waitingPlayerButton;
         public Button removePlayerButton;
@@ -26,8 +29,8 @@ namespace Prototype.NetworkLobby
         public GameObject remoteIcone;
 
         //OnMyName function will be invoked on clients when server change the value of playerName
-        [SyncVar(hook = "OnMyName")]
-        public string playerName = "";
+        //[SyncVar(hook = "OnMyName")]
+        //public string playerName = "";
         [SyncVar(hook = "OnMyColor")]
         public Color playerColor = Color.white;
         [SyncVar(hook = "OnMyVehicle")]
@@ -65,7 +68,7 @@ namespace Prototype.NetworkLobby
 
             //setup the player data on UI. The value are SyncVar so the player
             //will be created with the right value currently on server
-            OnMyName(playerName);
+            //OnMyName(playerName);
             OnMyColor(playerColor);
             OnMyVehicle(playerVehicle);
         }
@@ -92,8 +95,9 @@ namespace Prototype.NetworkLobby
 
         void SetupOtherPlayer()
         {
-            nameInput.interactable = false;
-            carSelect.interactable = false;
+            //nameInput.interactable = false;
+            carLeftSelect.interactable = false;
+            carRightSelect.interactable = false;
 
             removePlayerButton.interactable = NetworkServer.active;
 
@@ -107,8 +111,9 @@ namespace Prototype.NetworkLobby
 
         void SetupLocalPlayer()
         {
-            nameInput.interactable = true;
-            carSelect.interactable = true;
+            carLeftSelect.interactable = true;
+            carRightSelect.interactable = true;
+
             remoteIcone.gameObject.SetActive(false);
             localIcone.gameObject.SetActive(true);
 
@@ -123,25 +128,26 @@ namespace Prototype.NetworkLobby
             readyButton.interactable = true;
 
             //have to use child count of player prefab already setup as "this.slot" is not set yet
-            if (playerName == "")
-                CmdNameChanged("Player" + (LobbyPlayerList._instance.playerListContentTransform.childCount-1));
+            //if (playerName == "")
+            //    CmdNameChanged("Player" + (LobbyPlayerList._instance.playerListContentTransform.childCount-1));
 
             //we switch from simple name display to name input
-            colorButton.interactable = true;
-            nameInput.interactable = true;
+            //colorButton.interactable = true;
+            //nameInput.interactable = true;
 
-            nameInput.onEndEdit.RemoveAllListeners();
-            nameInput.onEndEdit.AddListener(OnNameChanged);
+            //nameInput.onEndEdit.RemoveAllListeners();
+            //nameInput.onEndEdit.AddListener(OnNameChanged);
 
-            colorButton.onClick.RemoveAllListeners();
-            colorButton.onClick.AddListener(OnColorClicked);
+            //colorButton.onClick.RemoveAllListeners();
+            //colorButton.onClick.AddListener(OnColorClicked);
 
             readyButton.onClick.RemoveAllListeners();
             readyButton.onClick.AddListener(OnReadyClicked);
 
-            carSelect.onClick.RemoveAllListeners();
-            carSelect.onClick.AddListener(OnVehicleClicked);
-
+            carLeftSelect.onClick.RemoveAllListeners();
+            carLeftSelect.onClick.AddListener(OnVehicleClicked);
+            carRightSelect.onClick.RemoveAllListeners();
+            carRightSelect.onClick.AddListener(OnVehicleClicked);
 
             //when OnClientEnterLobby is called, the loval PlayerController is not yet created, so we need to redo that here to disable
             //the add button if we reach maxLocalPlayer. We pass 0, as it was already counted on OnClientEnterLobby
@@ -171,8 +177,10 @@ namespace Prototype.NetworkLobby
                 textComponent.text = "READY";
                 textComponent.color = ReadyColor;
                 readyButton.interactable = false;
-                colorButton.interactable = false;
-                nameInput.interactable = false;
+                //colorButton.interactable = false;
+                //nameInput.interactable = false;
+                carLeftSelect.interactable = false;
+                carRightSelect.interactable = false;
             }
             else
             {
@@ -182,8 +190,10 @@ namespace Prototype.NetworkLobby
                 textComponent.text = isLocalPlayer ? "JOIN" : "...";
                 textComponent.color = Color.white;
                 readyButton.interactable = isLocalPlayer;
-                colorButton.interactable = isLocalPlayer;
-                nameInput.interactable = isLocalPlayer;
+                //colorButton.interactable = isLocalPlayer;
+                //nameInput.interactable = isLocalPlayer;
+                carLeftSelect.interactable = isLocalPlayer;
+                carRightSelect.interactable = isLocalPlayer;
             }
         }
 
@@ -194,22 +204,22 @@ namespace Prototype.NetworkLobby
 
         ///===== callback from sync var
 
-        public void OnMyName(string newName)
-        {
-            playerName = newName;
-            nameInput.text = playerName;
-        }
+        //public void OnMyName(string newName)
+        //{
+        //    playerName = newName;
+        //    nameInput.text = playerName;
+        //}
 
         public void OnMyColor(Color newColor)
         {
             playerColor = newColor;
-            colorButton.GetComponent<Image>().color = newColor;
+            colorImage.color = newColor;
         }
 
         public void OnMyVehicle(int newSelection)
         {
             playerVehicle = newSelection;
-            carSelect.GetComponent<LobbyCarSelect>().SetVisual(playerVehicle);
+            //carSelect.GetComponent<LobbyCarSelect>().SetVisual(playerVehicle);
            // carSelect.SetVisual(newSelection);
         }
 
@@ -233,10 +243,10 @@ namespace Prototype.NetworkLobby
             SendReadyToBeginMessage();
         }
 
-        public void OnNameChanged(string str)
-        {
-            CmdNameChanged(str);
-        }
+        //public void OnNameChanged(string str)
+        //{
+        //    CmdNameChanged(str);
+        //}
 
         public void OnRemovePlayerClick()
         {
@@ -308,17 +318,17 @@ namespace Prototype.NetworkLobby
             playerColor = Colors[idx];
         }
 
-        [Command]
-        public void CmdNameChanged(string name)
-        {
-            playerName = name;
-        }
+        //[Command]
+        //public void CmdNameChanged(string name)
+        //{
+        //    playerName = name;
+        //}
 
         [Command]
         public void CmdVehicleChanged()
         {
-            playerVehicle = carSelect.GetComponent<LobbyCarSelect>().currentVisual;
-            carSelect.GetComponent<LobbyCarSelect>().SetVisual(playerVehicle);
+            //playerVehicle = carSelect.GetComponent<LobbyCarSelect>().currentVisual;
+            //carSelect.GetComponent<LobbyCarSelect>().SetVisual(playerVehicle);
             Debug.Log("Selected vehicle = " + playerVehicle);
         }
 

@@ -11,7 +11,7 @@ public class NetworkLobbyHook : LobbyHook {
         LobbyPlayer lobbyProfile = lobbyPlayer.GetComponent<LobbyPlayer>();
         PlayerSetup localPlayer = gamePlayer.GetComponent<PlayerSetup>();
 
-        localPlayer.playerName = lobbyProfile.playerName;
+        //localPlayer.playerName = lobbyProfile.playerName;
         localPlayer.playerColor = lobbyProfile.playerColor;
         localPlayer.playerCarSelection = lobbyProfile.playerVehicle;
         Debug.Log(localPlayer.playerName + " car = " + localPlayer.playerCarSelection);
