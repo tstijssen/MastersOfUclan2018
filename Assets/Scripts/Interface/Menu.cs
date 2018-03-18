@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Menu : MonoBehaviour {
-    enum Menus {Splash, Main, OfflineLobby, Loading};
+    enum Menus {Splash, Main, OfflineLobby, OnlineLobby, Loading};
     Menus menuUp = Menus.Splash; //Which menu is active
 
     public float timer;
@@ -23,6 +23,7 @@ public class Menu : MonoBehaviour {
 
     //Main Menu
     public Button offline;
+    public Button online;
     public Button quit;
     public GameObject menuPanel;
 
@@ -36,6 +37,10 @@ public class Menu : MonoBehaviour {
     public Button back;
     public Button launch;
     public GameObject offlineLobby;
+
+    //Lobby Online
+    public Button onlineBack;
+    public GameObject onlineLobby;
 
     //Loading
     public GameObject loadingGif;
@@ -62,11 +67,15 @@ public class Menu : MonoBehaviour {
 
         //Main Menu
         offline.onClick.AddListener(LaunchOffline);
+        online.onClick.AddListener(LaunchOnline);
         quit.onClick.AddListener(QuitGame);
 
         //Lobby
         back.onClick.AddListener(ToMenu);
         launch.onClick.AddListener(LaunchGame);
+
+        onlineBack.onClick.AddListener(ToMenu);
+
 	}
 	
 	// Update is called once per frame
@@ -103,6 +112,15 @@ public class Menu : MonoBehaviour {
             case Menus.OfflineLobby:
                 if (!offlineLobby.activeInHierarchy)
                     offlineLobby.SetActive(true);
+
+                if (shutter.GetComponent<RectTransform>().position.y > Screen.height * 2)
+                    transitionSpd = 0f;
+
+                shutter.GetComponent<RectTransform>().Translate((Vector3.up * transitionSpd) * Time.deltaTime);
+                break;
+            case Menus.OnlineLobby:
+                if (!onlineLobby.activeInHierarchy)
+                    onlineLobby.SetActive(true);
 
                 if (shutter.GetComponent<RectTransform>().position.y > Screen.height * 2)
                     transitionSpd = 0f;
@@ -186,6 +204,15 @@ public class Menu : MonoBehaviour {
         soundSource.PlayOneShot(accept);
         soundSource.PlayOneShot(shutterNoiseOpen);
         menuUp = Menus.OfflineLobby;
+        stateText.text = menuUp.ToString();
+    }
+
+    void LaunchOnline()
+    {
+        transitionSpd = 3000f;
+        soundSource.PlayOneShot(accept);
+        soundSource.PlayOneShot(shutterNoiseOpen);
+        menuUp = Menus.OnlineLobby;
         stateText.text = menuUp.ToString();
     }
 

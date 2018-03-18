@@ -145,9 +145,9 @@ namespace Prototype.NetworkLobby
             readyButton.onClick.AddListener(OnReadyClicked);
 
             carLeftSelect.onClick.RemoveAllListeners();
-            carLeftSelect.onClick.AddListener(OnVehicleClicked);
+            carLeftSelect.onClick.AddListener(OnVehicleLeft);
             carRightSelect.onClick.RemoveAllListeners();
-            carRightSelect.onClick.AddListener(OnVehicleClicked);
+            carRightSelect.onClick.AddListener(OnVehicleRight);
 
             //when OnClientEnterLobby is called, the loval PlayerController is not yet created, so we need to redo that here to disable
             //the add button if we reach maxLocalPlayer. We pass 0, as it was already counted on OnClientEnterLobby
@@ -219,8 +219,6 @@ namespace Prototype.NetworkLobby
         public void OnMyVehicle(int newSelection)
         {
             playerVehicle = newSelection;
-            //carSelect.GetComponent<LobbyCarSelect>().SetVisual(playerVehicle);
-           // carSelect.SetVisual(newSelection);
         }
 
         //===== UI Handler
@@ -232,11 +230,15 @@ namespace Prototype.NetworkLobby
             CmdColorChange();
         }
 
-        public void OnVehicleClicked()
+        public void OnVehicleLeft()
         {
-            CmdVehicleChanged();
+            CmdVehicleLeft();
         }
 
+        public void OnVehicleRight()
+        {
+            CmdVehicleRight();
+        }
 
         public void OnReadyClicked()
         {
@@ -325,11 +327,22 @@ namespace Prototype.NetworkLobby
         //}
 
         [Command]
-        public void CmdVehicleChanged()
+        public void CmdVehicleLeft()
         {
-            //playerVehicle = carSelect.GetComponent<LobbyCarSelect>().currentVisual;
-            //carSelect.GetComponent<LobbyCarSelect>().SetVisual(playerVehicle);
+            GetComponent<P1LobbyController>().DecCar();
+            playerVehicle = (playerVehicle + 1) % 4;
+
             Debug.Log("Selected vehicle = " + playerVehicle);
+
+        }
+
+        [Command]
+        public void CmdVehicleRight()
+        {
+            GetComponent<P1LobbyController>().IncCar();
+            playerVehicle = (playerVehicle + 1) % 4;
+            Debug.Log("Selected vehicle = " + playerVehicle);
+
         }
 
         //Cleanup thing when get destroy (which happen when client kick or disconnect)

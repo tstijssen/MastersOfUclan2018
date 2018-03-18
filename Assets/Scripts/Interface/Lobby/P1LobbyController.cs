@@ -81,7 +81,7 @@ public class P1LobbyController : MonoBehaviour {
 
 
 
-    void IncCar()
+    public void IncCar()
     {
         p1CarChoice++;
         if (p1CarChoice > 3)
@@ -90,7 +90,7 @@ public class P1LobbyController : MonoBehaviour {
         carImg.sprite = spriteArray[p1CarChoice];
     }
 
-    void DecCar()
+    public void DecCar()
     {
         p1CarChoice--;
         if (p1CarChoice < 0)
