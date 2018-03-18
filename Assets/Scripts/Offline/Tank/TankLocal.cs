@@ -275,7 +275,7 @@ public class TankLocal : MonoBehaviour {
                 }
             }
 
-            control.UpdateText();
+
             m_Vehicle.transform.position = FindFurthestTarget("Respawn").transform.position;
             transform.rotation = Quaternion.identity;
         }

@@ -75,7 +75,7 @@ public class Menu : MonoBehaviour {
         switch (menuUp)
         {
             case Menus.Splash:
-        timer += Time.deltaTime;
+                timer += Time.deltaTime;
                 if(timer > 3f)
                 {
                     transitionSpd = 3000f;
@@ -92,8 +92,9 @@ public class Menu : MonoBehaviour {
                 if (shutter.GetComponent<RectTransform>().position.y < Screen.height /1.6)
                 {
                     transitionSpd = 0f;
-                    shutter.GetComponent<RectTransform>().localPosition = new Vector3(0f, 0f, 0f);
                     splashTitle.SetActive(false);
+                    shutter.GetComponent<RectTransform>().localPosition = new Vector3(0f, 0f, 0f);
+
                 }
 
                 shutter.GetComponent<RectTransform>().Translate((-Vector3.up * transitionSpd) * Time.deltaTime);
@@ -135,6 +136,10 @@ public class Menu : MonoBehaviour {
                     loadText.text = "Loading";
                     switch (PlayerPrefs.GetInt("Level"))
                     {
+                        case 0:
+                            StartCoroutine(AsynchronousLoad("Arena"));
+
+                            break;
                         case 1:
                             StartCoroutine(AsynchronousLoad("Tilt"));
 
