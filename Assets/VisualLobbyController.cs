@@ -10,95 +10,95 @@ public class VisualLobbyController : NetworkBehaviour {
     public Image carImg;
     public Image teamImg;
 
-    public Text p1Car;
-    public Text p1Team;
+    public Text pCar;
+    public Text pTeam;
 
     [SyncVar]
-    int p1CarChoice = 0;
+    public int pCarChoice = 0;
     [SyncVar]
-    int p1TeamChoice = 0;
+    public int pTeamChoice = 0;
 
 
     // Use this for initialization
     void Start()
     {
         spriteArray = GameObject.Find("OfflineLobby").GetComponent<LobbyOverlord>().spriteList;
-        carImg.sprite = spriteArray[p1CarChoice];
+        carImg.sprite = spriteArray[pCarChoice];
     }
 
     // Update is called once per frame
     void Update()
     {
-        switch (p1CarChoice)
+        switch (pCarChoice)
         {
             case 0:
-                p1Car.text = "Gun Car";
+                pCar.text = "Gun Car";
                 break;
             case 1:
-                p1Car.text = "Train";
+                pCar.text = "Train";
                 break;
             case 2:
-                p1Car.text = "Boat";
+                pCar.text = "Boat";
                 break;
             case 3:
-                p1Car.text = "Future Car";
+                pCar.text = "Future Car";
                 break;
         }
-        carImg.sprite = spriteArray[p1CarChoice];
+        carImg.sprite = spriteArray[pCarChoice];
 
-        switch (p1TeamChoice)
+        switch (pTeamChoice)
         {
-            case 0:
-                p1Team.text = "Red";
-                teamImg.color = Color.red;
-                break;
-            case 1:
-                p1Team.text = "Blue";
-                teamImg.color = Color.blue;
-                break;
-            case 2:
-                p1Team.text = "Yellow";
-                teamImg.color = Color.yellow;
-                break;
-            case 3:
-                p1Team.text = "Green";
-                teamImg.color = Color.green;
-                break;
+            //case 0:
+            //    pTeam.text = "Red";
+            //    teamImg.color = Color.red;
+            //    break;
+            //case 1:
+            //    pTeam.text = "Blue";
+            //    teamImg.color = Color.blue;
+            //    break;
+            //case 2:
+            //    pTeam.text = "Yellow";
+            //    teamImg.color = Color.yellow;
+            //    break;
+            //case 3:
+            //    pTeam.text = "Green";
+            //    teamImg.color = Color.green;
+            //    break;
         }
 
 
 
-        //PlayerPrefs.SetInt("P1Car", p1CarChoice);
-        //PlayerPrefs.SetInt("P1Team", p1TeamChoice);
+        //PlayerPrefs.SetInt("pCar", pCarChoice);
+        //PlayerPrefs.SetInt("pTeam", pTeamChoice);
     }
 
 
 
     public void IncCar()
     {
-        p1CarChoice++;
-        if (p1CarChoice > 3)
-            p1CarChoice = 0;
+        pCarChoice++;
+        if (pCarChoice > 3)
+            pCarChoice = 0;
     }
 
     public void DecCar()
     {
-        p1CarChoice--;
-        if (p1CarChoice < 0)
-            p1CarChoice = 3;
+        pCarChoice--;
+        if (pCarChoice < 0)
+            pCarChoice = 3;
     }
 
     void IncTeam()
     {
-        p1TeamChoice++;
-        if (p1TeamChoice > 3)
-            p1TeamChoice = 0;
+        pTeamChoice++;
+        if (pTeamChoice > 3)
+            pTeamChoice = 0;
     }
 
     void DecTeam()
     {
-        p1TeamChoice--;
-        if (p1TeamChoice < 0)
-            p1TeamChoice = 3;
+        pTeamChoice--;
+        if (pTeamChoice < 0)
+            pTeamChoice = 3;
     }
 }

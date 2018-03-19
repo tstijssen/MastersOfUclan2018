@@ -936,8 +936,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   carImg: {fileID: 114747988856649874}
   teamImg: {fileID: 114801521999740024}
-  p1Car: {fileID: 114339888750972520}
-  p1Team: {fileID: 114511201395626516}
+  pCar: {fileID: 114339888750972520}
+  pTeam: {fileID: 114511201395626516}
+  pCarChoice: 0
+  pTeamChoice: 0
 --- !u!114 &114489477774486550
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -330,8 +330,7 @@ namespace Prototype.NetworkLobby
         public void CmdVehicleLeft()
         {
             GetComponent<VisualLobbyController>().DecCar();
-            playerVehicle = (playerVehicle + 1) % 4;
-
+            playerVehicle = GetComponent<VisualLobbyController>().pCarChoice;
             Debug.Log("Selected vehicle = " + playerVehicle);
 
         }
@@ -340,7 +339,7 @@ namespace Prototype.NetworkLobby
         public void CmdVehicleRight()
         {
             GetComponent<VisualLobbyController>().IncCar();
-            playerVehicle = (playerVehicle + 1) % 4;
+            playerVehicle = GetComponent<VisualLobbyController>().pCarChoice;
             Debug.Log("Selected vehicle = " + playerVehicle);
 
         }
