@@ -85,7 +85,7 @@ public class Menu : MonoBehaviour {
         {
             case Menus.Splash:
                 timer += Time.deltaTime;
-                if(timer > 3f)
+                if(timer > 1f)
                 {
                     transitionSpd = 3000f;
                     menuUp = Menus.Main;
