@@ -9,7 +9,7 @@ namespace UnityStandardAssets.Vehicles.Car
     public class OnlineUserControl : NetworkBehaviour
     {
         private CarController m_Car; // the car controller we want to use
-        private CarFireControl m_FireControl;
+        private OnlineFireControl m_FireControl;
 
         float h;
         float v;
@@ -21,7 +21,7 @@ namespace UnityStandardAssets.Vehicles.Car
         {
             // get the car controller
             m_Car = GetComponent<CarController>();
-            m_FireControl = GetComponentInChildren<CarFireControl>();
+            m_FireControl = GetComponent<OnlineFireControl>();
         }
 
 
@@ -33,34 +33,23 @@ namespace UnityStandardAssets.Vehicles.Car
                 return;
             }
 
-            if(!m_FireControl)
-                m_FireControl = GetComponentInChildren<CarFireControl>();
-
             h = CrossPlatformInputManager.GetAxis("Horizontal");
             v = CrossPlatformInputManager.GetAxis("Vertical");
             fire = CrossPlatformInputManager.GetButton("Fire1");
             fireRelease = CrossPlatformInputManager.GetButtonUp("Fire1");
 
             if (fire)
-                CmdShoot();
+                m_FireControl.CmdShoot();
+
             if (fireRelease)
-                CmdShootRelease();
+                m_FireControl.CmdShootRelease();
+
 #if !MOBILE_INPUT
             float handbrake = CrossPlatformInputManager.GetAxis("Jump");
             m_Car.Move(h, v, v, handbrake);
 #else
             m_Car.Move(h, v, v, 0f);
 #endif
-        }
-        [Command]
-        void CmdShoot()
-        {
-            NetworkServer.Spawn(m_FireControl.Shoot());
-        }
-
-        void CmdShootRelease()
-        {
-            m_FireControl.ShootRelease();
         }
     }
 }

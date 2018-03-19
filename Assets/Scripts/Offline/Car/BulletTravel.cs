@@ -45,7 +45,7 @@ public class BulletTravel : MonoBehaviour {
     private void OnTriggerExit(Collider other)
     {
         // exited player's collision space, bullet now active
-        if(!m_Active && (other.tag == "Player 1" || other.tag == "Player 2"))
+        if(!m_Active && (other.tag == "Player" || other.tag == "Player 1" || other.tag == "Player 2"))
         {
             Debug.Log("BulletActive");
             m_Active = true;

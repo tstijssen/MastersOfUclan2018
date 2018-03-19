@@ -9,11 +9,20 @@ public class OnlineFireControl : NetworkBehaviour {
     public CarData m_CarData;
     public GunData m_GunData;
     public HeatFunction m_HeatFunction;
+    public GameObject m_BulletPrefab;
 
     private float m_SpawnTimer;
     private bool m_Alive;
 
     private bool m_ShieldPowerUp;
+
+    [SyncVar]
+    private float m_HP;
+
+    [SyncVar]
+    private bool m_Fired;
+
+    [SyncVar]
     private float m_ShieldHealth;
 
     private bool m_ReloadPowerUp;
@@ -21,6 +30,7 @@ public class OnlineFireControl : NetworkBehaviour {
     private float m_ReloadMultiplier;     // used by powerups to speed up reloading
     private float m_ReloadPowerUpTimer;
 
+    [SyncVar]
     private float m_Heat;
 
     private float m_DeathZoneDuration = 2.0f;
@@ -39,7 +49,7 @@ public class OnlineFireControl : NetworkBehaviour {
         {
             if (m_GunData.gunType == FireType.TwinGuns)
             {
-                GameObject bullet = m_GunData.BulletPool.GetPooledObject();  // get bullet object from pool
+                GameObject bullet = (GameObject)Instantiate(m_BulletPrefab);  // get bullet object from pool
                 if (bullet != null) // check if object pool returned a bullet
                 {
                     if (m_ReloadTimer <= 0.0f && m_Heat < m_HeatFunction.HeatSlider.maxValue)    // only shoot if not waiting for reload
@@ -68,6 +78,7 @@ public class OnlineFireControl : NetworkBehaviour {
 
                         // server spawns bullet on all clients (NOTE: convert this to work with the object pool, NetworkServer.Spawn instantiates)
                         NetworkServer.Spawn(bullet);
+                        Destroy(bullet, 3.0f);
 
                         m_Heat += m_HeatFunction.BulletHeat;
                     }
@@ -76,25 +87,21 @@ public class OnlineFireControl : NetworkBehaviour {
             // solid beam from front of vehicle
             if (m_GunData.gunType == FireType.Beam)
             {
-                if (m_Heat < m_HeatFunction.HeatSlider.maxValue && !m_GunData.fired)    // only shoot if not waiting for reload
+                if (m_Heat < m_HeatFunction.HeatSlider.maxValue && !m_Fired)    // only shoot if not waiting for reload
                 {
                     Debug.Log("Shooting");
-                    m_GunData.BeamBarrel.SetActive(true);
-                    if(!m_GunData.BeamBarrel.GetComponent<AudioSource>().isPlaying)
-                    {
-                        m_GunData.BeamBarrel.GetComponent<AudioSource>().Play();
-                    }
-                    m_GunData.fired = true;
+
+                    m_Fired = true;
                 }
             }
 
             // start windup
             if(m_GunData.gunType == FireType.Ram)
             {
-                if (m_Heat < m_HeatFunction.HeatSlider.maxValue && !m_GunData.fired)    // only shoot if not waiting for reload
+                if (m_Heat < m_HeatFunction.HeatSlider.maxValue && !m_Fired)    // only shoot if not waiting for reload
                 {
                     m_GunData.RamCollider.SetActive(true);
-                    m_GunData.fired = true;
+                    m_Fired = true;
 
                 }
                 //GetComponent<UnityStandardAssets.Vehicles.Car.CarController>().Move(0, 100.0f, 0.0f, 0.0f);
@@ -105,20 +112,20 @@ public class OnlineFireControl : NetworkBehaviour {
     [Command]
     public void CmdShootRelease()
     {
-        if(m_GunData.gunType == FireType.Beam && m_GunData.fired)
+        if(m_GunData.gunType == FireType.Beam && m_Fired)
         {
             if(m_Heat < (m_HeatFunction.HeatSlider.maxValue / 4) * 3)
-                m_GunData.fired = false;
+                m_Fired = false;
             m_GunData.BeamBarrel.GetComponent<AudioSource>().Stop();
 
             m_GunData.BeamBarrel.SetActive(false);
         }
 
         // shoot forward
-        if (m_GunData.gunType == FireType.Ram && m_GunData.fired)
+        if (m_GunData.gunType == FireType.Ram && m_Fired)
         {
             m_GunData.RamCollider.SetActive(false);
-            m_GunData.fired = false;
+            m_Fired = false;
         }
     }
 
@@ -134,12 +141,12 @@ public class OnlineFireControl : NetworkBehaviour {
                 switch (pickup.Type)
                 {
                     case PickupType.Health:
-                        if(m_CarData.Health < 100.0f)
+                        if(m_HP < 100.0f)
                         {
-                            if (m_CarData.Health + pickup.Value > 100.0f)
-                                m_CarData.Health = 100.0f;
+                            if (m_HP + pickup.Value > 100.0f)
+                                m_HP = 100.0f;
                             else
-                                m_CarData.Health += pickup.Value;
+                                m_HP += pickup.Value;
                         }
                         Debug.Log("HP picked up!");
 
@@ -181,7 +188,7 @@ public class OnlineFireControl : NetworkBehaviour {
                     }
                     else
                     {
-                        m_CarData.Health -= other.GetComponent<BulletTravel>().m_Damage;
+                        m_HP -= other.GetComponent<BulletTravel>().m_Damage;
                     }
                     Debug.Log("bullethit");
                     other.GetComponent<BulletTravel>().ResetBullet();
@@ -206,6 +213,15 @@ public class OnlineFireControl : NetworkBehaviour {
         }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "DeathZone")
+        {
+            m_InDeathZone = false;
+            Debug.Log("Exiting Death Zone");
+        }
+    }
+
     private void OnTriggerStay(Collider other)
     {
         if(m_Alive)
@@ -218,7 +234,7 @@ public class OnlineFireControl : NetworkBehaviour {
                 }
                 else
                 {
-                    m_CarData.Health -= (other.GetComponent<laserScript>().m_Damage * Time.deltaTime);
+                    m_HP -= (other.GetComponent<laserScript>().m_Damage * Time.deltaTime);
                 }
             }
         }
@@ -231,6 +247,7 @@ public class OnlineFireControl : NetworkBehaviour {
         m_GunData.BulletPool = GetComponent<CarPooler>();
         m_HeatFunction.HealthImage.color = Color.green;
         m_Alive = true;
+        m_HP = m_CarData.Health;
         rb = GetComponent<Rigidbody>();
         if(m_GunData.gunType == FireType.Ram)
             m_GunData.RamCollider.SetActive(false);
@@ -239,11 +256,11 @@ public class OnlineFireControl : NetworkBehaviour {
 
     private void Death()
     {
-        m_CarData.DeathCounter.text += "I ";
+        //m_CarData.DeathCounter.text += "I ";
         m_Alive = false;
         m_InDeathZone = false;
         m_ShieldHealth = 0.0f;
-        m_CarData.Health = 0.0f;
+        m_HP = 0.0f;
         m_Heat = 0.0f;
         m_ReloadPowerUpTimer = 0.0f;
         m_SpawnTimer = m_CarData.RespawnDuration;
@@ -253,7 +270,7 @@ public class OnlineFireControl : NetworkBehaviour {
     private void Respawn()
     {
         m_Alive = true;
-        m_CarData.Health = 100.0f;
+        m_HP = 100.0f;
         m_CarData.DeathParticles.SetActive(false);
         Transform respawnTarget = FindFurthestTarget("Respawn").transform;
         transform.position = respawnTarget.position;
@@ -276,13 +293,13 @@ public class OnlineFireControl : NetworkBehaviour {
             }
 
             // went off edge
-            if (transform.position.y < -1.0f || m_CarData.Health <= 0.0f)
+            if (transform.position.y < -1.0f || m_HP <= 0.0f)
             {
                 Death();
             }
 
             // activate smoke
-            if (m_CarData.Health < 50.0f)
+            if (m_HP < 50.0f)
             {
                 m_CarData.DamageParticles.SetActive(true);
             }
@@ -304,7 +321,7 @@ public class OnlineFireControl : NetworkBehaviour {
                 }
             }
             else
-                m_HeatFunction.HealthSlider.value = m_CarData.Health;
+                m_HeatFunction.HealthSlider.value = m_HP;
 
             // power up timer
             if (m_ReloadPowerUp)
@@ -316,7 +333,9 @@ public class OnlineFireControl : NetworkBehaviour {
                 }
             }
 
-            if(m_GunData.gunType == FireType.Beam && m_GunData.BeamBarrel.activeInHierarchy && m_Heat < m_HeatFunction.HeatSlider.maxValue)
+
+
+            if (m_GunData.gunType == FireType.Beam && m_GunData.BeamBarrel.activeInHierarchy && m_Heat < m_HeatFunction.HeatSlider.maxValue)
             {
                 m_Heat += m_HeatFunction.BeamHeat * Time.deltaTime;
                 if(m_Heat > m_HeatFunction.HeatSlider.maxValue)
@@ -324,8 +343,16 @@ public class OnlineFireControl : NetworkBehaviour {
                     CmdShootRelease();
                 }
             }
+            else if (m_GunData.gunType == FireType.Beam && m_Fired)
+            {
+                m_GunData.BeamBarrel.SetActive(true);
+                if (!m_GunData.BeamBarrel.GetComponent<AudioSource>().isPlaying)
+                {
+                    m_GunData.BeamBarrel.GetComponent<AudioSource>().Play();
+                }
+            }
 
-            if(m_GunData.gunType == FireType.Ram && m_GunData.RamCollider.activeInHierarchy)
+            if (m_GunData.gunType == FireType.Ram && m_GunData.RamCollider.activeInHierarchy)
             {
                 m_Heat += m_HeatFunction.RamHeat * Time.deltaTime;
                 if (m_Heat > m_HeatFunction.HeatSlider.maxValue)
@@ -393,16 +420,13 @@ public class OnlineFireControl : NetworkBehaviour {
         Vector3 position = transform.position;
         foreach (GameObject go in gos)
         {
-            if(go.name.Substring(go.name.Length - 1, 1) == tag.Substring(tag.Length - 1, 1))
-            {
-                Vector3 diff = go.transform.position + position;
-                float curDistance = diff.sqrMagnitude;
+            Vector3 diff = go.transform.position + position;
+            float curDistance = diff.sqrMagnitude;
 
-                if (curDistance < distance)
-                {
-                    furthest = go;
-                    distance = curDistance;
-                }
+            if (curDistance < distance)
+            {
+                furthest = go;
+                distance = curDistance;
             }
         }
 
