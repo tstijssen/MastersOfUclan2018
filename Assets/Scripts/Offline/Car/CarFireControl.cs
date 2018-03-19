@@ -77,7 +77,7 @@ public class CarFireControl : MonoBehaviour {
     private float volHighRange = 1.0f;
     Rigidbody rb;
 
-    public void Shoot()
+    public GameObject Shoot()
     {
         //Shooting
         if (m_Alive)
@@ -112,6 +112,7 @@ public class CarFireControl : MonoBehaviour {
                         m_ReloadTimer = m_GunData.ReloadTwinGuns;   // reset reload speed
 
                         m_Heat += m_HeatFunction.BulletHeat;
+                        return bullet;
                     }
                 }
             }
@@ -142,6 +143,7 @@ public class CarFireControl : MonoBehaviour {
                 //GetComponent<UnityStandardAssets.Vehicles.Car.CarController>().Move(0, 100.0f, 0.0f, 0.0f);
             }
         }
+        return null;
     }
 
     public void ShootRelease()

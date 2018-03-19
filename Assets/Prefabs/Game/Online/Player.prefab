@@ -1462,6 +1462,8 @@ MonoBehaviour:
   playerCarSelection: 0
   vehiclePrefabs:
   - {fileID: 1697153999923882, guid: e2e755d998d928d449f53abc7820da68, type: 2}
+  - {fileID: 1697153999923882, guid: e2e755d998d928d449f53abc7820da68, type: 2}
+  - {fileID: 1235611585730810, guid: 9ab2e3048c600874fa157b94f60011f4, type: 2}
   - {fileID: 1235611585730810, guid: 9ab2e3048c600874fa157b94f60011f4, type: 2}
 --- !u!114 &114283887292728108
 MonoBehaviour:
