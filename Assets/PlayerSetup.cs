@@ -1,10 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class PlayerSetup : MonoBehaviour {
 
+public class PlayerSetup : NetworkBehaviour {
+
+    [SyncVar]
     public Color playerColor;
+
+    [SyncVar]
     public int playerCarSelection;
     public GameObject[] vehiclePrefabs;
 
