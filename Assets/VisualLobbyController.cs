@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
-public class VisualLobbyController : MonoBehaviour {
+public class VisualLobbyController : NetworkBehaviour {
 
     Sprite[] spriteArray;
     public Image carImg;
@@ -12,7 +13,9 @@ public class VisualLobbyController : MonoBehaviour {
     public Text p1Car;
     public Text p1Team;
 
+    [SyncVar]
     int p1CarChoice = 0;
+    [SyncVar]
     int p1TeamChoice = 0;
 
 
@@ -41,6 +44,7 @@ public class VisualLobbyController : MonoBehaviour {
                 p1Car.text = "Future Car";
                 break;
         }
+        carImg.sprite = spriteArray[p1CarChoice];
 
         switch (p1TeamChoice)
         {
@@ -75,8 +79,6 @@ public class VisualLobbyController : MonoBehaviour {
         p1CarChoice++;
         if (p1CarChoice > 3)
             p1CarChoice = 0;
-
-        carImg.sprite = spriteArray[p1CarChoice];
     }
 
     public void DecCar()
@@ -84,8 +86,6 @@ public class VisualLobbyController : MonoBehaviour {
         p1CarChoice--;
         if (p1CarChoice < 0)
             p1CarChoice = 3;
-
-        carImg.sprite = spriteArray[p1CarChoice];
     }
 
     void IncTeam()
