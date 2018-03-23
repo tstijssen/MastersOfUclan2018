@@ -76,6 +76,8 @@ public class CarFireControl : MonoBehaviour {
     private float volLowRange = .75f;
     private float volHighRange = 1.0f;
     Rigidbody rb;
+    Vector3 previousPos;
+    public float m_NoMovementThreshold = 0.0001f;
 
     public GameObject Shoot()
     {
@@ -136,7 +138,6 @@ public class CarFireControl : MonoBehaviour {
             {
                 if (m_Heat < m_HeatFunction.HeatSlider.maxValue && !m_GunData.fired)    // only shoot if not waiting for reload
                 {
-                    m_GunData.RamCollider.SetActive(true);
                     m_GunData.fired = true;
 
                 }
@@ -201,7 +202,8 @@ public class CarFireControl : MonoBehaviour {
         // shoot forward
         if (m_GunData.gunType == FireType.Ram && m_GunData.fired)
         {
-            m_GunData.RamCollider.SetActive(false);
+            rb.velocity = transform.forward * m_Heat / 2;
+            m_GunData.RamCollider.SetActive(true);
             m_GunData.fired = false;
         }
     }
@@ -316,6 +318,7 @@ public class CarFireControl : MonoBehaviour {
         m_HeatFunction.HealthImage.color = Color.green;
         m_Alive = true;
         rb = GetComponent<Rigidbody>();
+        previousPos = Vector3.zero;
         if(m_GunData.gunType == FireType.Ram)
             m_GunData.RamCollider.SetActive(false);
 
@@ -357,6 +360,16 @@ public class CarFireControl : MonoBehaviour {
                 {
                     Death();
                 }
+            }
+
+            if(m_GunData.gunType == FireType.Ram)
+            {
+                if (Vector3.Distance(previousPos, transform.position) < m_NoMovementThreshold)
+                {
+                    m_GunData.RamCollider.SetActive(false);
+                }
+                previousPos = transform.position;
+
             }
 
             // went off edge
@@ -418,7 +431,7 @@ public class CarFireControl : MonoBehaviour {
                 }
             }
 
-            if(m_GunData.gunType == FireType.Ram && m_GunData.RamCollider.activeInHierarchy)
+            if(m_GunData.gunType == FireType.Ram && m_GunData.fired)
             {
                 m_Heat += m_HeatFunction.RamHeat * Time.deltaTime;
                 if (m_Heat > m_HeatFunction.HeatSlider.maxValue)
