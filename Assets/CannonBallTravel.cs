@@ -17,7 +17,7 @@ public class CannonBallTravel : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         // move bullet and decrease life counter
-        transform.localPosition += transform.forward * m_Speed * Time.deltaTime;
+        transform.localPosition += transform.forward * (m_Speed / 2) * Time.deltaTime;
         m_LifeTime -= Time.deltaTime;
 
         if (m_LifeTime < 0)

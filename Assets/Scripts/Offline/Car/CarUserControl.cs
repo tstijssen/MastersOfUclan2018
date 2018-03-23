@@ -34,7 +34,7 @@ namespace UnityStandardAssets.Vehicles.Car
             {
               h = CrossPlatformInputManager.GetAxis("Horizontal");
               v = CrossPlatformInputManager.GetAxis("Vertical");
-              fire = CrossPlatformInputManager.GetButton("Fire1");
+              fire = CrossPlatformInputManager.GetButtonDown("Fire1");
               fireRelease = CrossPlatformInputManager.GetButtonUp("Fire1");
             }
 
@@ -42,15 +42,15 @@ namespace UnityStandardAssets.Vehicles.Car
             {
                 h = CrossPlatformInputManager.GetAxis("Horizontal2");
                 v = CrossPlatformInputManager.GetAxis("Vertical2");
-                fire = CrossPlatformInputManager.GetButton("FireTwo");
+                fire = CrossPlatformInputManager.GetButtonDown("FireTwo");
                 fireRelease = CrossPlatformInputManager.GetButtonUp("FireTwo");
             }
 
-            if (fire)
-                m_FireControl.Shoot();
 
             if (fireRelease)
                 m_FireControl.ShootRelease();
+            else if (fire)
+                m_FireControl.Shoot();
 
 #if !MOBILE_INPUT
             float handbrake = CrossPlatformInputManager.GetAxis("Jump");

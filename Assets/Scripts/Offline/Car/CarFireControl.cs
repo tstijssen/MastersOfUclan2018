@@ -195,6 +195,7 @@ public class CarFireControl : MonoBehaviour {
                 bullet2.SetActive(true);
             }
             m_GunData.fired = false;
+            m_Heat = 0;
         }
 
         // shoot forward
