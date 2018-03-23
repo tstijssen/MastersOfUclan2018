@@ -142,12 +142,21 @@ public class CarFireControl : MonoBehaviour {
                 }
                 //GetComponent<UnityStandardAssets.Vehicles.Car.CarController>().Move(0, 100.0f, 0.0f, 0.0f);
             }
+
+            if(m_GunData.gunType == FireType.Cannon)
+            {
+                if(m_Heat < m_HeatFunction.HeatSlider.maxValue)
+                {
+                    m_GunData.fired = true;
+                }
+            }
         }
         return null;
     }
 
     public void ShootRelease()
     {
+        // stop shooting lazerbeam
         if(m_GunData.gunType == FireType.Beam && m_GunData.fired)
         {
             if(m_Heat < (m_HeatFunction.HeatSlider.maxValue / 4) * 3)
@@ -155,6 +164,37 @@ public class CarFireControl : MonoBehaviour {
             m_GunData.BeamBarrel.GetComponent<AudioSource>().Stop();
 
             m_GunData.BeamBarrel.SetActive(false);
+        }
+
+        // shoot cannonballs
+        if(m_GunData.gunType == FireType.Cannon && m_GunData.fired)
+        {
+            Debug.Log("Shooting");
+
+            GameObject bullet1 = m_GunData.BulletPool.GetPooledObject();  // get bullet object from pool
+            float vol = Random.Range(volLowRange, volHighRange);
+
+            if (bullet1 != null) // check if object pool returned a bullet
+            {
+                m_GunData.Barrel1.GetComponent<AudioSource>().volume = vol;
+                m_GunData.Barrel1.GetComponent<AudioSource>().Play();
+                bullet1.transform.position = m_GunData.Barrel1.transform.position;
+                bullet1.transform.rotation = m_GunData.Barrel1.transform.rotation;
+                bullet1.GetComponent<CannonBallTravel>().m_Speed = m_Heat;
+                bullet1.SetActive(true);
+            }
+            GameObject bullet2 = m_GunData.BulletPool.GetPooledObject();  // get bullet object from pool
+
+            if (bullet2 != null)
+            {
+                m_GunData.Barrel2.GetComponent<AudioSource>().volume = vol;
+                m_GunData.Barrel2.GetComponent<AudioSource>().Play();
+                bullet2.transform.position = m_GunData.Barrel2.transform.position;
+                bullet2.transform.rotation = m_GunData.Barrel2.transform.rotation;
+                bullet2.GetComponent<CannonBallTravel>().m_Speed = m_Heat;
+                bullet2.SetActive(true);
+            }
+            m_GunData.fired = false;
         }
 
         // shoot forward
@@ -363,6 +403,15 @@ public class CarFireControl : MonoBehaviour {
             {
                 m_Heat += m_HeatFunction.BeamHeat * Time.deltaTime;
                 if(m_Heat > m_HeatFunction.HeatSlider.maxValue)
+                {
+                    ShootRelease();
+                }
+            }
+
+            if(m_GunData.gunType == FireType.Cannon && m_GunData.fired)
+            {
+                m_Heat += m_HeatFunction.BeamHeat * Time.deltaTime; // TODO: get separate cannonball heat float
+                if (m_Heat > m_HeatFunction.HeatSlider.maxValue)
                 {
                     ShootRelease();
                 }
