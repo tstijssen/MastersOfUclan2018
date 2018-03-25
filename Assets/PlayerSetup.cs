@@ -11,15 +11,18 @@ public class PlayerSetup : NetworkBehaviour {
 
     [SyncVar]
     public int playerCarSelection;
+
+    public NetworkTransformChild vehicleNetworkTransform;
     public GameObject[] vehiclePrefabs;
     public OnlineFireControl fireControl;
+
 
     private void Start()
     {
         GameObject playerCar = Instantiate(vehiclePrefabs[playerCarSelection]) as GameObject;
         playerCar.transform.parent = this.transform;
         playerCar.transform.position = this.transform.position;
-
+        vehicleNetworkTransform.target = playerCar.transform;
         switch (playerCarSelection)
         {
             case 0: // twin gun car
