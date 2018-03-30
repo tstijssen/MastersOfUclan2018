@@ -27,30 +27,41 @@ namespace UnityStandardAssets.Vehicles.Car
         private void FixedUpdate()
         {
             // pass the input to the car!
-
-           
-
             if (transform.parent.name == "Player1")
             {
               h = CrossPlatformInputManager.GetAxis("Horizontal");
               v = CrossPlatformInputManager.GetAxis("Vertical");
-              fire = CrossPlatformInputManager.GetButtonDown("Fire1");
+              fire = CrossPlatformInputManager.GetButton("Fire1");
               fireRelease = CrossPlatformInputManager.GetButtonUp("Fire1");
             }
-
-            if (transform.parent.name == "Player2")
+            else if (transform.parent.name == "Player2")
             {
                 h = CrossPlatformInputManager.GetAxis("Horizontal2");
                 v = CrossPlatformInputManager.GetAxis("Vertical2");
                 fire = CrossPlatformInputManager.GetButtonDown("FireTwo");
                 fireRelease = CrossPlatformInputManager.GetButtonUp("FireTwo");
             }
+            else if (transform.parent.name == "Player3")
+            {
+                h = CrossPlatformInputManager.GetAxis("Horizontal3");
+                v = CrossPlatformInputManager.GetAxis("Vertical3");
+                fire = CrossPlatformInputManager.GetButtonDown("FireThree");
+                fireRelease = CrossPlatformInputManager.GetButtonUp("FireThree");
+            }
+            else if (transform.parent.name == "Player4")
+            {
+                h = CrossPlatformInputManager.GetAxis("Horizontal4");
+                v = CrossPlatformInputManager.GetAxis("Vertical4");
+                fire = CrossPlatformInputManager.GetButtonDown("FireFour");
+                fireRelease = CrossPlatformInputManager.GetButtonUp("FireFour");
+            }
 
 
+
+            if (fire)
+                m_FireControl.Shoot();
             if (fireRelease)
                 m_FireControl.ShootRelease();
-            else if (fire)
-                m_FireControl.Shoot();
 
 #if !MOBILE_INPUT
             float handbrake = CrossPlatformInputManager.GetAxis("Jump");

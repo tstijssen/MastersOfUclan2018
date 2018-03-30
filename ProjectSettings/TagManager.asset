@@ -16,6 +16,11 @@ TagManager:
   - Fire
   - DeathZone
   - TrainScoop
+  - Flag
+  - RedScore
+  - BlueScore
+  - GreenScore
+  - YellowScore
   layers:
   - Default
   - TransparentFX

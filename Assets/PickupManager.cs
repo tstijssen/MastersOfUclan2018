@@ -24,7 +24,7 @@ public class PickupManager : MonoBehaviour {
         // spawn pickup
         float xPos = Random.Range(-33.0f, 33.0f);
         float zPos = Random.Range(-33.0f, 33.0f);
-        float yPos = 1;
+        float yPos = 10.0f;
         targetPos = new Vector3(xPos, yPos, zPos);
     }
 
@@ -52,12 +52,14 @@ public class PickupManager : MonoBehaviour {
                 Debug.Log("Got pickup obj");
                 // raycast to ground to find empty spot to spawn, retry random positions until one is found
                 RaycastHit hitInfo;
-                if (Physics.Linecast(new Vector3(targetPos.x, 5.0f, targetPos.z), new Vector3(targetPos.x, -6.0f, targetPos.z), out hitInfo))
+                if (Physics.Linecast(new Vector3(targetPos.x, 100.0f, targetPos.z), new Vector3(targetPos.x, -6.0f, targetPos.z), out hitInfo))
                 {
                     Debug.Log(hitInfo.transform.tag);
                     if (hitInfo.transform.tag == "Ground")
                     {
                         validSpawn = true;
+                        targetPos.Set(targetPos.x, hitInfo.point.y + 1.0f, targetPos.z);
+                        
                     }
                 }
 

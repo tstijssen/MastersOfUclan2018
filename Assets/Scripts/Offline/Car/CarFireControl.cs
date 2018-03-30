@@ -45,7 +45,7 @@ public struct CarData
     public GameObject DeathParticles;
     public AudioClip HitSound;
 
-    public Text DeathCounter;
+    public Text[] ScoreText;
 
     public GameObject Shield;
 }
@@ -75,9 +75,12 @@ public class CarFireControl : MonoBehaviour {
 
     private float volLowRange = .75f;
     private float volHighRange = 1.0f;
+
+    private bool m_HasFlag = false;
     Rigidbody rb;
     Vector3 previousPos;
     public float m_NoMovementThreshold = 0.0001f;
+    public int m_PlayerTeam;
 
     public GameObject Shoot()
     {
@@ -289,6 +292,15 @@ public class CarFireControl : MonoBehaviour {
                 m_DeathZoneTimer = m_DeathZoneDuration;
                 Debug.Log("In Death Zone");
             }
+            else if (other.tag == "Flag")
+            {
+                if(!m_HasFlag)
+                {
+                    other.transform.parent = this.transform;
+                    m_HasFlag = true;
+                }
+                    other.transform.localPosition = Vector3.forward;
+            }
         }
     }
 
@@ -319,6 +331,34 @@ public class CarFireControl : MonoBehaviour {
         m_Alive = true;
         rb = GetComponent<Rigidbody>();
         previousPos = Vector3.zero;
+
+        string scoresTag = "";
+        switch(m_PlayerTeam)
+        {
+            case 0:
+                scoresTag = "RedScore";
+                break;
+            case 1:
+                scoresTag = "BlueScore";
+                break;
+            case 2:
+                scoresTag = "GreenScore";
+                break;
+            case 3:
+                scoresTag = "YellowScore";
+                break;
+            default:
+                break;
+        }
+        GameObject[] scoresObj = GameObject.FindGameObjectsWithTag(scoresTag);
+        m_CarData.ScoreText = new Text[scoresObj.Length];
+        Debug.Log(scoresTag);
+
+        for (int t = 0; t < scoresObj.Length; ++t)
+        {
+            m_CarData.ScoreText[t] = scoresObj[t].GetComponent<Text>();
+        }
+
         if(m_GunData.gunType == FireType.Ram)
             m_GunData.RamCollider.SetActive(false);
 
@@ -326,7 +366,12 @@ public class CarFireControl : MonoBehaviour {
 
     private void Death()
     {
-        m_CarData.DeathCounter.text += "I ";
+        for (int t = 0; t < m_CarData.ScoreText.Length; ++t)
+        {
+            m_CarData.ScoreText[t].text += "I ";
+        }
+        Debug.Log(m_CarData.ScoreText.Length);
+
         m_Alive = false;
         m_InDeathZone = false;
         m_ShieldHealth = 0.0f;
@@ -373,7 +418,7 @@ public class CarFireControl : MonoBehaviour {
             }
 
             // went off edge
-            if (transform.position.y < -1.0f || m_CarData.Health <= 0.0f)
+            if (transform.position.y < -5.0f || m_CarData.Health <= 0.0f)
             {
                 Death();
             }
