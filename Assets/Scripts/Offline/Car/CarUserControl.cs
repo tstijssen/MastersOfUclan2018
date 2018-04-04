@@ -27,6 +27,11 @@ namespace UnityStandardAssets.Vehicles.Car
         private void FixedUpdate()
         {
             // pass the input to the car!
+            if (!m_FireControl.m_Alive)
+            {
+                return;
+            }
+
             if (transform.parent.name == "Player1")
             {
               h = CrossPlatformInputManager.GetAxis("Horizontal");

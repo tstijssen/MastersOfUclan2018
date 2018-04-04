@@ -11,6 +11,7 @@ public class BulletTravel : MonoBehaviour {
     private float m_LifeReset;  // used to reset bulletLife var when returning bullet to object pool
                                 //private TeamNames m_Team;   // identifies team of the player that shot this bullet instance
 
+    public CarFireControl m_Owner;
     public bool m_Active;
     bool m_Resetting;
     private GameObject ScoreInfo;

@@ -9,7 +9,7 @@ public class MouseAimCamera : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		offset = target.transform.position = transform.position;
+		offset = target.transform.position - transform.position;
 	}
 	
 	// Update is called once per frame

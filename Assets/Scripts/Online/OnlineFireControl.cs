@@ -10,9 +10,20 @@ public class OnlineFireControl : NetworkBehaviour {
     public GunData m_GunData;
     public HeatFunction m_HeatFunction;
     public GameObject m_BulletPrefab;
+    public Image m_HitIndicator;
 
     private float m_SpawnTimer;
-    private bool m_Alive;
+
+    [SyncVar]
+    public bool m_Despawned;
+    [SyncVar]
+    public bool m_Alive;
+    [SyncVar]
+    public int m_Score;
+    [SyncVar]
+    public int m_Kills;
+    [SyncVar]
+    public int m_Deaths;
 
     private bool m_ShieldPowerUp;
 
@@ -39,7 +50,23 @@ public class OnlineFireControl : NetworkBehaviour {
 
     private float volLowRange = .75f;
     private float volHighRange = 1.0f;
+    private bool m_HitActive = false;
+    private float m_IndicatorDuration = 0.0f;
+
+    private bool m_HasFlag = false;
+    FlagCaptureScript m_FlagData = null;
+
+    Text m_FlagScoreText;
+
     Rigidbody rb;
+
+    Vector3 previousPos;
+    public float m_NoMovementThreshold = 0.0001f;
+
+    public TeamColours m_PlayerTeam;
+    public GameObject m_CarMat;
+
+    public int m_PlayerNumber;
 
     [Command]
     public void CmdShoot()
@@ -52,6 +79,7 @@ public class OnlineFireControl : NetworkBehaviour {
                 GameObject bullet = (GameObject)Instantiate(m_BulletPrefab);  // get bullet object from pool
                 if (bullet != null) // check if object pool returned a bullet
                 {
+                    bullet.GetComponent<OnlineBullet>().m_Owner = this;
                     if (m_ReloadTimer <= 0.0f && m_Heat < m_HeatFunction.HeatSlider.maxValue)    // only shoot if not waiting for reload
                     {
                         Debug.Log("Shooting");
@@ -85,7 +113,7 @@ public class OnlineFireControl : NetworkBehaviour {
                 }
             }
             // solid beam from front of vehicle
-            if (m_GunData.gunType == FireType.Beam)
+            else if (m_GunData.gunType == FireType.Beam)
             {
                 if (m_Heat < m_HeatFunction.HeatSlider.maxValue && !m_Fired)    // only shoot if not waiting for reload
                 {
@@ -96,15 +124,21 @@ public class OnlineFireControl : NetworkBehaviour {
             }
 
             // start windup
-            if(m_GunData.gunType == FireType.Ram)
+            else if(m_GunData.gunType == FireType.Ram)
             {
                 if (m_Heat < m_HeatFunction.HeatSlider.maxValue && !m_Fired)    // only shoot if not waiting for reload
                 {
-                    m_GunData.RamCollider.SetActive(true);
                     m_Fired = true;
-
                 }
                 //GetComponent<UnityStandardAssets.Vehicles.Car.CarController>().Move(0, 100.0f, 0.0f, 0.0f);
+            }
+
+            else if (m_GunData.gunType == FireType.Cannon)
+            {
+                if (m_Heat < m_HeatFunction.HeatSlider.maxValue)
+                {
+                    m_GunData.fired = true;
+                }
             }
         }
     }
@@ -121,11 +155,51 @@ public class OnlineFireControl : NetworkBehaviour {
             m_GunData.BeamBarrel.SetActive(false);
         }
 
+        // shoot cannonballs NOT NETWORK CONVERTED
+        if (m_GunData.gunType == FireType.Cannon && m_GunData.fired)
+        {
+            Debug.Log("Shooting");
+
+            GameObject bullet1 = m_GunData.BulletPool.GetPooledObject();  // get bullet object from pool
+            float vol = Random.Range(volLowRange, volHighRange);
+
+            if (bullet1 != null) // check if object pool returned a bullet
+            {
+                m_GunData.Barrel1.GetComponent<AudioSource>().volume = vol;
+                m_GunData.Barrel1.GetComponent<AudioSource>().Play();
+                bullet1.transform.position = m_GunData.Barrel1.transform.position;
+                bullet1.transform.rotation = m_GunData.Barrel1.transform.rotation;
+                bullet1.GetComponent<CannonBallTravel>().m_Speed = m_Heat;
+                bullet1.SetActive(true);
+            }
+            GameObject bullet2 = m_GunData.BulletPool.GetPooledObject();  // get bullet object from pool
+
+            if (bullet2 != null)
+            {
+                m_GunData.Barrel2.GetComponent<AudioSource>().volume = vol;
+                m_GunData.Barrel2.GetComponent<AudioSource>().Play();
+                bullet2.transform.position = m_GunData.Barrel2.transform.position;
+                bullet2.transform.rotation = m_GunData.Barrel2.transform.rotation;
+                bullet2.GetComponent<CannonBallTravel>().m_Speed = m_Heat;
+                bullet2.SetActive(true);
+            }
+            m_GunData.fired = false;
+            m_Heat = 0;
+        }
+
         // shoot forward
         if (m_GunData.gunType == FireType.Ram && m_Fired)
         {
-            m_GunData.RamCollider.SetActive(false);
+            rb.velocity = transform.forward * m_Heat / 2;
+            m_GunData.RamCollider.SetActive(true);
             m_Fired = false;
+        }
+
+        if (m_GunData.gunType == FireType.TwinGuns)
+        {
+            m_GunData.Barrel1.transform.GetChild(0).gameObject.SetActive(false);
+            m_GunData.Barrel2.transform.GetChild(0).gameObject.SetActive(false);
+
         }
     }
 
@@ -179,20 +253,26 @@ public class OnlineFireControl : NetworkBehaviour {
             }
             else if (other.tag == "Bullet")
             {
-                if (other.GetComponent<BulletTravel>().m_Active)
+                if (other.GetComponent<OnlineBullet>().m_Active)
                 {
                     GetComponent<AudioSource>().PlayOneShot(m_CarData.HitSound, 1);
                     if (m_ShieldPowerUp)
                     {
-                        m_ShieldHealth -= other.GetComponent<BulletTravel>().m_Damage;
+                        m_ShieldHealth -= other.GetComponent<OnlineBullet>().m_Damage;
                     }
                     else
                     {
-                        m_HP -= other.GetComponent<BulletTravel>().m_Damage;
+                        m_HP -= other.GetComponent<OnlineBullet>().m_Damage;
+                        if (m_CarData.Health <= 0.0f)
+                        {
+                            other.GetComponent<OnlineBullet>().m_Owner.RecordKill(this);
+                            Death();
+                        }
                     }
                     Debug.Log("bullethit");
-                    other.GetComponent<BulletTravel>().ResetBullet();
+                    other.GetComponent<OnlineBullet>().ResetBullet();
 
+                    RotateHitIndicator(other.transform.position);
                 }
             }
             else if (other.tag == "TrainScoop")
@@ -209,6 +289,24 @@ public class OnlineFireControl : NetworkBehaviour {
                 m_InDeathZone = true;
                 m_DeathZoneTimer = m_DeathZoneDuration;
                 Debug.Log("In Death Zone");
+            }
+            else if (other.tag == "Flag")
+            {
+                if (m_HasFlag)
+                {
+                    if (other.GetComponent<FlagCaptureScript>().m_FlagColour == m_PlayerTeam)
+                    {
+                        m_FlagData.CaptureFlag(other.GetComponent<FlagCaptureScript>().m_FlagColour);
+                        m_Score += 20;
+
+                        int teamScore = int.Parse(m_FlagScoreText.text);
+                        teamScore++;
+                        m_FlagScoreText.text = teamScore.ToString();
+
+                        m_HasFlag = false;
+                        m_FlagData = null;
+                    }
+                }
             }
         }
     }
@@ -235,10 +333,58 @@ public class OnlineFireControl : NetworkBehaviour {
                 else
                 {
                     m_HP -= (other.GetComponent<laserScript>().m_Damage * Time.deltaTime);
+                    if (m_CarData.Health <= 0.0f)
+                    {
+                        //other.GetComponent<BulletTravel>().m_Owner.RecordKill(this);
+                        Death();
+                    }
                 }
             }
         }
 
+    }
+
+    private void RotateHitIndicator(Vector3 hitPos)
+    {
+        if (!m_HitActive)
+        {
+            m_HitActive = true;
+            m_IndicatorDuration = 1.0f;
+        }
+
+        Vector3 relpos = hitPos - transform.position;
+
+        Quaternion qRot = Quaternion.LookRotation(relpos);
+
+        float rot = Quaternion.Angle(qRot, transform.localRotation);
+
+        if (Vector3.Dot(transform.right, relpos) > 0.0f)
+        {
+            rot = -rot;
+        }
+
+        m_HitIndicator.rectTransform.localRotation = Quaternion.Euler(0, 0, rot);
+    }
+
+    public void FlagTaken(FlagCaptureScript flag)
+    {
+        m_FlagData = flag;
+        m_HasFlag = true;
+    }
+
+    public void RecordKill(OnlineFireControl car)
+    {
+        if (car.m_PlayerTeam == m_PlayerTeam)
+        {
+            // teamkill!
+            m_Kills--;
+            m_Score -= 10;
+        }
+        else
+        {
+            m_Kills++;
+            m_Score += 10;
+        }
     }
 
     // Use this for initialization
@@ -247,16 +393,56 @@ public class OnlineFireControl : NetworkBehaviour {
         m_GunData.BulletPool = GetComponent<CarPooler>();
         m_HeatFunction.HealthImage.color = Color.green;
         m_Alive = true;
+        m_Despawned = false;
+        m_Score = 0;
+        m_Kills = 0;
+        m_Deaths = 0;
         m_HP = m_CarData.Health;
         rb = GetComponent<Rigidbody>();
-        if(m_GunData.gunType == FireType.Ram)
-            m_GunData.RamCollider.SetActive(false);
+        previousPos = Vector3.zero;
 
+        Renderer ren = m_CarMat.GetComponentInChildren<Renderer>();
+        Material mat;
+        if (ren.materials.Length == 1)
+            mat = ren.material;
+        else
+            mat = ren.materials[1];
+
+        switch (m_PlayerTeam)
+        {
+            case TeamColours.Red:
+                mat.color = Color.red;
+                m_FlagScoreText = GameObject.FindGameObjectWithTag("RedScore").GetComponent<Text>();
+                break;
+            case TeamColours.Blue:
+                mat.color = Color.blue;
+                m_FlagScoreText = GameObject.FindGameObjectWithTag("BlueScore").GetComponent<Text>();
+                break;
+            case TeamColours.Green:
+                mat.color = Color.green;
+                break;
+            case TeamColours.Yellow:
+                mat.color = Color.yellow;
+                break;
+            default:
+                break;
+        }
+
+        if (m_GunData.gunType == FireType.Ram)
+            m_GunData.RamCollider.SetActive(false);
     }
 
     private void Death()
     {
-        //m_CarData.DeathCounter.text += "I ";
+
+        if (m_HasFlag)
+        {
+            m_FlagData.DropFlag();
+            m_FlagData = null;
+            m_HasFlag = false;
+        }
+
+        m_Deaths++;
         m_Alive = false;
         m_InDeathZone = false;
         m_ShieldHealth = 0.0f;
@@ -269,14 +455,15 @@ public class OnlineFireControl : NetworkBehaviour {
 
     private void Respawn()
     {
+        m_Despawned = true;
         m_Alive = true;
         m_HP = 100.0f;
         m_CarData.DeathParticles.SetActive(false);
-        Transform respawnTarget = FindFurthestTarget("Respawn").transform;
-        transform.position = respawnTarget.position;
+        //Transform respawnTarget = FindFurthestTarget("Respawn").transform;
+        //transform.position = respawnTarget.position;
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
-        transform.rotation = respawnTarget.rotation;
+        transform.rotation = Quaternion.identity;
     }
 
     private void Update()
@@ -292,8 +479,29 @@ public class OnlineFireControl : NetworkBehaviour {
                 }
             }
 
+            if (m_HitActive)
+            {
+                m_IndicatorDuration -= Time.deltaTime;
+                if (m_IndicatorDuration <= 0.0f)
+                {
+                    m_IndicatorDuration = 0.0f;
+                    m_HitActive = false;
+                }
+                m_HitIndicator.color = new Color(Color.red.r, Color.red.g, Color.red.b, m_IndicatorDuration);
+
+            }
+
+            if (m_GunData.gunType == FireType.Ram)
+            {
+                if (Vector3.Distance(previousPos, transform.position) < m_NoMovementThreshold)
+                {
+                    m_GunData.RamCollider.SetActive(false);
+                }
+                previousPos = transform.position;
+            }
+
             // went off edge
-            if (transform.position.y < -1.0f || m_HP <= 0.0f)
+            if (transform.position.y < -5.0f || m_HP <= 0.0f)
             {
                 Death();
             }
@@ -352,7 +560,16 @@ public class OnlineFireControl : NetworkBehaviour {
                 }
             }
 
-            if (m_GunData.gunType == FireType.Ram && m_GunData.RamCollider.activeInHierarchy)
+            if (m_GunData.gunType == FireType.Cannon && m_GunData.fired)
+            {
+                m_Heat += m_HeatFunction.BeamHeat * Time.deltaTime; // TODO: get separate cannonball heat float
+                if (m_Heat > m_HeatFunction.HeatSlider.maxValue)
+                {
+                    CmdShootRelease();
+                }
+            }
+
+            if (m_GunData.gunType == FireType.Ram && m_Fired)
             {
                 m_Heat += m_HeatFunction.RamHeat * Time.deltaTime;
                 if (m_Heat > m_HeatFunction.HeatSlider.maxValue)
@@ -397,7 +614,7 @@ public class OnlineFireControl : NetworkBehaviour {
             }
         }
         // count down respawn
-        else
+        else if(!m_Despawned)
         {
             if (m_SpawnTimer > 0.0f)
             {

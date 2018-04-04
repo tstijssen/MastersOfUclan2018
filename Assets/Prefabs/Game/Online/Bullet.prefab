@@ -21,10 +21,10 @@ GameObject:
   - component: {fileID: 4746942509785848}
   - component: {fileID: 33226468949303208}
   - component: {fileID: 135636323023504776}
-  - component: {fileID: 114792107594528636}
   - component: {fileID: 23570115794397338}
   - component: {fileID: 114417968901357844}
   - component: {fileID: 114434862574639038}
+  - component: {fileID: 114752794748406108}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Bullet
@@ -139,7 +139,7 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
---- !u!114 &114792107594528636
+--- !u!114 &114752794748406108
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -147,13 +147,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1325183690101082}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 767f5fc76628a944981f26bb1fb287b6, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b63c502759e68144889e755e97abcda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Damage: 3.5
-  m_BulletSpeed: 100
-  m_BulletLife: 0.6
+  m_Damage: 0
+  m_BulletSpeed: 0
+  m_BulletLife: 0
   m_ReloadSpeed: 0
+  m_Owner: {fileID: 0}
   m_Active: 0
 --- !u!135 &135636323023504776
 SphereCollider:

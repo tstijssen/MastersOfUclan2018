@@ -4,7 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [System.Serializable]
-public enum FireType {TwinGuns, Beam, Cannon, Ram };
+public enum FireType {TwinGuns, Beam, Ram, Cannon };
+
+[System.Serializable]
+public enum TeamColours { Red, Blue, Green, Yellow };
 
 [System.Serializable]
 public struct HeatFunction
@@ -56,8 +59,14 @@ public class CarFireControl : MonoBehaviour {
     public GunData m_GunData;
     public HeatFunction m_HeatFunction;
 
+    public Image m_HitIndicator;
+
     private float m_SpawnTimer;
-    private bool m_Alive;
+    public bool m_Despawned;
+    public bool m_Alive;
+    public int m_Score;
+    public int m_Kills;
+    public int m_Deaths;
 
     private bool m_ShieldPowerUp;
     private float m_ShieldHealth;
@@ -75,12 +84,20 @@ public class CarFireControl : MonoBehaviour {
 
     private float volLowRange = .75f;
     private float volHighRange = 1.0f;
+    private bool m_HitActive = false;
+    private float m_IndicatorDuration = 0.0f;
 
     private bool m_HasFlag = false;
+    FlagCaptureScript m_FlagData = null;
+    Text m_FlagScoreText;
+
     Rigidbody rb;
     Vector3 previousPos;
     public float m_NoMovementThreshold = 0.0001f;
-    public int m_PlayerTeam;
+
+    public TeamColours m_PlayerTeam;
+    public GameObject m_CarMat;
+    public int m_PlayerNumber;
 
     public GameObject Shoot()
     {
@@ -89,9 +106,10 @@ public class CarFireControl : MonoBehaviour {
         {
             if (m_GunData.gunType == FireType.TwinGuns)
             {
-                GameObject bullet = m_GunData.BulletPool.GetPooledObject();  // get bullet object from pool
+                GameObject bullet = m_GunData.BulletPool.GetPooledObject();  // get bullet object from pool             
                 if (bullet != null) // check if object pool returned a bullet
                 {
+                    bullet.GetComponent<BulletTravel>().m_Owner = this;
                     if (m_ReloadTimer <= 0.0f && m_Heat < m_HeatFunction.HeatSlider.maxValue)    // only shoot if not waiting for reload
                     {
                         Debug.Log("Shooting");
@@ -104,6 +122,7 @@ public class CarFireControl : MonoBehaviour {
                             bullet.transform.position = m_GunData.Barrel1.transform.position;
                             bullet.transform.rotation = m_GunData.Barrel1.transform.rotation;
                             m_GunData.altguns = !m_GunData.altguns;
+                            m_GunData.Barrel1.transform.GetChild(0).gameObject.SetActive(true);
                         }
                         else
                         {
@@ -112,6 +131,7 @@ public class CarFireControl : MonoBehaviour {
                             bullet.transform.position = m_GunData.Barrel2.transform.position;
                             bullet.transform.rotation = m_GunData.Barrel2.transform.rotation;
                             m_GunData.altguns = !m_GunData.altguns;
+                            m_GunData.Barrel2.transform.GetChild(0).gameObject.SetActive(true);
                         }
                         bullet.SetActive(true);
                         m_ReloadTimer = m_GunData.ReloadTwinGuns;   // reset reload speed
@@ -209,6 +229,13 @@ public class CarFireControl : MonoBehaviour {
             m_GunData.RamCollider.SetActive(true);
             m_GunData.fired = false;
         }
+
+        if (m_GunData.gunType == FireType.TwinGuns)
+        {
+            m_GunData.Barrel1.transform.GetChild(0).gameObject.SetActive(false);
+            m_GunData.Barrel2.transform.GetChild(0).gameObject.SetActive(false);
+
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -271,10 +298,16 @@ public class CarFireControl : MonoBehaviour {
                     else
                     {
                         m_CarData.Health -= other.GetComponent<BulletTravel>().m_Damage;
+                        if (m_CarData.Health <= 0.0f)
+                        {
+                            other.GetComponent<BulletTravel>().m_Owner.RecordKill(this);
+                            Death();
+                        }
                     }
                     Debug.Log("bullethit");
                     other.GetComponent<BulletTravel>().ResetBullet();
 
+                    RotateHitIndicator(other.transform.position);
                 }
             }
             else if (other.tag == "TrainScoop")
@@ -294,13 +327,31 @@ public class CarFireControl : MonoBehaviour {
             }
             else if (other.tag == "Flag")
             {
-                if(!m_HasFlag)
+                if (m_HasFlag)
                 {
-                    other.transform.parent = this.transform;
-                    m_HasFlag = true;
+                    if (other.GetComponent<FlagCaptureScript>().m_FlagColour == m_PlayerTeam)
+                    {
+                        m_FlagData.CaptureFlag(other.GetComponent<FlagCaptureScript>().m_FlagColour);
+                        m_Score += 20;
+
+                        int teamScore = int.Parse(m_FlagScoreText.text);
+                        teamScore++;
+                        m_FlagScoreText.text = teamScore.ToString();
+
+                        m_HasFlag = false;
+                        m_FlagData = null;
+                    }
                 }
-                    other.transform.localPosition = Vector3.forward;
             }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "DeathZone")
+        {
+            m_InDeathZone = false;
+            Debug.Log("Leaving Death Zone");
         }
     }
 
@@ -317,10 +368,58 @@ public class CarFireControl : MonoBehaviour {
                 else
                 {
                     m_CarData.Health -= (other.GetComponent<laserScript>().m_Damage * Time.deltaTime);
+                    if (m_CarData.Health <= 0.0f)
+                    {
+                        other.GetComponent<BulletTravel>().m_Owner.RecordKill(this);
+                        Death();
+                    }
                 }
             }
         }
 
+    }
+
+    private void RotateHitIndicator(Vector3 hitPos)
+    {
+        if (!m_HitActive)
+        {
+            m_HitActive = true;
+            m_IndicatorDuration = 1.0f;
+        }
+
+        Vector3 relpos = hitPos - transform.position;
+
+        Quaternion qRot = Quaternion.LookRotation(relpos);
+
+        float rot = Quaternion.Angle(qRot, transform.localRotation);
+
+        if (Vector3.Dot(transform.right, relpos) > 0.0f)
+        {
+            rot = -rot;
+        }
+
+        m_HitIndicator.rectTransform.localRotation = Quaternion.Euler(0, 0, rot);
+    }
+
+    public void FlagTaken(FlagCaptureScript flag)
+    {
+        m_FlagData = flag;
+        m_HasFlag = true;
+    }
+
+    public void RecordKill(CarFireControl car)
+    {
+        if (car.m_PlayerTeam == m_PlayerTeam)
+        {
+            // teamkill!
+            m_Kills--;
+            m_Score -= 10;
+        }
+        else
+        {
+            m_Kills++;
+            m_Score += 10;
+        }
     }
 
     // Use this for initialization
@@ -329,34 +428,38 @@ public class CarFireControl : MonoBehaviour {
         m_GunData.BulletPool = GetComponent<CarPooler>();
         m_HeatFunction.HealthImage.color = Color.green;
         m_Alive = true;
+        m_Despawned = false;
+        m_Score = 0;
+        m_Kills = 0;
+        m_Deaths = 0;
         rb = GetComponent<Rigidbody>();
         previousPos = Vector3.zero;
 
-        string scoresTag = "";
-        switch(m_PlayerTeam)
+        Renderer ren = m_CarMat.GetComponentInChildren<Renderer>();
+        Material mat;
+        if (ren.materials.Length == 1)
+            mat = ren.material;
+        else
+            mat = ren.materials[1];
+
+        switch (m_PlayerTeam)
         {
-            case 0:
-                scoresTag = "RedScore";
+            case TeamColours.Red:
+                mat.color = Color.red;
+                m_FlagScoreText = GameObject.FindGameObjectWithTag("RedScore").GetComponent<Text>();
                 break;
-            case 1:
-                scoresTag = "BlueScore";
+            case TeamColours.Blue:
+                mat.color = Color.blue;
+                m_FlagScoreText = GameObject.FindGameObjectWithTag("BlueScore").GetComponent<Text>();
                 break;
-            case 2:
-                scoresTag = "GreenScore";
+            case TeamColours.Green:
+                mat.color = Color.green;
                 break;
-            case 3:
-                scoresTag = "YellowScore";
+            case TeamColours.Yellow:
+                mat.color = Color.yellow;
                 break;
             default:
                 break;
-        }
-        GameObject[] scoresObj = GameObject.FindGameObjectsWithTag(scoresTag);
-        m_CarData.ScoreText = new Text[scoresObj.Length];
-        Debug.Log(scoresTag);
-
-        for (int t = 0; t < scoresObj.Length; ++t)
-        {
-            m_CarData.ScoreText[t] = scoresObj[t].GetComponent<Text>();
         }
 
         if(m_GunData.gunType == FireType.Ram)
@@ -364,14 +467,16 @@ public class CarFireControl : MonoBehaviour {
 
     }
 
-    private void Death()
+    public void Death()
     {
-        for (int t = 0; t < m_CarData.ScoreText.Length; ++t)
+        if (m_HasFlag)
         {
-            m_CarData.ScoreText[t].text += "I ";
+            m_FlagData.DropFlag();
+            m_FlagData = null;
+            m_HasFlag = false;
         }
-        Debug.Log(m_CarData.ScoreText.Length);
 
+        m_Deaths++;
         m_Alive = false;
         m_InDeathZone = false;
         m_ShieldHealth = 0.0f;
@@ -382,16 +487,17 @@ public class CarFireControl : MonoBehaviour {
         m_CarData.DeathParticles.SetActive(true);
     }
 
-    private void Respawn()
+    public void Respawn()
     {
+        m_Despawned = true;
         m_Alive = true;
         m_CarData.Health = 100.0f;
         m_CarData.DeathParticles.SetActive(false);
-        Transform respawnTarget = FindFurthestTarget("Respawn").transform;
-        transform.position = respawnTarget.position;
+        //Transform respawnTarget = FindFurthestTarget("Respawn").transform;
+        //transform.position = respawnTarget.position;
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
-        transform.rotation = respawnTarget.rotation;
+        transform.rotation = Quaternion.identity;
     }
 
     private void Update()
@@ -407,14 +513,25 @@ public class CarFireControl : MonoBehaviour {
                 }
             }
 
-            if(m_GunData.gunType == FireType.Ram)
+            if (m_HitActive)
+            {
+                m_IndicatorDuration -= Time.deltaTime;
+                if (m_IndicatorDuration <= 0.0f)
+                {
+                    m_IndicatorDuration = 0.0f;
+                    m_HitActive = false;
+                }
+                m_HitIndicator.color = new Color(Color.red.r, Color.red.g, Color.red.b, m_IndicatorDuration);
+
+            }
+
+            if (m_GunData.gunType == FireType.Ram)
             {
                 if (Vector3.Distance(previousPos, transform.position) < m_NoMovementThreshold)
                 {
                     m_GunData.RamCollider.SetActive(false);
                 }
                 previousPos = transform.position;
-
             }
 
             // went off edge
@@ -467,7 +584,7 @@ public class CarFireControl : MonoBehaviour {
                 }
             }
 
-            if(m_GunData.gunType == FireType.Cannon && m_GunData.fired)
+            if (m_GunData.gunType == FireType.Cannon && m_GunData.fired)
             {
                 m_Heat += m_HeatFunction.BeamHeat * Time.deltaTime; // TODO: get separate cannonball heat float
                 if (m_Heat > m_HeatFunction.HeatSlider.maxValue)
@@ -521,7 +638,7 @@ public class CarFireControl : MonoBehaviour {
             }
         }
         // count down respawn
-        else
+        else if(!m_Despawned)
         {
             if (m_SpawnTimer > 0.0f)
             {
@@ -532,7 +649,7 @@ public class CarFireControl : MonoBehaviour {
                 m_SpawnTimer = 0.0f;
                 Respawn();
             }
-        }      
+        }
     }
 
     public GameObject FindFurthestTarget(string trgt)
@@ -544,16 +661,13 @@ public class CarFireControl : MonoBehaviour {
         Vector3 position = transform.position;
         foreach (GameObject go in gos)
         {
-            if(go.name.Substring(go.name.Length - 1, 1) == tag.Substring(tag.Length - 1, 1))
-            {
-                Vector3 diff = go.transform.position + position;
-                float curDistance = diff.sqrMagnitude;
+            Vector3 diff = go.transform.position + position;
+            float curDistance = diff.sqrMagnitude;
 
-                if (curDistance < distance)
-                {
-                    furthest = go;
-                    distance = curDistance;
-                }
+            if (curDistance < distance)
+            {
+                furthest = go;
+                distance = curDistance;
             }
         }
 

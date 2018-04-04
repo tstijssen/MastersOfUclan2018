@@ -13,6 +13,7 @@ public class NetworkLobbyHook : LobbyHook {
         PlayerSetup localPlayer = gamePlayer.GetComponent<PlayerSetup>();
 
         //localPlayer.playerName = lobbyProfile.playerName;
+        localPlayer.playerNumber = lobbyProfile.slot;
         localPlayer.playerColor = lobbyProfile.playerColor;
         localPlayer.playerCarSelection = lobbyProfile.playerVehicle;
         Debug.Log(lobbyProfile.slot + " car = " + localPlayer.playerCarSelection);
