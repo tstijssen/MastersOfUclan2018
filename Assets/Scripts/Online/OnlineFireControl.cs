@@ -64,7 +64,6 @@ public class OnlineFireControl : NetworkBehaviour {
     public float m_NoMovementThreshold = 0.0001f;
 
     public TeamColours m_PlayerTeam;
-    public GameObject m_CarMat;
 
     public int m_PlayerNumber;
 
@@ -92,6 +91,8 @@ public class OnlineFireControl : NetworkBehaviour {
                             bullet.transform.position = m_GunData.Barrel1.transform.position;
                             bullet.transform.rotation = m_GunData.Barrel1.transform.rotation;
                             m_GunData.altguns = !m_GunData.altguns;
+                            m_GunData.Barrel1.transform.GetChild(0).gameObject.SetActive(true);
+
                         }
                         else
                         {
@@ -100,6 +101,8 @@ public class OnlineFireControl : NetworkBehaviour {
                             bullet.transform.position = m_GunData.Barrel2.transform.position;
                             bullet.transform.rotation = m_GunData.Barrel2.transform.rotation;
                             m_GunData.altguns = !m_GunData.altguns;
+                            m_GunData.Barrel2.transform.GetChild(0).gameObject.SetActive(true);
+
                         }
                         bullet.SetActive(true);
                         m_ReloadTimer = m_GunData.ReloadTwinGuns;   // reset reload speed
@@ -199,7 +202,6 @@ public class OnlineFireControl : NetworkBehaviour {
         {
             m_GunData.Barrel1.transform.GetChild(0).gameObject.SetActive(false);
             m_GunData.Barrel2.transform.GetChild(0).gameObject.SetActive(false);
-
         }
     }
 
@@ -400,33 +402,6 @@ public class OnlineFireControl : NetworkBehaviour {
         m_HP = m_CarData.Health;
         rb = GetComponent<Rigidbody>();
         previousPos = Vector3.zero;
-
-        Renderer ren = m_CarMat.GetComponentInChildren<Renderer>();
-        Material mat;
-        if (ren.materials.Length == 1)
-            mat = ren.material;
-        else
-            mat = ren.materials[1];
-
-        switch (m_PlayerTeam)
-        {
-            case TeamColours.Red:
-                mat.color = Color.red;
-                m_FlagScoreText = GameObject.FindGameObjectWithTag("RedScore").GetComponent<Text>();
-                break;
-            case TeamColours.Blue:
-                mat.color = Color.blue;
-                m_FlagScoreText = GameObject.FindGameObjectWithTag("BlueScore").GetComponent<Text>();
-                break;
-            case TeamColours.Green:
-                mat.color = Color.green;
-                break;
-            case TeamColours.Yellow:
-                mat.color = Color.yellow;
-                break;
-            default:
-                break;
-        }
 
         if (m_GunData.gunType == FireType.Ram)
             m_GunData.RamCollider.SetActive(false);

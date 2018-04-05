@@ -934,6 +934,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c70250b1e590744298ff6cfd2727c11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spriteArray:
+  - {fileID: 21300000, guid: 6ff00736f0b2b1d49bc9da62629ef6f3, type: 3}
+  - {fileID: 21300000, guid: 819df23adaca6b34fa05421cef5a563a, type: 3}
+  - {fileID: 21300000, guid: ecae42c145deb114585da71637d0b292, type: 3}
+  - {fileID: 21300000, guid: 4fbd69cde251bbe439f591dae736aa49, type: 3}
   carImg: {fileID: 114747988856649874}
   teamImg: {fileID: 114801521999740024}
   pCar: {fileID: 114339888750972520}

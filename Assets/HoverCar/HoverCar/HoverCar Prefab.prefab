@@ -7743,7 +7743,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   spreadCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -7767,7 +7767,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
 --- !u!92 &9200000
 Behaviour:
   m_ObjectHideFlags: 1
@@ -7825,6 +7825,7 @@ MonoBehaviour:
   - {fileID: 100018}
   m_forwardAcl: 10000
   m_backwardAcl: 5000
+  m_sideAcl: 50
   m_turnStrength: 2500
   LeftBreak: {fileID: 100016}
   RightBreak: {fileID: 100014}

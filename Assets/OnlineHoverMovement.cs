@@ -36,7 +36,7 @@ public class OnlineHoverMovement : NetworkBehaviour
     public GameObject RightBreak;
     //Break Right GameObject
 
-    CarFireControl m_FireControl;
+    OnlineFireControl m_FireControl;
 
     int m_layerMask;
 
@@ -52,7 +52,7 @@ public class OnlineHoverMovement : NetworkBehaviour
         m_layerMask = 1 << LayerMask.NameToLayer("Characters");
         m_layerMask = ~m_layerMask;
 
-        m_FireControl = GetComponent<CarFireControl>();
+        m_FireControl = GetComponent<OnlineFireControl>();
     }
 
     void Update()
@@ -68,9 +68,9 @@ public class OnlineHoverMovement : NetworkBehaviour
         bool fireRelease = Input.GetButtonUp(FireButton);
 
         if (fire)
-            m_FireControl.Shoot();
+            m_FireControl.CmdShoot();
         if (fireRelease)
-            m_FireControl.ShootRelease();
+            m_FireControl.CmdShootRelease();
 
         // Main Thrust
         m_currThrust = 0.0f;

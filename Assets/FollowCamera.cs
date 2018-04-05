@@ -65,7 +65,7 @@ public class FollowCamera : MonoBehaviour {
         targets[(int)m_Selection].transform.position = position;
         targets[(int)m_Selection].SetActive(true);
         Follow(targets[(int)m_Selection].transform);
-
+        
         //switch (m_Selection)
         //{
         //    case FireType.TwinGuns:
