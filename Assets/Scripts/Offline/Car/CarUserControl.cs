@@ -48,7 +48,6 @@ namespace UnityStandardAssets.Vehicles.Car
 
                 h = gamePad.ThumbSticks.Left.X;
                 v = gamePad.ThumbSticks.Left.Y;
-
                 fire = (gamePad.Buttons.A == ButtonState.Pressed);
 
                 fireRelease = (gamePad.Buttons.A == ButtonState.Released);

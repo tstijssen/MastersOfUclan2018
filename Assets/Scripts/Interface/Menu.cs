@@ -155,10 +155,7 @@ public class Menu : MonoBehaviour {
                     shutter.GetComponent<RectTransform>().localPosition = new Vector3(0f, 0f, 0f);
                 }
 
-                shutter.GetComponent<RectTransform>().Translate((-Vector3.up * transitionSpd) * Time.deltaTime);
-                
-
-
+                shutter.GetComponent<RectTransform>().Translate((-Vector3.up * transitionSpd) * Time.deltaTime);               
 
                 if (!loading)
                 {
@@ -171,7 +168,9 @@ public class Menu : MonoBehaviour {
                             break;
                         case 1:
                             StartCoroutine(AsynchronousLoad("Meuble"));
-
+                            break;
+                        case 2:
+                            StartCoroutine(AsynchronousLoad("Tilt"));
                             break;
                     }
                 }

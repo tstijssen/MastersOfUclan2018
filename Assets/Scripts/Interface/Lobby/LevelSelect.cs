@@ -27,14 +27,14 @@ public class LevelSelect : MonoBehaviour {
         switch (levelSelect)
         {
             case 0:
-                levelName.text = "CTF-Castles";
+                levelName.text = "CTF Castles";
                 break;
             case 1:
-                levelName.text = "FFA-Bridge";
+                levelName.text = "FFA Bridge";
                 break;
-            //case 2:
-            //    levelName.text = "Beach";
-            //    break;
+            case 2:
+                levelName.text = "FFA Tilt";
+                break;
         }
 
         PlayerPrefs.SetInt("Level", levelSelect);

@@ -44,16 +44,17 @@ public class ControllerDetection : MonoBehaviour {
             }
         }
         prevState = state[0];
+        numOfPlayers = 0;
         for (int i = 0; i < state.Length; ++i)
         {
-            numOfPlayers = 0;
             state[i] = GamePad.GetState((PlayerIndex)i);
             if (state[i].IsConnected)
             {
                 players[i].SetActive(true);
                 players[i].GetComponent<LocalPlayerSetup>().m_GamePadState = state[i];
                 numOfPlayers++;
-                GetComponent<SplitSceen>().NumOfPlayers = numOfPlayers + 1;
+                GetComponent<SplitSceen>().NumOfPlayers = numOfPlayers;
+                Debug.Log(numOfPlayers);
             }
         }
     }

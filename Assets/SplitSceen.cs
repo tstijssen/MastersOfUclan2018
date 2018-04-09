@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SplitSceen : MonoBehaviour {
 
+    public Camera[] cams;
     public Camera cam1;
     public Camera cam2;
     public Camera cam3;
@@ -24,6 +25,14 @@ public class SplitSceen : MonoBehaviour {
 
     public void ChangeSplitScreen()
     {
+
+        for (int i = 0; i < cams.Length; ++i)
+        {
+            if (cams[i].isActiveAndEnabled)
+            {
+                
+            }
+        }
 
         switch (NumOfPlayers)
         {
