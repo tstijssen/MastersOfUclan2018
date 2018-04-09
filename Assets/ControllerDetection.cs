@@ -19,7 +19,7 @@ public class ControllerDetection : MonoBehaviour {
 	
     void FixedUpdate()
     {
-        //GamePad.SetVibration(playerIndex, state.Triggers.Left, state.Triggers.Right);
+        GamePad.SetVibration(playerIndex, state[0].Triggers.Left, state[0].Triggers.Right);
     }
 
 	// Update is called once per frame
@@ -53,8 +53,8 @@ public class ControllerDetection : MonoBehaviour {
                 players[i].SetActive(true);
                 players[i].GetComponent<LocalPlayerSetup>().m_GamePadState = state[i];
                 numOfPlayers++;
+                GetComponent<SplitSceen>().NumOfPlayers = numOfPlayers + 1;
             }
-            GetComponent<SplitSceen>().NumOfPlayers = numOfPlayers;
         }
     }
 
