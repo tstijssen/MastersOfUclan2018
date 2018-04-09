@@ -55,7 +55,7 @@ public class FlagCaptureScript : MonoBehaviour {
     {
         if (other.tag == "Player")
         {
-            CarFireControl car = other.GetComponent<CarFireControl>();
+            OnlineFireControl car = other.GetComponent<OnlineFireControl>();
             if (car.m_Alive)
             {
                 if (m_State == FlagState.Home)
@@ -93,7 +93,7 @@ public class FlagCaptureScript : MonoBehaviour {
         this.transform.rotation = m_HomeRot;
     }
 
-    private void TakeFlag(CarFireControl player)
+    private void TakeFlag(OnlineFireControl player)
     {
         Debug.Log("taking flag");
         player.FlagTaken(this);

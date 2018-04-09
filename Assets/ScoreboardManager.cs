@@ -21,7 +21,7 @@ public class ScoreboardManager : MonoBehaviour {
     public ScorePanelItems[] m_Items;
 
     public Sprite[] m_CarSprites;
-
+    public int KillLimit = 0;
     CarFireControl[] m_Cars = new CarFireControl[4];
 
 	// Use this for initialization
@@ -76,6 +76,11 @@ public class ScoreboardManager : MonoBehaviour {
                 m_Items[i].m_Score.text = m_Cars[i].m_Score.ToString();
                 m_Items[i].m_Kills.text = m_Cars[i].m_Kills.ToString();
                 m_Items[i].m_Deaths.text = m_Cars[i].m_Deaths.ToString();
+
+                if (KillLimit != 0 && m_Cars[i].m_Score >= KillLimit)
+                {
+                    m_Cars[i].m_Victory = true;
+                }
             }
         }
     }

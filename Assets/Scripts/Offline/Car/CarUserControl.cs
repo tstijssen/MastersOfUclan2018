@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
+using XInputDotNetPure;
 
 namespace UnityStandardAssets.Vehicles.Car
 {
@@ -16,52 +17,65 @@ namespace UnityStandardAssets.Vehicles.Car
         bool fire = false;
         bool fireRelease = false;
 
+        string fireCommand;
+        string horizontalCommand;
+        string verticalCommand;
+
+        public GamePadState gamePad;
+
         private void Awake()
         {
             // get the car controller
             m_Car = GetComponent<CarController>();
             m_FireControl = GetComponent<CarFireControl>();
+            fireCommand = GetComponentInParent<LocalPlayerSetup>().m_FireCommand;
+            horizontalCommand = GetComponentInParent<LocalPlayerSetup>().m_HorizontalMove;
+            verticalCommand = GetComponentInParent<LocalPlayerSetup>().m_VerticalMove;
+            gamePad = GetComponentInParent<LocalPlayerSetup>().m_GamePadState;
         }
 
+        private void Update()
+        {
+            if (!m_FireControl.m_Alive)
+            {
+                return;
+            }
+            Debug.Log("Player is using gamepad " + gamePad.IsConnected);
+
+            if (gamePad.IsConnected)
+            {
+                gamePad = GetComponentInParent<LocalPlayerSetup>().m_GamePadState;
+
+                h = gamePad.ThumbSticks.Left.X;
+                v = gamePad.ThumbSticks.Left.Y;
+
+                fire = (gamePad.Buttons.A == ButtonState.Pressed);
+
+                fireRelease = (gamePad.Buttons.A == ButtonState.Released);
+  
+                Debug.Log(fire);
+            }
+        }
 
         private void FixedUpdate()
         {
-            // pass the input to the car!
+
             if (!m_FireControl.m_Alive)
             {
                 return;
             }
 
-            if (transform.parent.name == "Player1")
+
+            if (!gamePad.IsConnected)
             {
-              h = CrossPlatformInputManager.GetAxis("Horizontal");
-              v = CrossPlatformInputManager.GetAxis("Vertical");
-              fire = CrossPlatformInputManager.GetButton("Fire1");
-              fireRelease = CrossPlatformInputManager.GetButtonUp("Fire1");
-            }
-            else if (transform.parent.name == "Player2")
-            {
-                h = CrossPlatformInputManager.GetAxis("Horizontal2");
-                v = CrossPlatformInputManager.GetAxis("Vertical2");
-                fire = CrossPlatformInputManager.GetButtonDown("FireTwo");
-                fireRelease = CrossPlatformInputManager.GetButtonUp("FireTwo");
-            }
-            else if (transform.parent.name == "Player3")
-            {
-                h = CrossPlatformInputManager.GetAxis("Horizontal3");
-                v = CrossPlatformInputManager.GetAxis("Vertical3");
-                fire = CrossPlatformInputManager.GetButtonDown("FireThree");
-                fireRelease = CrossPlatformInputManager.GetButtonUp("FireThree");
-            }
-            else if (transform.parent.name == "Player4")
-            {
-                h = CrossPlatformInputManager.GetAxis("Horizontal4");
-                v = CrossPlatformInputManager.GetAxis("Vertical4");
-                fire = CrossPlatformInputManager.GetButtonDown("FireFour");
-                fireRelease = CrossPlatformInputManager.GetButtonUp("FireFour");
+                h = CrossPlatformInputManager.GetAxis(horizontalCommand);
+                v = CrossPlatformInputManager.GetAxis(verticalCommand);
+
+                fire = CrossPlatformInputManager.GetButton(fireCommand);
+                fireRelease = CrossPlatformInputManager.GetButtonUp(fireCommand);
             }
 
-
+            // pass the input to the car!
 
             if (fire)
                 m_FireControl.Shoot();

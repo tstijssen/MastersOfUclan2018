@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using XInputDotNetPure;
 
 [RequireComponent(typeof(Rigidbody))]
 public class HoverCarControl : MonoBehaviour
@@ -43,17 +44,23 @@ public class HoverCarControl : MonoBehaviour
     string TurnMove = "Horizontal";
     string FireButton = "Fire1";
 
+    GamePadState gamePad;
+
   void Start()
   {
-    m_body = GetComponent<Rigidbody>();
+        m_body = GetComponent<Rigidbody>();
 
-    m_layerMask = 1 << LayerMask.NameToLayer("Characters");
-    m_layerMask = ~m_layerMask;
+        m_layerMask = 1 << LayerMask.NameToLayer("Characters");
+        m_layerMask = ~m_layerMask;
+        FireButton = GetComponentInParent<LocalPlayerSetup>().m_FireCommand;
+        TurnMove = GetComponentInParent<LocalPlayerSetup>().m_HorizontalMove;
+        VerticalMove = GetComponentInParent<LocalPlayerSetup>().m_VerticalMove;
+        m_FireControl = GetComponent<CarFireControl>();
+        gamePad = GetComponentInParent<LocalPlayerSetup>().m_GamePadState;
 
-       m_FireControl = GetComponent<CarFireControl>();
     }
 
-  void OnDrawGizmos()
+    void OnDrawGizmos()
   {
 
     //  Hover Force
@@ -87,10 +94,34 @@ public class HoverCarControl : MonoBehaviour
         {
             return;
         }
+        bool fire = false;
+        bool fireRelease = false;
+        float aclAxis = 0.0f;
+        float aclSAxis = 0.0f;
+        float turnAxis = 0.0f;
 
-        // shooting
-        bool fire = Input.GetButton(FireButton);
-        bool fireRelease = Input.GetButtonUp(FireButton);
+        if (gamePad.IsConnected)
+        {
+            gamePad = GetComponentInParent<LocalPlayerSetup>().m_GamePadState;
+
+            aclSAxis = gamePad.ThumbSticks.Left.X;
+            aclAxis = gamePad.ThumbSticks.Left.Y;
+
+            turnAxis = gamePad.ThumbSticks.Right.X;
+
+            fire = (gamePad.Buttons.A == ButtonState.Pressed);
+            fireRelease = (gamePad.Buttons.A == ButtonState.Released);
+        }
+        else
+        {
+            // shooting
+            fire = Input.GetButton(FireButton);
+            fireRelease = Input.GetButtonUp(FireButton);
+
+            aclAxis = Input.GetAxis(VerticalMove);
+            aclSAxis = Input.GetAxis(HorizontalMove);
+            turnAxis = Input.GetAxis(TurnMove);
+        }
 
         if (fire)
             m_FireControl.Shoot();
@@ -99,27 +130,23 @@ public class HoverCarControl : MonoBehaviour
 
         // Main Thrust
         m_currThrust = 0.0f;
-        float aclAxis = Input.GetAxis(VerticalMove);
         if (aclAxis > m_deadZone)
           m_currThrust = aclAxis * m_forwardAcl;
         else if (aclAxis < -m_deadZone)
           m_currThrust = aclAxis * m_backwardAcl;
 
         m_sideThrust = 0.0f;
-        float aclSAxis = Input.GetAxis(HorizontalMove);
         if (Mathf.Abs(aclSAxis) > m_deadZone)
             m_sideThrust = aclSAxis * m_sideAcl;
 
         // Turning
         CurrentTurnAngle = 0.0f;
-        float turnAxis = Input.GetAxis(TurnMove);
         if (Mathf.Abs(turnAxis) > m_deadZone)
             CurrentTurnAngle = turnAxis;
   }
 
   void FixedUpdate()
   {
-
     //  Hover Force
     RaycastHit hit;
     for (int i = 0; i < HoverPointsGameObjects.Length; i++)

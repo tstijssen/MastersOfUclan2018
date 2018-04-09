@@ -5,8 +5,6 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
-  - Player 2
-  - Player 1
   - DeathPlane
   - Beam
   - Pickup
@@ -22,6 +20,7 @@ TagManager:
   - GreenScore
   - YellowScore
   - SpawnBlocker
+  - Spawn
   layers:
   - Default
   - TransparentFX

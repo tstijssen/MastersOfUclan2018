@@ -88,7 +88,7 @@ public class CarFireControl : MonoBehaviour {
     private float m_IndicatorDuration = 0.0f;
 
     private bool m_HasFlag = false;
-    FlagCaptureScript m_FlagData = null;
+    LocalFlagScript m_FlagData = null;
     Text m_FlagScoreText;
 
     Rigidbody rb;
@@ -98,6 +98,7 @@ public class CarFireControl : MonoBehaviour {
     public TeamColours m_PlayerTeam;
     public GameObject m_CarMat;
     public int m_PlayerNumber;
+    public bool m_Victory;  // determines whether this player has achieved victory
 
     public GameObject Shoot()
     {
@@ -329,14 +330,20 @@ public class CarFireControl : MonoBehaviour {
             {
                 if (m_HasFlag)
                 {
-                    if (other.GetComponent<FlagCaptureScript>().m_FlagColour == m_PlayerTeam)
+                    if (other.GetComponent<LocalFlagScript>().m_FlagColour == m_PlayerTeam)
                     {
-                        m_FlagData.CaptureFlag(other.GetComponent<FlagCaptureScript>().m_FlagColour);
+                        m_FlagData.CaptureFlag(other.GetComponent<LocalFlagScript>().m_FlagColour);
                         m_Score += 20;
 
                         int teamScore = int.Parse(m_FlagScoreText.text);
                         teamScore++;
                         m_FlagScoreText.text = teamScore.ToString();
+
+                        if (teamScore >= other.GetComponent<LocalFlagScript>().m_VictoryNumber)
+                        {
+                            // VICTORY
+                            m_Victory = true;                   
+                        }
 
                         m_HasFlag = false;
                         m_FlagData = null;
@@ -401,7 +408,7 @@ public class CarFireControl : MonoBehaviour {
         m_HitIndicator.rectTransform.localRotation = Quaternion.Euler(0, 0, rot);
     }
 
-    public void FlagTaken(FlagCaptureScript flag)
+    public void FlagTaken(LocalFlagScript flag)
     {
         m_FlagData = flag;
         m_HasFlag = true;
@@ -422,19 +429,8 @@ public class CarFireControl : MonoBehaviour {
         }
     }
 
-    // Use this for initialization
-    void Start () {
-        m_ReloadTimer = 0.0f;
-        m_GunData.BulletPool = GetComponent<CarPooler>();
-        m_HeatFunction.HealthImage.color = Color.green;
-        m_Alive = true;
-        m_Despawned = false;
-        m_Score = 0;
-        m_Kills = 0;
-        m_Deaths = 0;
-        rb = GetComponent<Rigidbody>();
-        previousPos = Vector3.zero;
-
+    void OnEnable()
+    {
         Renderer ren = m_CarMat.GetComponentInChildren<Renderer>();
         Material mat;
         if (ren.materials.Length == 1)
@@ -442,7 +438,7 @@ public class CarFireControl : MonoBehaviour {
         else
             mat = ren.materials[1];
 
-        switch (m_PlayerTeam)
+        switch (GetComponentInParent<LocalPlayerSetup>().m_PlayerTeam)
         {
             case TeamColours.Red:
                 mat.color = Color.red;
@@ -461,6 +457,22 @@ public class CarFireControl : MonoBehaviour {
             default:
                 break;
         }
+    }
+
+    // Use this for initialization
+    void Start () {
+        m_ReloadTimer = 0.0f;
+        m_GunData.BulletPool = GetComponent<CarPooler>();
+        m_HeatFunction.HealthImage.color = Color.green;
+        m_Alive = true;
+        m_Despawned = false;
+        m_Score = 0;
+        m_Kills = 0;
+        m_Deaths = 0;
+        rb = GetComponent<Rigidbody>();
+        previousPos = Vector3.zero;
+
+        m_Victory = false;
 
         if(m_GunData.gunType == FireType.Ram)
             m_GunData.RamCollider.SetActive(false);

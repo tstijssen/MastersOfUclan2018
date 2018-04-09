@@ -77,7 +77,6 @@ public class OnlineFollowCamera : MonoBehaviour {
         m_Selection = (FireType)type;
         VehicleSelected = true;
         selection_Panel.SetActive(false);
-
     }
 
     public void SpawnPlayer(Vector3 position)

@@ -5,7 +5,9 @@ using UnityEngine;
 public class FollowCamera : MonoBehaviour {
     public GameObject[] targets;
     public GameObject container;
-    public GameObject selection_Panel;
+    public GameObject CharacterSelect;
+    public GameObject TeamSelect;
+    public GameObject SpawnSelect;
     public Vector3 m_MenuPosition;
 
     public Vector3 m_FollowPosition;
@@ -20,7 +22,7 @@ public class FollowCamera : MonoBehaviour {
     void Start()
     {
         VehicleSelected = false;
-        MenuCamera();
+
         m_Camera = this.GetComponent<Camera>();
     }
 
@@ -36,17 +38,41 @@ public class FollowCamera : MonoBehaviour {
 
         if (Input.GetMouseButtonDown(0) && VehicleSelected)
         {
-            //Vector3 mousePos = m_Camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, m_Camera.transform.position.y + m_Camera.nearClipPlane));
-            //Debug.Log(mousePos.ToString());
-            Ray ray = m_Camera.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hitInfo;
-            if (Physics.Raycast(ray, out hitInfo))
+            MouseClick(Input.mousePosition);
+        }
+    }
+
+    public void ControllerClick(Vector3 pos)
+    {
+        Debug.Log("Spawning at: " + pos);
+        RaycastHit hitInfo;
+        if (Physics.Raycast(pos, new Vector3(pos.x, -pos.y, pos.z), out hitInfo))
+        {
+            Debug.Log(hitInfo.transform.tag + " from ray at" + hitInfo.transform.position);
+            if (hitInfo.transform.tag == "Ground")
             {
-                Debug.Log(hitInfo.transform.tag);
-                if (hitInfo.transform.tag == "Ground")
-                {
-                    SpawnPlayer(new Vector3(hitInfo.point.x, hitInfo.point.y + m_SpawnHeight, hitInfo.point.z));
-                }
+                SpawnPlayer(new Vector3(hitInfo.point.x, hitInfo.point.y + m_SpawnHeight, hitInfo.point.z), transform.rotation);
+            }
+        }
+    }
+
+    public void SetSpawn(Vector3 pos, Quaternion rot)
+    {
+        SpawnPlayer(new Vector3(pos.x, pos.y + m_SpawnHeight, pos.z), rot);
+        SpawnSelect.SetActive(false);
+    }
+
+    public void MouseClick(Vector3 pos)
+    {
+        Debug.Log("Spawning at: " + pos);
+        Ray ray = m_Camera.ScreenPointToRay(pos);
+        RaycastHit hitInfo;
+        if (Physics.Raycast(ray, out hitInfo))
+        {
+            Debug.Log(hitInfo.transform.tag + " from ray at" + hitInfo.transform.position);
+            if (hitInfo.transform.tag == "Ground")
+            {
+                SpawnPlayer(new Vector3(hitInfo.point.x, hitInfo.point.y + m_SpawnHeight, hitInfo.point.z), transform.rotation);
             }
         }
     }
@@ -55,47 +81,29 @@ public class FollowCamera : MonoBehaviour {
     {
         m_Selection = (FireType)type;
         VehicleSelected = true;
-        selection_Panel.SetActive(false);
+        CharacterSelect.SetActive(false);
 
     }
 
-    public void SpawnPlayer(Vector3 position)
+    public void SpawnPlayer(Vector3 position, Quaternion rotation)
     {
         container.transform.position = position;
+        container.transform.rotation = rotation;
+        transform.rotation = rotation;
+
         targets[(int)m_Selection].transform.position = position;
+
         targets[(int)m_Selection].SetActive(true);
         Follow(targets[(int)m_Selection].transform);
         
-        //switch (m_Selection)
-        //{
-        //    case FireType.TwinGuns:
-        //        targets[0].SetActive(true);
-        //        Follow(targets[0].transform);
-        //        break;
 
-        //    case FireType.Beam:
-        //        targets[1].SetActive(true);
-        //        Follow(targets[1].transform);
-        //        break;
-
-        //    case FireType.Ram:
-        //        targets[2].SetActive(true);
-        //        Follow(targets[2].transform);
-        //        break;
-
-        //    case FireType.Cannon:
-        //        targets[3].SetActive(true);
-        //        Follow(targets[3].transform);
-        //        break;
-        //}
     }
 
     public void Follow(Transform parent)
     {
         transform.parent = parent;
+        transform.Rotate(m_FollowXRot, 0,0);
         transform.localPosition = m_FollowPosition;
-        transform.rotation = Quaternion.identity;
-        transform.Rotate(m_FollowXRot, 0.0f, 0.0f);
         offset = parent.position - transform.position;
         Debug.Log("Setting cam pos");
         VehicleSelected = false;
@@ -103,11 +111,18 @@ public class FollowCamera : MonoBehaviour {
 
     public void MenuCamera()
     {
-        transform.parent = null;
+        transform.parent = container.transform;
         transform.rotation = Quaternion.identity;
         transform.Rotate(90.0f, 90.0f, 0.0f);
         transform.position = m_MenuPosition;
-        selection_Panel.SetActive(true);
+        CharacterSelect.SetActive(true);
+        TeamSelect.SetActive(false);
     }
 
+    public void TeamCamera()
+    {
+        MenuCamera();
+        CharacterSelect.SetActive(false);
+        TeamSelect.SetActive(true);
+    }
 }

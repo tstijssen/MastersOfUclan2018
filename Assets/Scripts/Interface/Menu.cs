@@ -170,7 +170,7 @@ public class Menu : MonoBehaviour {
 
                             break;
                         case 1:
-                            StartCoroutine(AsynchronousLoad("Tilt"));
+                            StartCoroutine(AsynchronousLoad("Meuble"));
 
                             break;
                     }

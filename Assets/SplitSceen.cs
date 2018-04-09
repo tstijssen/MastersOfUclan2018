@@ -16,6 +16,12 @@ public class SplitSceen : MonoBehaviour {
         ChangeSplitScreen();
     }
 
+    private void Update()
+    {
+        ChangeSplitScreen();
+
+    }
+
     public void ChangeSplitScreen()
     {
 
@@ -38,9 +44,9 @@ public class SplitSceen : MonoBehaviour {
                 break;
 
             case 3: // single vertical on left, two vertical on right []:
-                cam1.rect = new Rect(0, 0, 0.5f, 1);
-                cam2.rect = new Rect(0.5f, 0, 0.5f, 0.5f);
-                cam3.rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
+                cam1.rect = new Rect(0, 0, 0.5f, 0.5f);
+                cam2.rect = new Rect(0, 0.5f, 0.5f, 0.5f);
+                cam3.rect = new Rect(0.5f, 0.0f, 0.5f, 0.5f);
 
                 cam2.gameObject.SetActive(true);
                 cam3.gameObject.SetActive(true);
