@@ -27,10 +27,10 @@ public class LevelSelect : MonoBehaviour {
         switch (levelSelect)
         {
             case 0:
-                levelName.text = "CTF Castles";
+                levelName.text = "CTF Bridges";
                 break;
             case 1:
-                levelName.text = "FFA Bridge";
+                levelName.text = "FFA Bridges";
                 break;
             case 2:
                 levelName.text = "FFA Tilt";
