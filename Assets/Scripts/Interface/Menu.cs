@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using XInputDotNetPure;
 
 public class Menu : MonoBehaviour {
     enum Menus {Splash, Main, OfflineLobby, OnlineLobby, Loading};
     Menus menuUp = Menus.Splash; //Which menu is active
 
     public float timer;
+    GamePadState gamePad;
+
+
 
     //DEV
     public Text stateText;
@@ -53,6 +57,8 @@ public class Menu : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+      
+
         //DEV
         stateText.text = menuUp.ToString();
 
@@ -94,12 +100,8 @@ public class Menu : MonoBehaviour {
                 }
                 break;
             case Menus.Main:
-
                 if (!menuPanel.activeInHierarchy)
-                    menuPanel.SetActive(true);
-
-                
-
+                    menuPanel.SetActive(true);             
 
                 if (shutter.GetComponent<RectTransform>().position.y < Screen.height /1.6)
                 {
@@ -114,15 +116,13 @@ public class Menu : MonoBehaviour {
 
                     if (onlineLobby.activeInHierarchy)
                         onlineLobby.SetActive(false);
-
                 }
 
                 shutter.GetComponent<RectTransform>().Translate((-Vector3.up * transitionSpd) * Time.deltaTime);
-
                 break;
             case Menus.OfflineLobby:
                 if (!offlineLobby.activeInHierarchy)
-                    offlineLobby.SetActive(true);
+                   offlineLobby.SetActive(true);
 
                 if (shutter.GetComponent<RectTransform>().position.y > Screen.height * 2)
                     transitionSpd = 0f;
@@ -145,8 +145,6 @@ public class Menu : MonoBehaviour {
 
                 if (!loadingGif.activeInHierarchy)
                     loadingGif.SetActive(true);
-
-
 
                 if (shutter.GetComponent<RectTransform>().position.y < Screen.height / 1.6)
                 {
