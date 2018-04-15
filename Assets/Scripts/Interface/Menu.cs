@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using XInputDotNetPure;
 
 public class Menu : MonoBehaviour {
-    enum Menus {Splash, Main, OfflineLobby, OnlineLobby, Loading};
+    enum Menus {Splash, Main, OfflineLobby, LevelSelect, OnlineLobby, Loading};
     Menus menuUp = Menus.Splash; //Which menu is active
 
     public float timer;
@@ -39,7 +39,8 @@ public class Menu : MonoBehaviour {
 
     //Lobby Offline
     public Button back;
-    public Button launch;
+    public Button levelSelectBtn;
+    public GameObject offlineLobbyUI;
     public GameObject offlineLobby;
 
     //Lobby Online
@@ -53,6 +54,10 @@ public class Menu : MonoBehaviour {
     AsyncOperation loadLevel;
     bool loading = false;
 
+    //Level Select
+    public GameObject levelSelect;
+    public GameObject levelSelectUI;
+    public Button launchGame;
 
     // Use this for initialization
     void Start ()
@@ -78,10 +83,10 @@ public class Menu : MonoBehaviour {
 
         //Lobby
         back.onClick.AddListener(ToMenu);
-        launch.onClick.AddListener(LaunchGame);
+        launchGame.onClick.AddListener(LaunchGame);
+        levelSelectBtn.onClick.AddListener(LevelSelect);
 
         onlineBack.onClick.AddListener(ToMenu);
-
 	}
 	
 	// Update is called once per frame
@@ -124,10 +129,48 @@ public class Menu : MonoBehaviour {
                 if (!offlineLobby.activeInHierarchy)
                    offlineLobby.SetActive(true);
 
+                if (!offlineLobbyUI.activeInHierarchy)
+                    offlineLobbyUI.SetActive(true);
+
                 if (shutter.GetComponent<RectTransform>().position.y > Screen.height * 2)
                     transitionSpd = 0f;
 
                 shutter.GetComponent<RectTransform>().Translate((Vector3.up * transitionSpd) * Time.deltaTime);
+
+                if (menuPanel.activeInHierarchy)
+                    menuPanel.SetActive(false);
+
+                break;      
+            case Menus.LevelSelect:
+
+                shutter.GetComponent<RectTransform>().Translate((-Vector3.up * transitionSpd) * Time.deltaTime);
+
+                if (shutter.GetComponent<RectTransform>().position.y < Screen.height / 1.6)
+                {
+                    transitionSpd = 0f;
+                    shutter.GetComponent<RectTransform>().localPosition = new Vector3(0f, 0f, 0f);
+
+
+                    if (offlineLobby.activeInHierarchy)
+                        offlineLobby.SetActive(false);
+
+                    if (offlineLobbyUI.activeInHierarchy)
+                        offlineLobbyUI.SetActive(false);
+
+                    if (!levelSelect.activeInHierarchy)
+                        levelSelect.SetActive(true);
+
+                    if (!levelSelectUI.activeInHierarchy)
+                        levelSelectUI.SetActive(true);
+
+                    transitionSpd = -3000f;
+                }
+                
+
+                if (shutter.GetComponent<RectTransform>().position.y > Screen.height * 2)
+                    transitionSpd = 0f;
+
+
                 break;
             case Menus.OnlineLobby:
                 if (!onlineLobby.activeInHierarchy)
@@ -151,6 +194,11 @@ public class Menu : MonoBehaviour {
 
                     transitionSpd = 0f;
                     shutter.GetComponent<RectTransform>().localPosition = new Vector3(0f, 0f, 0f);
+                    if (levelSelect.activeInHierarchy)
+                        offlineLobby.SetActive(false);
+
+                    if (levelSelectUI.activeInHierarchy)
+                        levelSelectUI.SetActive(false);
                 }
 
                 shutter.GetComponent<RectTransform>().Translate((-Vector3.up * transitionSpd) * Time.deltaTime);               
@@ -162,13 +210,12 @@ public class Menu : MonoBehaviour {
                     {
                         case 0:
                             StartCoroutine(AsynchronousLoad("Arena"));
-
                             break;
                         case 1:
-                            StartCoroutine(AsynchronousLoad("Meuble"));
+                            StartCoroutine(AsynchronousLoad("Castle"));
                             break;
                         case 2:
-                            StartCoroutine(AsynchronousLoad("Tilt"));
+                            StartCoroutine(AsynchronousLoad("Beach"));
                             break;
                     }
                 }
@@ -235,11 +282,25 @@ public class Menu : MonoBehaviour {
 
     void LaunchGame()
     {
-        transitionSpd = 3000f;
-        soundSource.PlayOneShot(accept);
-        soundSource.PlayOneShot(shutterNoise);
-        menuUp = Menus.Loading;
-        stateText.text = menuUp.ToString();
+
+            transitionSpd = 3000f;
+            soundSource.PlayOneShot(accept);
+            soundSource.PlayOneShot(shutterNoise);
+            menuUp = Menus.Loading;
+            stateText.text = menuUp.ToString();
+        
+    }
+
+
+    void LevelSelect()
+    {
+
+            transitionSpd = 3000f;
+            soundSource.PlayOneShot(accept);
+            soundSource.PlayOneShot(shutterNoise);
+            menuUp = Menus.LevelSelect;
+            stateText.text = menuUp.ToString();
+        
     }
 
     void QuitGame()

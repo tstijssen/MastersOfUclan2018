@@ -7,8 +7,10 @@ public class PlatfomOptions : MonoBehaviour {
 
     public GameObject[] car;// = new GameObject[3];
 
-    bool isReady = false;
 
+    float speed = 10.0f;
+    public bool isReady = false;
+    
     public int carPick;
 
     public Button ready;
@@ -33,16 +35,20 @@ public class PlatfomOptions : MonoBehaviour {
         ready.onClick.AddListener(PickReady);
 
         car[carPick].SetActive(true);
-
     }
-	
-	// Update is called once per frame
-	void Update ()
-    {
-        transform.Rotate(new Vector3(0f, 10f * Time.deltaTime, 0f));
 
-        if(isReady)
+    private void OnEnable()
+    {
+        isReady = false;
+    }
+
+    // Update is called once per frame
+    void Update ()
+    {
+
+        if (isReady)
         {
+
             //find the vector pointing from our position to the target
             _direction = (Target.position - transform.position).normalized;
 
@@ -51,40 +57,58 @@ public class PlatfomOptions : MonoBehaviour {
 
             //rotate us over time according to speed until we are in the required rotation
             transform.rotation = Quaternion.Slerp(transform.rotation, _lookRotation, Time.deltaTime * RotationSpeed);
+        }
+        else
+        {
+            transform.Rotate(new Vector3(0f, speed * Time.deltaTime, 0f));
+
 
         }
-
-
-
     }
 
     void PickReady()
     {
-
-        isReady = true;
+        switch (gameObject.name)
+        {
+            case "Platform1":
+                break;
+            case "Platform2":
+                break;
+            case "Platform3":
+                break;
+            case "Platform4":
+                break;
+        }
+        isReady = !isReady;
     }
 
 
     void IncChoice()
     {
-        car[carPick].SetActive(false);
-        carPick++;
+        if (!isReady)
+        {
+            car[carPick].SetActive(false);
+            carPick++;
 
-        if (carPick > 3)
-            carPick = 0;
+            if (carPick > 3)
+                carPick = 0;
 
-        car[carPick].SetActive(true);
+            car[carPick].SetActive(true);
+        }
     }
 
     void DecChoice()
     {
-        car[carPick].SetActive(false);
-        carPick--;
+        if (!isReady)
+        {
+            car[carPick].SetActive(false);
+            carPick--;
 
-        if (carPick < 0)
-            carPick = 3;
+            if (carPick < 0)
+                carPick = 3;
 
-        car[carPick].SetActive(true);
+            car[carPick].SetActive(true);
+        }
     }
 
 }
