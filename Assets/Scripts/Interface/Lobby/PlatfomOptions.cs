@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using XInputDotNetPure;
 
 public class PlatfomOptions : MonoBehaviour {
 
     public GameObject[] car;// = new GameObject[3];
+    GamePadState gamePad;
 
 
     float speed = 10.0f;
@@ -45,7 +47,7 @@ public class PlatfomOptions : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
-
+        gamePad = container.GetComponent<MenuControllerDetect>().state;
         if (isReady)
         {
 

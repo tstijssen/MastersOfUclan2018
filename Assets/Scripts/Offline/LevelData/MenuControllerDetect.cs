@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using XInputDotNetPure;
 
-public class MenuControllerDetect : MonoBehaviour {
+public class MenuControllerDetection : MonoBehaviour {
 
 
     public GameObject[] players;
     bool playerIndexSet = false;
     PlayerIndex playerIndex;
-    public GamePadState state;
+    GamePadState state;
     GamePadState prevState;
     int numOfPlayers = 0;
     // Use this for initialization
