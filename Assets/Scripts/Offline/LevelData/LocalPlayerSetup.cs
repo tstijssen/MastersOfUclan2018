@@ -20,7 +20,6 @@ public class LocalPlayerSetup : MonoBehaviour {
     void Update()
     {
         //transform.Rotate(Vector3.up, m_GamePadState.ThumbSticks.Left.X);
-
     }
 
 }

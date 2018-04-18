@@ -3924,17 +3924,17 @@ MonoBehaviour:
   shutterNoise: {fileID: 8300000, guid: 6e6f3137837e4d045839a9f43c668c4f, type: 3}
   shutterNoiseOpen: {fileID: 8300000, guid: 3899dbd6d6c54594b8dd6deb638514bb, type: 3}
   back: {fileID: 646103623}
-  levelSelectBtn: {fileID: 1138075021}
-  offlineLobbyUI: {fileID: 1812554419}
+  levelSelectBtn: {fileID: 0}
+  offlineLobbyUI: {fileID: 0}
   offlineLobby: {fileID: 1771930374}
   onlineBack: {fileID: 727334793}
   onlineLobby: {fileID: 727334790}
   loadingGif: {fileID: 1530615965}
   loadText: {fileID: 2123213238}
   loadAnim: {fileID: 0}
-  levelSelect: {fileID: 1388517527}
-  levelSelectUI: {fileID: 1804554081}
-  launchGame: {fileID: 1691400088}
+  levelSelect: {fileID: 0}
+  levelSelectUI: {fileID: 0}
+  launchGame: {fileID: 0}
 --- !u!82 &347117824
 AudioSource:
   m_ObjectHideFlags: 0

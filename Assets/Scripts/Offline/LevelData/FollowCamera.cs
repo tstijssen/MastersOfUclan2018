@@ -21,12 +21,14 @@ public class FollowCamera : MonoBehaviour {
 
     void Start()
     {
+
         VehicleSelected = false;
 
         m_Camera = this.GetComponent<Camera>();
+
     }
 
-    private void Update()
+    void LateUpdate()
     {
         if (!VehicleSelected && targets[(int)m_Selection].GetComponent<CarFireControl>().m_Despawned)
         {

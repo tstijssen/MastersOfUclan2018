@@ -12,8 +12,6 @@ public class Menu : MonoBehaviour {
     public float timer;
     GamePadState gamePad;
 
-
-
     //DEV
     public Text stateText;
 

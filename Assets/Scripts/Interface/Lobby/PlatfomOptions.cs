@@ -47,7 +47,7 @@ public class PlatfomOptions : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
-        gamePad = container.GetComponent<MenuControllerDetect>().state;
+        //gamePad = container.GetComponent<MenuControllerDetect>().state;
         if (isReady)
         {
 

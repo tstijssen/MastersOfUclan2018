@@ -27,20 +27,21 @@ public class ControllerMouse : MonoBehaviour {
         v = 0.0f;
         selectedTarget = -1;
         //transform.position = targets[selectedTarget].transform.position;
-    }
-
-    void OnEnable()
-    {
         canInteract = false;
         pressed = false;
         toggle = false;
         StartCoroutine(MenuChange());
         selectedTarget = 0;
 
-        if(spawnSelect)
+        if (spawnSelect)
         {
             targets = GameObject.FindGameObjectsWithTag("Spawn");
         }
+    }
+
+    void ResetButton()
+    {
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -48,11 +49,10 @@ public class ControllerMouse : MonoBehaviour {
         Debug.Log("Trigger");
     }
 
-        // Update is called once per frame
-    void Update () {
-
+    // Update is called once per frame
+    void LateUpdate()
+    {
         gamePad = cam.GetComponentInParent<LocalPlayerSetup>().m_GamePadState;
-
         if (gamePad.IsConnected)
         {
             toggle = (gamePad.Buttons.B == ButtonState.Pressed);
@@ -68,7 +68,6 @@ public class ControllerMouse : MonoBehaviour {
         if (toggle && canInteract)
         {
             selectedTarget = (selectedTarget + 1) % targets.Length;
-
             if (spawnSelect)
             {
                 bool validSpawn = false;
@@ -94,13 +93,6 @@ public class ControllerMouse : MonoBehaviour {
             canInteract = false;
             StartCoroutine(MenuChange());
         }
-        //else if(h < 0 && selectedTarget < targets.Length - 1 && canInteract)
-        //{
-        //    selectedTarget++;
-        //    transform.position = targets[selectedTarget].transform.position;
-        //    canInteract = false;
-        //    StartCoroutine(MenuChange());
-        //}
 
         if (pressed && selectedTarget != -1 && canInteract)
         {
@@ -115,8 +107,11 @@ public class ControllerMouse : MonoBehaviour {
 
     IEnumerator MenuChange()
     {
-        yield return new WaitForSeconds(0.5f);  // I suggest decreasing the time here. One second for each button is quite a long time, which I'm sure you already know.
+        Debug.Log("Delaying");
+        yield return new WaitForSeconds(0.25f);
         canInteract = true;   // After the wait is over, the player can interact with the menu again.
+        Debug.Log("Interact = " + canInteract);
+        yield return null;
     }
 
 }

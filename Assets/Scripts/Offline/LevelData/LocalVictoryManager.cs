@@ -30,7 +30,7 @@ public class LocalVictoryManager : MonoBehaviour {
             if (m_Players[i].activeInHierarchy)
             {
                 CarFireControl car = m_Players[i].GetComponentInChildren<CarFireControl>();               
-                if (car.gameObject.activeInHierarchy && car.m_Victory)
+                if (car && car.gameObject.activeInHierarchy && car.m_Victory)
                 {
                     // a player has won the game
                     m_Panel.SetActive(true);
