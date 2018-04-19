@@ -10,7 +10,7 @@ public class PlatformActivator : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-			
+		gamePadStates = new GamePadState[Platforms.Length];
 	}
 	
 	// Update is called once per frame
