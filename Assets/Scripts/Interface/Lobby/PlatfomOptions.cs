@@ -66,14 +66,14 @@ public class PlatfomOptions : MonoBehaviour {
         {
             transform.Rotate(new Vector3(0f, speed * Time.deltaTime, 0f));
 
-			if (canInteract && gamePad.ThumbSticks.Left.Y < -0.5f)
+			if (canInteract && gamePad.ThumbSticks.Left.X < -0.5f)
 			{
 				DecChoice ();
 				canInteract = false;
 				StartCoroutine (MenuChange());
 			}
 
-			if (canInteract && gamePad.ThumbSticks.Left.Y > 0.5f)
+			if (canInteract && gamePad.ThumbSticks.Left.X > 0.5f)
 			{
 				IncChoice ();
 				canInteract = false;
