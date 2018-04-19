@@ -17,7 +17,7 @@ public class MenuControllerMouse : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        gamePad = container.GetComponent<MenuControllerDetect>().state;
+        gamePad = container.GetComponent<MenuControllerDetect>().state[0];
 
         transform.Translate(new Vector3(gamePad.ThumbSticks.Left.X, gamePad.ThumbSticks.Left.Y, 0.0f));
 	}

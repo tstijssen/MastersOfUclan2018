@@ -7,12 +7,13 @@ using XInputDotNetPure;
 public class PlatfomOptions : MonoBehaviour {
 
     public GameObject[] car;// = new GameObject[3];
-    GamePadState gamePad;
+    public GamePadState gamePad;
 
 
     float speed = 10.0f;
     public bool isReady = false;
-    
+	bool canInteract;
+
     public int carPick;
 
     public Button ready;
@@ -37,6 +38,8 @@ public class PlatfomOptions : MonoBehaviour {
         ready.onClick.AddListener(PickReady);
 
         car[carPick].SetActive(true);
+		canInteract = false;
+		StartCoroutine (MenuChange());
     }
 
     private void OnEnable()
@@ -47,7 +50,6 @@ public class PlatfomOptions : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
-        //gamePad = container.GetComponent<MenuControllerDetect>().state;
         if (isReady)
         {
 
@@ -64,7 +66,26 @@ public class PlatfomOptions : MonoBehaviour {
         {
             transform.Rotate(new Vector3(0f, speed * Time.deltaTime, 0f));
 
+			if (canInteract && gamePad.ThumbSticks.Left.Y < -0.5f)
+			{
+				DecChoice ();
+				canInteract = false;
+				StartCoroutine (MenuChange());
+			}
 
+			if (canInteract && gamePad.ThumbSticks.Left.Y > 0.5f)
+			{
+				IncChoice ();
+				canInteract = false;
+				StartCoroutine (MenuChange());
+			}
+
+			if (canInteract && gamePad.Buttons.A == ButtonState.Pressed)
+			{
+				PickReady ();
+				canInteract = false;
+				StartCoroutine (MenuChange());
+			}
         }
     }
 
@@ -113,4 +134,10 @@ public class PlatfomOptions : MonoBehaviour {
         }
     }
 
+	IEnumerator MenuChange()
+	{
+		Debug.Log("Delaying");
+		yield return new WaitForSeconds(0.25f);
+		canInteract = true;   // After the wait is over, the player can interact with the menu again.
+	}
 }

@@ -251,7 +251,7 @@ public class Menu : MonoBehaviour {
 
 
     //Button Listeners
-    void LaunchOffline()
+    public void LaunchOffline()
     {
         transitionSpd = 3000f;
         soundSource.PlayOneShot(accept);
@@ -260,7 +260,7 @@ public class Menu : MonoBehaviour {
         stateText.text = menuUp.ToString();
     }
 
-    void LaunchOnline()
+	public void LaunchOnline()
     {
         transitionSpd = 3000f;
         soundSource.PlayOneShot(accept);
@@ -269,7 +269,7 @@ public class Menu : MonoBehaviour {
         stateText.text = menuUp.ToString();
     }
 
-    void ToMenu()
+	public void ToMenu()
     {
         transitionSpd = 3000f;
         soundSource.PlayOneShot(accept);
@@ -278,7 +278,7 @@ public class Menu : MonoBehaviour {
         stateText.text = menuUp.ToString();
     }
 
-    void LaunchGame()
+	public void LaunchGame()
     {
 
             transitionSpd = 3000f;
@@ -290,7 +290,7 @@ public class Menu : MonoBehaviour {
     }
 
 
-    void LevelSelect()
+    public void LevelSelect()
     {
 
             transitionSpd = 3000f;
@@ -301,7 +301,7 @@ public class Menu : MonoBehaviour {
         
     }
 
-    void QuitGame()
+	public void QuitGame()
     {
         soundSource.PlayOneShot(accept);
         Application.Quit();

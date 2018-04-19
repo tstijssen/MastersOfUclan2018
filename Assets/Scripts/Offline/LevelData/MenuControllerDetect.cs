@@ -7,8 +7,13 @@ public class MenuControllerDetect : MonoBehaviour {
 
     bool playerIndexSet = false;
     PlayerIndex playerIndex;
-    public GamePadState state;
+	public GamePadState[] state;
     GamePadState prevState;
+
+	void Start()
+	{
+		state = new GamePadState[4];
+	}
 
 	// Update is called once per frame
 	void Update () {
@@ -31,8 +36,11 @@ public class MenuControllerDetect : MonoBehaviour {
                 }
             }
         }
-        prevState = state;
-        state = GamePad.GetState(playerIndex);
+        prevState = state[0];
+		for (int i = 0; i < 4; ++i)
+		{
+			state[i] = GamePad.GetState((PlayerIndex)i);
+		}
     }
 
 
