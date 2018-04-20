@@ -143,7 +143,7 @@ public class Menu : MonoBehaviour {
 
                 if (players)
                 {
-                    if (gamePad.Buttons.Start == ButtonState.Pressed)
+                    if (gamePad.Buttons.Y == ButtonState.Pressed)
                     {
                         LevelSelect();
                         Debug.Log("Start");
@@ -180,6 +180,16 @@ public class Menu : MonoBehaviour {
 
                 if (shutter.GetComponent<RectTransform>().position.y > Screen.height * 2)
                     transitionSpd = 0f;
+
+                if (players)
+                {
+                    if (gamePad.Buttons.Y == ButtonState.Pressed)
+                    {
+                        LaunchGame();
+                        Debug.Log("Start");
+                    }
+                    Debug.Log("players ready");
+                }
 
 
                 break;
@@ -220,13 +230,10 @@ public class Menu : MonoBehaviour {
                     switch (PlayerPrefs.GetInt("Level"))
                     {
                         case 0:
-                            StartCoroutine(AsynchronousLoad("Arena"));
+                            StartCoroutine(AsynchronousLoad("FFA-Bridges"));
                             break;
                         case 1:
-                            StartCoroutine(AsynchronousLoad("Castle"));
-                            break;
-                        case 2:
-                            StartCoroutine(AsynchronousLoad("Beach"));
+                            StartCoroutine(AsynchronousLoad("FFA-Tilt"));
                             break;
                     }
                 }
@@ -250,11 +257,9 @@ public class Menu : MonoBehaviour {
             Debug.Log("Loading progress: " + (progress * 100) + "%");
 
             // Loading completed
-            if (ao.progress == 0.9f)
+            if (ao.progress >= 0.9f)
             {
-                Debug.Log("Press Q key to start");
-                loadText.text = "Press Q key to start";
-                if (Input.GetKey(KeyCode.Q))
+                
                     ao.allowSceneActivation = true;
             }
 

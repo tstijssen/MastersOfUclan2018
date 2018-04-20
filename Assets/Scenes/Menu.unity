@@ -22986,9 +22986,8 @@ MonoBehaviour:
   right: {fileID: 769864666}
   levelText: {fileID: 1329545140}
   levels:
-  - Arena
-  - Castle
-  - Beach
+  - FFABridge
+  - FFATilt
 --- !u!1 &1391496122
 GameObject:
   m_ObjectHideFlags: 0

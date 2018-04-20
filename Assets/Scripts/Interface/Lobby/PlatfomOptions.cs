@@ -92,19 +92,23 @@ public class PlatfomOptions : MonoBehaviour {
 
     void PickReady()
     {
-        //switch (gameObject.name)
-        //{
-        //    case "Platform1":
-        //        break;
-        //    case "Platform2":
-        //        break;
-        //    case "Platform3":
-        //        break;
-        //    case "Platform4":
-        //        break;
-        //}
+        switch (gameObject.name)
+        {
+            case "Platform1":
+                PlayerPrefs.SetInt("P1", carPick);
+                break;
+            case "Platform2":
+                PlayerPrefs.SetInt("P2", carPick);
+                break;
+            case "Platform3":
+                PlayerPrefs.SetInt("P3", carPick);
+                break;
+            case "Platform4":
+                PlayerPrefs.SetInt("P4", carPick);
+                break;
+        }
 
-        if(!isReady)
+        if (!isReady)
             GetComponentInParent<PlatformActivator>().noPlayers++;
 
 
