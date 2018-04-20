@@ -50,6 +50,7 @@ public class PlatfomOptions : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
+        
         if (isReady)
         {
 
@@ -91,17 +92,22 @@ public class PlatfomOptions : MonoBehaviour {
 
     void PickReady()
     {
-        switch (gameObject.name)
-        {
-            case "Platform1":
-                break;
-            case "Platform2":
-                break;
-            case "Platform3":
-                break;
-            case "Platform4":
-                break;
-        }
+        //switch (gameObject.name)
+        //{
+        //    case "Platform1":
+        //        break;
+        //    case "Platform2":
+        //        break;
+        //    case "Platform3":
+        //        break;
+        //    case "Platform4":
+        //        break;
+        //}
+
+        if(!isReady)
+            GetComponentInParent<PlatformActivator>().noPlayers++;
+
+
         isReady = !isReady;
     }
 

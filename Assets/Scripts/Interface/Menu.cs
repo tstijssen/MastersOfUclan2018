@@ -6,8 +6,8 @@ using UnityEngine.UI;
 using XInputDotNetPure;
 
 public class Menu : MonoBehaviour {
-    enum Menus {Splash, Main, OfflineLobby, LevelSelect, OnlineLobby, Loading};
-    Menus menuUp = Menus.Splash; //Which menu is active
+    public enum Menus {Splash, Main, OfflineLobby, LevelSelect, OnlineLobby, Loading};
+    public Menus menuUp = Menus.Splash; //Which menu is active
 
     public float timer;
     GamePadState gamePad;
@@ -40,6 +40,8 @@ public class Menu : MonoBehaviour {
     public Button levelSelectBtn;
     public GameObject offlineLobbyUI;
     public GameObject offlineLobby;
+    public GameObject getPlayersReady;
+    bool players;
 
     //Lobby Online
     public Button onlineBack;
@@ -83,13 +85,14 @@ public class Menu : MonoBehaviour {
         back.onClick.AddListener(ToMenu);
         launchGame.onClick.AddListener(LaunchGame);
         levelSelectBtn.onClick.AddListener(LevelSelect);
-
         onlineBack.onClick.AddListener(ToMenu);
+        
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
+        players = getPlayersReady.GetComponent<PlatformActivator>().allReady;
         switch (menuUp)
         {
             case Menus.Splash:
@@ -137,6 +140,16 @@ public class Menu : MonoBehaviour {
 
                 if (menuPanel.activeInHierarchy)
                     menuPanel.SetActive(false);
+
+                if (players)
+                {
+                    if (gamePad.Buttons.Start == ButtonState.Pressed)
+                    {
+                        LevelSelect();
+                        Debug.Log("Start");
+                    }
+                    Debug.Log("players ready");
+                }
 
                 break;      
             case Menus.LevelSelect:

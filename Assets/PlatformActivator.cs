@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using XInputDotNetPure;
 
-public class PlatformActivator : MonoBehaviour {
+public class PlatformActivator : MonoBehaviour
+{
     public GameObject levelSelectTxt;
-
-	public GameObject[] Platforms;
-	public GamePadState[] gamePadStates;
+    Menu levelScreen;
+    public GameObject[] Platforms;
+    public GamePadState[] gamePadStates;
     bool[] playersReady = new bool[4];
-    int noPlayers;
+    public int noPlayers;
+    public int noReadyPlayers;
+    public bool allReady = false;
 
     // Use this for initialization
     void Start()
@@ -19,39 +22,75 @@ public class PlatformActivator : MonoBehaviour {
         {
             playersReady[i] = false;
         }
-
+        levelScreen = GameObject.Find("MenuControl").GetComponent<Menu>();
         noPlayers = 0;
     }
-	
-	// Update is called once per frame
-	void Update () {
-		for (int i = 0; i < Platforms.Length; ++i)
-		{
-			gamePadStates[i] = GameObject.Find("MenuControl").GetComponent<MenuControllerDetect>().state[i];
-			if (gamePadStates [i].IsConnected) 
-			{
-                if(!Platforms[i].activeInHierarchy)
-				    Platforms [i].SetActive (true);
 
-                Platforms [i].GetComponent<PlatfomOptions> ().gamePad = gamePadStates[i];
+    // Update is called once per frame
+    void Update()
+    {
+        for (int i = 0; i < Platforms.Length; ++i)
+        {
+            gamePadStates[i] = GameObject.Find("MenuControl").GetComponent<MenuControllerDetect>().state[i];
+            if (gamePadStates[i].IsConnected)
+            {
+                if (!Platforms[i].activeInHierarchy)
+                    Platforms[i].SetActive(true);
 
-                if(gamePadStates[i].Buttons.A == ButtonState.Pressed)
-                    playersReady[i] = true;
+                Platforms[i].GetComponent<PlatfomOptions>().gamePad = gamePadStates[i];
 
-                for (int j = 0; j < Platforms.Length; ++j)
-                {
-                    if (!playersReady[j])
-                        return;
+                //if(gamePadStates[i].Buttons.A == ButtonState.Pressed)
+                //    playersReady[i] = true;
 
-                    levelSelectTxt.SetActive(true);
 
-                }
             }
-			else
-				Platforms [i].SetActive (false);
-		}
+            else
+                Platforms[i].SetActive(false);
+
+            //Debug.Log(gamePadStates.Length);
+
+            noPlayers = 0;
+            noReadyPlayers = 0;
+            for (int j = 0; j < Platforms.Length; ++j)
+            {
+                if (gamePadStates[j].IsConnected)
+                {
+                    noPlayers++;
+                }
+
+                if (Platforms[j].GetComponent<PlatfomOptions>().isReady)
+                {
+                    noReadyPlayers++;
+                }
+
+                if (noPlayers == noReadyPlayers)
+                {
+                    levelSelectTxt.SetActive(true);
+                    allReady = true;
+                }
+
+            }
+        }
 
 
 
-	}
+    }
+
+    private void LateUpdate()
+    {
+        //if (allReady)
+        //{
+        //    for (int i = 0; i < Platforms.Length; ++i)
+        //    {
+        //        gamePadStates[i] = GameObject.Find("MenuControl").GetComponent<MenuControllerDetect>().state[i];
+        //        if (gamePadStates[i].Buttons.B == ButtonState.Pressed)
+        //        {
+        //            levelScreen.menuUp = Menu.Menus.LevelSelect;
+        //            Debug.Log("Start");
+        //        }
+        //    }
+
+        //}
+
+    }
 }
