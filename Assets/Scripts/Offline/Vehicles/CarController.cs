@@ -103,7 +103,6 @@ namespace UnityStandardAssets.Vehicles.Car
             return (1.0f - value)*from + value*to;
         }
 
-
         private void CalculateGearFactor()
         {
             float f = (1/(float) NoOfGears);
@@ -195,7 +194,6 @@ namespace UnityStandardAssets.Vehicles.Car
 
         private void ApplyDrive(float accel, float footbrake)
         {
-
             float thrustTorque;
             switch (m_CarDriveType)
             {

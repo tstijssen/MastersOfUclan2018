@@ -21,6 +21,8 @@ TagManager:
   - YellowScore
   - SpawnBlocker
   - Spawn
+  - Player 1
+  - Shell
   layers:
   - Default
   - TransparentFX

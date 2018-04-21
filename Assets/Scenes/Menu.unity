@@ -19951,6 +19951,7 @@ MonoBehaviour:
   - {fileID: 1605201814}
   - {fileID: 700712422}
   isReady: 0
+  canInteract: 0
   carPick: 0
   ready: {fileID: 759550337}
   left: {fileID: 2113769051}
@@ -22529,6 +22530,7 @@ MonoBehaviour:
   - {fileID: 1391940929}
   - {fileID: 624220705}
   isReady: 0
+  canInteract: 0
   carPick: 3
   ready: {fileID: 215485560}
   left: {fileID: 2021929868}
@@ -22988,6 +22990,7 @@ MonoBehaviour:
   levels:
   - FFABridge
   - FFATilt
+  Platforms: []
 --- !u!1 &1391496122
 GameObject:
   m_ObjectHideFlags: 0
@@ -23580,6 +23583,7 @@ MonoBehaviour:
   - {fileID: 386728350}
   - {fileID: 309494897}
   isReady: 0
+  canInteract: 0
   carPick: 2
   ready: {fileID: 1404733344}
   left: {fileID: 522145752}
@@ -34599,6 +34603,7 @@ MonoBehaviour:
   - {fileID: 654131244}
   - {fileID: 149159694}
   isReady: 0
+  canInteract: 0
   carPick: 1
   ready: {fileID: 1030945060}
   left: {fileID: 1403190660}

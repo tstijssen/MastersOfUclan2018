@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using XInputDotNetPure;
 
 [System.Serializable]
 public enum FireType {TwinGuns, Beam, Ram, Cannon };
@@ -99,6 +100,9 @@ public class CarFireControl : MonoBehaviour {
     public GameObject m_CarMat;
     public int m_PlayerNumber;
     public bool m_Victory;  // determines whether this player has achieved victory
+
+    float m_RumbleCountDown = 0.0f;
+    bool m_RumbleActive;
 
     public GameObject Shoot()
     {
@@ -206,6 +210,8 @@ public class CarFireControl : MonoBehaviour {
                 bullet1.transform.position = m_GunData.Barrel1.transform.position;
                 bullet1.transform.rotation = m_GunData.Barrel1.transform.rotation;
                 bullet1.GetComponent<CannonBallTravel>().m_Speed = m_Heat;
+                bullet1.GetComponent<CannonBallTravel>().m_Owner = this;
+                bullet1.GetComponent<CannonBallTravel>().direction = bullet1.transform.forward;
                 bullet1.SetActive(true);
             }
             GameObject bullet2 = m_GunData.BulletPool.GetPooledObject();  // get bullet object from pool
@@ -217,6 +223,8 @@ public class CarFireControl : MonoBehaviour {
                 bullet2.transform.position = m_GunData.Barrel2.transform.position;
                 bullet2.transform.rotation = m_GunData.Barrel2.transform.rotation;
                 bullet2.GetComponent<CannonBallTravel>().m_Speed = m_Heat;
+                bullet2.GetComponent<CannonBallTravel>().m_Owner = this;
+                bullet2.GetComponent<CannonBallTravel>().direction = bullet2.transform.forward;
                 bullet2.SetActive(true);
             }
             m_GunData.fired = false;
@@ -306,13 +314,41 @@ public class CarFireControl : MonoBehaviour {
                         }
                     }
                     Debug.Log("bullethit");
+
                     other.GetComponent<BulletTravel>().ResetBullet();
+
+                    RotateHitIndicator(other.transform.position);
+                }
+            }
+            else if (other.tag == "Shell")
+            {
+                if (other.GetComponent<CannonBallTravel>().m_Active)
+                {
+                    GetComponent<AudioSource>().PlayOneShot(m_CarData.HitSound, 1);
+                    if (m_ShieldPowerUp)
+                    {
+                        m_ShieldHealth -= other.GetComponent<CannonBallTravel>().m_Damage;
+                    }
+                    else
+                    {
+                        m_CarData.Health -= other.GetComponent<CannonBallTravel>().m_Damage;
+                        if (m_CarData.Health <= 0.0f)
+                        {
+                            other.GetComponent<CannonBallTravel>().m_Owner.RecordKill(this);
+                            Death();
+                        }
+                    }
+                    Debug.Log("cannon ball hit");
+                    other.GetComponent<CannonBallTravel>().ResetBullet();
 
                     RotateHitIndicator(other.transform.position);
                 }
             }
             else if (other.tag == "TrainScoop")
             {
+                RotateHitIndicator(other.transform.position);
+                other.transform.parent.parent.parent.GetComponentInParent<CarFireControl>().RecordKill(this);
+                
                 Death();
             }
             else if (other.tag == "Hazard")
@@ -353,6 +389,13 @@ public class CarFireControl : MonoBehaviour {
         }
     }
 
+    public void RumblePlayer(float amount)
+    {
+        GamePad.SetVibration((PlayerIndex)m_PlayerNumber, amount, amount);
+        m_RumbleCountDown = 0.2f; // amount in seconds for rumble to reset
+        m_RumbleActive = true;
+    }
+
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "DeathZone")
@@ -389,6 +432,7 @@ public class CarFireControl : MonoBehaviour {
 
     private void RotateHitIndicator(Vector3 hitPos)
     {
+        RumblePlayer(0.5f);
         if (!m_HitActive)
         {
             m_HitActive = true;
@@ -489,6 +533,7 @@ public class CarFireControl : MonoBehaviour {
 
     public void Death()
     {
+        RumblePlayer(0.5f);
         if (m_HasFlag)
         {
             m_FlagData.DropFlag();
@@ -522,6 +567,16 @@ public class CarFireControl : MonoBehaviour {
 
     private void Update()
     {
+        if (m_RumbleActive)
+        {
+            m_RumbleCountDown -= Time.deltaTime;
+            if (m_RumbleCountDown < 0.0f)
+            {
+                RumblePlayer(0.0f);
+                m_RumbleActive = false;
+            }
+        }
+
         if(m_Alive)
         {
             if(m_InDeathZone)

@@ -37,6 +37,10 @@ public class FollowCamera : MonoBehaviour {
             targets[(int)m_Selection].SetActive(false);
             targets[(int)m_Selection].GetComponent<CarFireControl>().m_Despawned = false;
         }
+        else if(targets[(int)m_Selection].activeInHierarchy)
+        {
+            transform.LookAt(targets[(int)m_Selection].transform);
+        }
 
         if (Input.GetMouseButtonDown(0) && VehicleSelected)
         {

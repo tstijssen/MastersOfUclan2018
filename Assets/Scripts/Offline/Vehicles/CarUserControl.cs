@@ -13,7 +13,9 @@ namespace UnityStandardAssets.Vehicles.Car
 
         float h;
         float v;
-
+        float triggerFire = 0.0f;
+        float cameraMovement = 0.0f;
+        
         bool fire = false;
         bool fireRelease = false;
 
@@ -22,6 +24,7 @@ namespace UnityStandardAssets.Vehicles.Car
         string verticalCommand;
 
         public GamePadState gamePad;
+        GameObject m_Camera;
 
         private void Awake()
         {
@@ -32,27 +35,47 @@ namespace UnityStandardAssets.Vehicles.Car
             horizontalCommand = GetComponentInParent<LocalPlayerSetup>().m_HorizontalMove;
             verticalCommand = GetComponentInParent<LocalPlayerSetup>().m_VerticalMove;
             gamePad = GetComponentInParent<LocalPlayerSetup>().m_GamePadState;
+            m_Camera = GetComponentInParent<LocalPlayerSetup>().m_Camera;
         }
 
         private void Update()
         {
+            
             if (!m_FireControl.m_Alive)
             {
                 return;
             }
-            Debug.Log("Player is using gamepad " + gamePad.IsConnected);
 
             if (gamePad.IsConnected)
             {
+                float oldTrigger = triggerFire;
                 gamePad = GetComponentInParent<LocalPlayerSetup>().m_GamePadState;
 
                 h = gamePad.ThumbSticks.Left.X;
                 v = gamePad.ThumbSticks.Left.Y;
-                fire = (gamePad.Buttons.A == ButtonState.Pressed);
+                triggerFire = gamePad.Triggers.Right;
+                cameraMovement = gamePad.ThumbSticks.Right.X;
 
-                fireRelease = (gamePad.Buttons.A == ButtonState.Released);
-  
-                Debug.Log(fire);
+                if (triggerFire > 0.5f)
+                {
+                    fire = true;
+                }
+                else
+                {
+                    fire = false;
+                    if (triggerFire < oldTrigger && triggerFire <= 0.1f)
+                    {
+                        fireRelease = true;
+                    }
+                    else
+                    {
+                        fireRelease = false;
+                    }
+                }
+
+                //fire = (gamePad.Buttons.A == ButtonState.Pressed);
+
+                //fireRelease = (gamePad.Buttons.A == ButtonState.Released);
             }
         }
 
@@ -81,6 +104,8 @@ namespace UnityStandardAssets.Vehicles.Car
             if (fireRelease)
                 m_FireControl.ShootRelease();
 
+            m_Camera.transform.Translate(Vector3.right * (cameraMovement * 10.0f) * Time.deltaTime);
+           // Debug.Log(v);
 #if !MOBILE_INPUT
             float handbrake = CrossPlatformInputManager.GetAxis("Jump");
             m_Car.Move(h, v, v, handbrake);

@@ -11,7 +11,7 @@ public class LocalPlayerSetup : MonoBehaviour {
     public string m_FireCommand;
     public GamePadState m_GamePadState;
     public GameObject m_Camera;
-
+    float cameraMovement;
     public void SetColour(int colourNum)
     {
         m_PlayerTeam = (TeamColours)colourNum;
@@ -42,7 +42,7 @@ public class LocalPlayerSetup : MonoBehaviour {
 
     void Update()
     {
-        //transform.Rotate(Vector3.up, m_GamePadState.ThumbSticks.Left.X);
+
     }
 
 }

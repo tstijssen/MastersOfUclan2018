@@ -48,19 +48,7 @@ public class BulletTravel : MonoBehaviour {
         // exited player's collision space, bullet now active
         if(!m_Active && (other.tag == "Player" || other.tag == "Player 1" || other.tag == "Player 2"))
         {
-            Debug.Log("BulletActive");
             m_Active = true;
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log(other.tag);
-        if (other.tag == "Scenery")
-        {
-            ResetBullet();
-            Debug.Log("BulletReset");
-
         }
     }
 
