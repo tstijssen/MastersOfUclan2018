@@ -11,7 +11,7 @@ public class ScoreBoardToggle : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         
-		if(Input.GetKey(KeyCode.Tab))
+		if(Input.GetButton("ToggleScoreboard"))
         {
             scoreboard.SetActive(true);
         }

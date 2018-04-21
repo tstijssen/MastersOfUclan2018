@@ -377,10 +377,11 @@ public class CarFireControl : MonoBehaviour {
                     m_CarData.Health -= (other.GetComponent<laserScript>().m_Damage * Time.deltaTime);
                     if (m_CarData.Health <= 0.0f)
                     {
-                        other.GetComponent<BulletTravel>().m_Owner.RecordKill(this);
+                        other.transform.parent.GetComponentInParent<CarFireControl>().RecordKill(this);
                         Death();
                     }
                 }
+                RotateHitIndicator(other.transform.position);
             }
         }
 
@@ -442,11 +443,18 @@ public class CarFireControl : MonoBehaviour {
         {
             case TeamColours.Red:
                 mat.color = Color.red;
-                m_FlagScoreText = GameObject.FindGameObjectWithTag("RedScore").GetComponent<Text>();
+                if (GameObject.FindGameObjectWithTag("RedScore"))
+                {
+                    m_FlagScoreText = GameObject.FindGameObjectWithTag("RedScore").GetComponent<Text>();
+
+                }
                 break;
             case TeamColours.Blue:
                 mat.color = Color.blue;
-                m_FlagScoreText = GameObject.FindGameObjectWithTag("BlueScore").GetComponent<Text>();
+                if (GameObject.FindGameObjectWithTag("BlueScore"))
+                {
+                    m_FlagScoreText = GameObject.FindGameObjectWithTag("BlueScore").GetComponent<Text>();
+                }
                 break;
             case TeamColours.Green:
                 mat.color = Color.green;

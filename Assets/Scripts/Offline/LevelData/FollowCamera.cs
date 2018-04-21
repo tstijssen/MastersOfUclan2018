@@ -90,10 +90,13 @@ public class FollowCamera : MonoBehaviour {
     public void SpawnPlayer(Vector3 position, Quaternion rotation)
     {
         container.transform.position = position;
+        container.transform.rotation = Quaternion.identity;
         container.transform.rotation = rotation;
-        transform.rotation = rotation;
 
         targets[(int)m_Selection].transform.position = position;
+        targets[(int)m_Selection].transform.rotation = new Quaternion(0, 0, 0, 0);
+        //targets[(int)m_Selection].transform.rotation = rotation;
+        transform.rotation = new Quaternion( 0,0,0, 0);
 
         targets[(int)m_Selection].SetActive(true);
         Follow(targets[(int)m_Selection].transform);
@@ -118,7 +121,11 @@ public class FollowCamera : MonoBehaviour {
         transform.Rotate(90.0f, 90.0f, 0.0f);
         transform.position = m_MenuPosition;
         CharacterSelect.SetActive(true);
-        TeamSelect.SetActive(false);
+        if(TeamSelect)
+        {
+            TeamSelect.SetActive(false);
+
+        }
     }
 
     public void TeamCamera()

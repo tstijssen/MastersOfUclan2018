@@ -35,37 +35,40 @@ public class ScoreboardManager : MonoBehaviour {
             {
                 m_ScorePanels[i].SetActive(true);
                 m_Cars[i] = m_Players[i].GetComponentInChildren<CarFireControl>();
-                switch (m_Cars[i].m_PlayerTeam)
+                if (m_Cars[i])
                 {
-                    case TeamColours.Red:
-                        m_Items[i].m_Colour.color = Color.red;
-                        break;
-                    case TeamColours.Blue:
-                        m_Items[i].m_Colour.color = Color.blue;
-                        break;
-                    case TeamColours.Green:
-                        m_Items[i].m_Colour.color = Color.green;
-                        break;
-                    case TeamColours.Yellow:
-                        m_Items[i].m_Colour.color = Color.yellow;
-                        break;
-                }
+                    switch (m_Cars[i].m_PlayerTeam)
+                    {
+                        case TeamColours.Red:
+                            m_Items[i].m_Colour.color = Color.red;
+                            break;
+                        case TeamColours.Blue:
+                            m_Items[i].m_Colour.color = Color.blue;
+                            break;
+                        case TeamColours.Green:
+                            m_Items[i].m_Colour.color = Color.green;
+                            break;
+                        case TeamColours.Yellow:
+                            m_Items[i].m_Colour.color = Color.yellow;
+                            break;
+                    }
 
-                switch(m_Cars[i].m_GunData.gunType)
-                {
-                    case FireType.TwinGuns:
-                        m_Items[i].m_Vehicle.sprite = m_CarSprites[0];
-                        break;
-                    case FireType.Beam:
-                        m_Items[i].m_Vehicle.sprite = m_CarSprites[1];
-                        break;
-                    case FireType.Ram:
-                        m_Items[i].m_Vehicle.sprite = m_CarSprites[2];
-                        break;
-                    case FireType.Cannon:
-                        m_Items[i].m_Vehicle.sprite = m_CarSprites[3];
-                        break;
-                }
+                    switch (m_Cars[i].m_GunData.gunType)
+                    {
+                        case FireType.TwinGuns:
+                            m_Items[i].m_Vehicle.sprite = m_CarSprites[0];
+                            break;
+                        case FireType.Beam:
+                            m_Items[i].m_Vehicle.sprite = m_CarSprites[1];
+                            break;
+                        case FireType.Ram:
+                            m_Items[i].m_Vehicle.sprite = m_CarSprites[2];
+                            break;
+                        case FireType.Cannon:
+                            m_Items[i].m_Vehicle.sprite = m_CarSprites[3];
+                            break;
+                    }
+                }          
             }
         }
 	}
@@ -76,13 +79,16 @@ public class ScoreboardManager : MonoBehaviour {
         {
             if (m_ScorePanels[i].activeInHierarchy)
             {
-                m_Items[i].m_Score.text = m_Cars[i].m_Score.ToString();
-                m_Items[i].m_Kills.text = m_Cars[i].m_Kills.ToString();
-                m_Items[i].m_Deaths.text = m_Cars[i].m_Deaths.ToString();
-
-                if (KillLimit != 0 && m_Cars[i].m_Score >= KillLimit)
+                if (m_Cars[i])
                 {
-                    m_Cars[i].m_Victory = true;
+                    m_Items[i].m_Score.text = m_Cars[i].m_Score.ToString();
+                    m_Items[i].m_Kills.text = m_Cars[i].m_Kills.ToString();
+                    m_Items[i].m_Deaths.text = m_Cars[i].m_Deaths.ToString();
+                    Debug.Log("Populating scoreboard");
+                    if (KillLimit != 0 && m_Cars[i].m_Score >= KillLimit)
+                    {
+                        m_Cars[i].m_Victory = true;
+                    }
                 }
             }
         }

@@ -39,9 +39,13 @@ public class ControllerMouse : MonoBehaviour {
         }
     }
 
-    void ResetButton()
+    void OnEnable()
     {
-
+        canInteract = false;
+        pressed = false;
+        toggle = false;
+        StartCoroutine(MenuChange());
+        Debug.LogWarning("Enabling");
     }
 
     private void OnTriggerEnter(Collider other)
@@ -50,7 +54,7 @@ public class ControllerMouse : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void LateUpdate()
+    void Update()
     {
         gamePad = cam.GetComponentInParent<LocalPlayerSetup>().m_GamePadState;
         if (gamePad.IsConnected)
@@ -110,8 +114,6 @@ public class ControllerMouse : MonoBehaviour {
         Debug.Log("Delaying");
         yield return new WaitForSeconds(0.25f);
         canInteract = true;   // After the wait is over, the player can interact with the menu again.
-        Debug.Log("Interact = " + canInteract);
-        yield return null;
     }
 
 }

@@ -12,7 +12,7 @@ public class PlatfomOptions : MonoBehaviour {
 
     float speed = 10.0f;
     public bool isReady = false;
-	bool canInteract;
+	public bool canInteract;
 
     public int carPick;
 

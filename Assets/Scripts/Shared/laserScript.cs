@@ -26,7 +26,8 @@ public class laserScript : MonoBehaviour {
         }
 
         laserLine = GetComponentInChildren<LineRenderer>();
-        laserLine.SetWidth(0.25f, 0.25f);
+        laserLine.startWidth = 2.0f;
+        laserLine.endWidth = 2.0f;
 
         laserLine.SetPosition (0, startPoint.position);
         laserLine.SetPosition(1, linecastedTransform.position);

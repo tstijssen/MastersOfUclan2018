@@ -42,6 +42,7 @@ public class Menu : MonoBehaviour {
     public GameObject offlineLobby;
     public GameObject getPlayersReady;
     bool players;
+    bool canInteract = false;   //whether the controller inputs are used this frame
 
     //Lobby Online
     public Button onlineBack;
@@ -62,7 +63,8 @@ public class Menu : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-      
+        canInteract = false;
+        StartCoroutine(MenuChange());
 
         //DEV
         stateText.text = menuUp.ToString();
@@ -92,6 +94,7 @@ public class Menu : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        gamePad = GetComponent<MenuControllerDetect>().state[0];
         players = getPlayersReady.GetComponent<PlatformActivator>().allReady;
         switch (menuUp)
         {
@@ -143,10 +146,13 @@ public class Menu : MonoBehaviour {
 
                 if (players)
                 {
-                    if (gamePad.Buttons.Y == ButtonState.Pressed)
+                    canInteract = getPlayersReady.GetComponent<PlatformActivator>().Platforms[0].GetComponent<PlatfomOptions>().canInteract;
+                    if (canInteract && gamePad.Buttons.Y == ButtonState.Pressed)
                     {
                         LevelSelect();
                         Debug.Log("Start");
+                        canInteract = false;
+                        StartCoroutine(MenuChange());
                     }
                     Debug.Log("players ready");
                 }
@@ -158,9 +164,9 @@ public class Menu : MonoBehaviour {
 
                 if (shutter.GetComponent<RectTransform>().position.y < Screen.height / 1.6)
                 {
-                    transitionSpd = 0f;
-                    shutter.GetComponent<RectTransform>().localPosition = new Vector3(0f, 0f, 0f);
+                    //transitionSpd = 0f;
 
+                    Debug.Log("Shutter down");
 
                     if (offlineLobby.activeInHierarchy)
                         offlineLobby.SetActive(false);
@@ -176,14 +182,17 @@ public class Menu : MonoBehaviour {
 
                     transitionSpd = -3000f;
                 }
-                
 
+                Debug.LogError(transitionSpd);
                 if (shutter.GetComponent<RectTransform>().position.y > Screen.height * 2)
+                {
                     transitionSpd = 0f;
-
+                    Debug.Log("ShutterIfReached!!");
+                }
+   
                 if (players)
                 {
-                    if (gamePad.Buttons.Y == ButtonState.Pressed)
+                    if (canInteract && gamePad.Buttons.Y == ButtonState.Pressed)
                     {
                         LaunchGame();
                         Debug.Log("Start");
@@ -241,6 +250,12 @@ public class Menu : MonoBehaviour {
         }
     }
 
+    IEnumerator MenuChange()
+    {
+        Debug.Log("Delaying");
+        yield return new WaitForSeconds(0.25f);
+        canInteract = true;   // After the wait is over, the player can interact with the menu again.
+    }
 
     IEnumerator AsynchronousLoad(string scene)
     {
@@ -259,7 +274,7 @@ public class Menu : MonoBehaviour {
             // Loading completed
             if (ao.progress >= 0.9f)
             {
-                
+                Debug.Log("Loading Completed");
                     ao.allowSceneActivation = true;
             }
 
