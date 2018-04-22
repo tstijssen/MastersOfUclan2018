@@ -52,9 +52,18 @@ namespace UnityStandardAssets.Vehicles.Car
                 gamePad = GetComponentInParent<LocalPlayerSetup>().m_GamePadState;
 
                 h = gamePad.ThumbSticks.Left.X;
-                v = gamePad.ThumbSticks.Left.Y;
+                //v = gamePad.Buttons.A;
                 triggerFire = gamePad.Triggers.Right;
                 cameraMovement = gamePad.ThumbSticks.Right.X;
+
+
+                if (gamePad.Buttons.A == ButtonState.Pressed)
+                    v = 1f;             
+                else if (gamePad.Buttons.B == ButtonState.Pressed)
+                    v = -1f;
+                else
+                    v = 0f;
+                Debug.Log(v);
 
                 if (triggerFire > 0.5f)
                 {

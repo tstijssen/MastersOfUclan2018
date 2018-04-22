@@ -48,6 +48,11 @@ public class Menu : MonoBehaviour {
     public Button onlineBack;
     public GameObject onlineLobby;
 
+    //Options
+    public GameObject optionsUI;
+    public Button optionsBtn;
+    public bool optionsMenu = false;
+
     //Loading
     public GameObject loadingGif;
     public Text loadText;
@@ -82,6 +87,7 @@ public class Menu : MonoBehaviour {
         offline.onClick.AddListener(LaunchOffline);
         online.onClick.AddListener(LaunchOnline);
         quit.onClick.AddListener(QuitGame);
+        optionsBtn.onClick.AddListener(LoadOptions);
 
         //Lobby
         back.onClick.AddListener(ToMenu);
@@ -96,6 +102,10 @@ public class Menu : MonoBehaviour {
     {
         gamePad = GetComponent<MenuControllerDetect>().state[0];
         players = getPlayersReady.GetComponent<PlatformActivator>().allReady;
+        optionsUI.SetActive(optionsMenu);
+        menuPanel.SetActive(!optionsMenu);
+        
+
         switch (menuUp)
         {
             case Menus.Splash:
@@ -109,7 +119,7 @@ public class Menu : MonoBehaviour {
                 }
                 break;
             case Menus.Main:
-                if (!menuPanel.activeInHierarchy)
+                if (!menuPanel.activeInHierarchy && !optionsMenu)
                     menuPanel.SetActive(true);             
 
                 if (shutter.GetComponent<RectTransform>().position.y < Screen.height /1.6)
@@ -338,6 +348,11 @@ public class Menu : MonoBehaviour {
     {
         soundSource.PlayOneShot(accept);
         Application.Quit();
+    }
+
+    public void LoadOptions()
+    {
+        optionsMenu = true;
     }
 
 }
