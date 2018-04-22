@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using XInputDotNetPure;
 
 public class Menu : MonoBehaviour {
-    enum Menus {Splash, Main, OfflineLobby, OnlineLobby, Loading};
-    Menus menuUp = Menus.Splash; //Which menu is active
+    public enum Menus {Splash, Main, OfflineLobby, LevelSelect, OnlineLobby, Loading};
+    public Menus menuUp = Menus.Splash; //Which menu is active
 
     public float timer;
+    GamePadState gamePad;
 
     //DEV
     public Text stateText;
@@ -35,12 +37,21 @@ public class Menu : MonoBehaviour {
 
     //Lobby Offline
     public Button back;
-    public Button launch;
+    public Button levelSelectBtn;
+    public GameObject offlineLobbyUI;
     public GameObject offlineLobby;
+    public GameObject getPlayersReady;
+    bool players;
+    bool canInteract = false;   //whether the controller inputs are used this frame
 
     //Lobby Online
     public Button onlineBack;
     public GameObject onlineLobby;
+
+    //Options
+    public GameObject optionsUI;
+    public Button optionsBtn;
+    public bool optionsMenu = false;
 
     //Loading
     public GameObject loadingGif;
@@ -49,10 +60,17 @@ public class Menu : MonoBehaviour {
     AsyncOperation loadLevel;
     bool loading = false;
 
+    //Level Select
+    public GameObject levelSelect;
+    public GameObject levelSelectUI;
+    public Button launchGame;
 
     // Use this for initialization
     void Start ()
     {
+        canInteract = false;
+        StartCoroutine(MenuChange());
+
         //DEV
         stateText.text = menuUp.ToString();
 
@@ -69,18 +87,25 @@ public class Menu : MonoBehaviour {
         offline.onClick.AddListener(LaunchOffline);
         online.onClick.AddListener(LaunchOnline);
         quit.onClick.AddListener(QuitGame);
+        optionsBtn.onClick.AddListener(LoadOptions);
 
         //Lobby
         back.onClick.AddListener(ToMenu);
-        launch.onClick.AddListener(LaunchGame);
-
+        launchGame.onClick.AddListener(LaunchGame);
+        levelSelectBtn.onClick.AddListener(LevelSelect);
         onlineBack.onClick.AddListener(ToMenu);
-
+        
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
+        gamePad = GetComponent<MenuControllerDetect>().state[0];
+        players = getPlayersReady.GetComponent<PlatformActivator>().allReady;
+        optionsUI.SetActive(optionsMenu);
+        menuPanel.SetActive(!optionsMenu);
+        
+
         switch (menuUp)
         {
             case Menus.Splash:
@@ -94,12 +119,8 @@ public class Menu : MonoBehaviour {
                 }
                 break;
             case Menus.Main:
-
-                if (!menuPanel.activeInHierarchy)
-                    menuPanel.SetActive(true);
-
-                
-
+                if (!menuPanel.activeInHierarchy && !optionsMenu)
+                    menuPanel.SetActive(true);             
 
                 if (shutter.GetComponent<RectTransform>().position.y < Screen.height /1.6)
                 {
@@ -114,20 +135,82 @@ public class Menu : MonoBehaviour {
 
                     if (onlineLobby.activeInHierarchy)
                         onlineLobby.SetActive(false);
-
                 }
 
                 shutter.GetComponent<RectTransform>().Translate((-Vector3.up * transitionSpd) * Time.deltaTime);
-
                 break;
             case Menus.OfflineLobby:
                 if (!offlineLobby.activeInHierarchy)
-                    offlineLobby.SetActive(true);
+                   offlineLobby.SetActive(true);
+
+                if (!offlineLobbyUI.activeInHierarchy)
+                    offlineLobbyUI.SetActive(true);
 
                 if (shutter.GetComponent<RectTransform>().position.y > Screen.height * 2)
                     transitionSpd = 0f;
 
                 shutter.GetComponent<RectTransform>().Translate((Vector3.up * transitionSpd) * Time.deltaTime);
+
+                if (menuPanel.activeInHierarchy)
+                    menuPanel.SetActive(false);
+
+                if (players)
+                {
+                    canInteract = getPlayersReady.GetComponent<PlatformActivator>().Platforms[0].GetComponent<PlatfomOptions>().canInteract;
+                    if (canInteract && gamePad.Buttons.Y == ButtonState.Pressed)
+                    {
+                        LevelSelect();
+                        Debug.Log("Start");
+                        canInteract = false;
+                        StartCoroutine(MenuChange());
+                    }
+                    Debug.Log("players ready");
+                }
+
+                break;      
+            case Menus.LevelSelect:
+
+                shutter.GetComponent<RectTransform>().Translate((-Vector3.up * transitionSpd) * Time.deltaTime);
+
+                if (shutter.GetComponent<RectTransform>().position.y < Screen.height / 1.6)
+                {
+                    //transitionSpd = 0f;
+
+                    Debug.Log("Shutter down");
+
+                    if (offlineLobby.activeInHierarchy)
+                        offlineLobby.SetActive(false);
+
+                    if (offlineLobbyUI.activeInHierarchy)
+                        offlineLobbyUI.SetActive(false);
+
+                    if (!levelSelect.activeInHierarchy)
+                        levelSelect.SetActive(true);
+
+                    if (!levelSelectUI.activeInHierarchy)
+                        levelSelectUI.SetActive(true);
+
+                    transitionSpd = -3000f;
+                }
+
+                Debug.LogError(transitionSpd);
+                if (shutter.GetComponent<RectTransform>().position.y > Screen.height * 2)
+                {
+                    transitionSpd = 0f;
+                    Debug.Log("ShutterIfReached!!");
+                }
+   
+                if (players)
+                {
+                    if (canInteract && gamePad.Buttons.Y == ButtonState.Pressed)
+                    {
+                        LaunchGame();
+                        Debug.Log("Start");
+                    }
+                    Debug.Log("players ready");
+                }
+
+
                 break;
             case Menus.OnlineLobby:
                 if (!onlineLobby.activeInHierarchy)
@@ -146,19 +229,19 @@ public class Menu : MonoBehaviour {
                 if (!loadingGif.activeInHierarchy)
                     loadingGif.SetActive(true);
 
-
-
                 if (shutter.GetComponent<RectTransform>().position.y < Screen.height / 1.6)
                 {
 
                     transitionSpd = 0f;
                     shutter.GetComponent<RectTransform>().localPosition = new Vector3(0f, 0f, 0f);
+                    if (levelSelect.activeInHierarchy)
+                        offlineLobby.SetActive(false);
+
+                    if (levelSelectUI.activeInHierarchy)
+                        levelSelectUI.SetActive(false);
                 }
 
-                shutter.GetComponent<RectTransform>().Translate((-Vector3.up * transitionSpd) * Time.deltaTime);
-                
-
-
+                shutter.GetComponent<RectTransform>().Translate((-Vector3.up * transitionSpd) * Time.deltaTime);               
 
                 if (!loading)
                 {
@@ -166,12 +249,10 @@ public class Menu : MonoBehaviour {
                     switch (PlayerPrefs.GetInt("Level"))
                     {
                         case 0:
-                            StartCoroutine(AsynchronousLoad("Arena"));
-
+                            StartCoroutine(AsynchronousLoad("FFA-Bridges"));
                             break;
                         case 1:
-                            StartCoroutine(AsynchronousLoad("Tilt"));
-
+                            StartCoroutine(AsynchronousLoad("FFA-Tilt"));
                             break;
                     }
                 }
@@ -179,6 +260,12 @@ public class Menu : MonoBehaviour {
         }
     }
 
+    IEnumerator MenuChange()
+    {
+        Debug.Log("Delaying");
+        yield return new WaitForSeconds(0.25f);
+        canInteract = true;   // After the wait is over, the player can interact with the menu again.
+    }
 
     IEnumerator AsynchronousLoad(string scene)
     {
@@ -195,11 +282,9 @@ public class Menu : MonoBehaviour {
             Debug.Log("Loading progress: " + (progress * 100) + "%");
 
             // Loading completed
-            if (ao.progress == 0.9f)
+            if (ao.progress >= 0.9f)
             {
-                Debug.Log("Press Q key to start");
-                loadText.text = "Press Q key to start";
-                if (Input.GetKey(KeyCode.Q))
+                Debug.Log("Loading Completed");
                     ao.allowSceneActivation = true;
             }
 
@@ -209,7 +294,7 @@ public class Menu : MonoBehaviour {
 
 
     //Button Listeners
-    void LaunchOffline()
+    public void LaunchOffline()
     {
         transitionSpd = 3000f;
         soundSource.PlayOneShot(accept);
@@ -218,7 +303,7 @@ public class Menu : MonoBehaviour {
         stateText.text = menuUp.ToString();
     }
 
-    void LaunchOnline()
+	public void LaunchOnline()
     {
         transitionSpd = 3000f;
         soundSource.PlayOneShot(accept);
@@ -227,7 +312,7 @@ public class Menu : MonoBehaviour {
         stateText.text = menuUp.ToString();
     }
 
-    void ToMenu()
+	public void ToMenu()
     {
         transitionSpd = 3000f;
         soundSource.PlayOneShot(accept);
@@ -236,19 +321,38 @@ public class Menu : MonoBehaviour {
         stateText.text = menuUp.ToString();
     }
 
-    void LaunchGame()
+	public void LaunchGame()
     {
-        transitionSpd = 3000f;
-        soundSource.PlayOneShot(accept);
-        soundSource.PlayOneShot(shutterNoise);
-        menuUp = Menus.Loading;
-        stateText.text = menuUp.ToString();
+
+            transitionSpd = 3000f;
+            soundSource.PlayOneShot(accept);
+            soundSource.PlayOneShot(shutterNoise);
+            menuUp = Menus.Loading;
+            stateText.text = menuUp.ToString();
+        
     }
 
-    void QuitGame()
+
+    public void LevelSelect()
+    {
+
+            transitionSpd = 3000f;
+            soundSource.PlayOneShot(accept);
+            soundSource.PlayOneShot(shutterNoise);
+            menuUp = Menus.LevelSelect;
+            stateText.text = menuUp.ToString();
+        
+    }
+
+	public void QuitGame()
     {
         soundSource.PlayOneShot(accept);
         Application.Quit();
+    }
+
+    public void LoadOptions()
+    {
+        optionsMenu = true;
     }
 
 }

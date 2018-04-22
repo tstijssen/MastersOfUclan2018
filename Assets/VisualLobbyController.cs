@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 
 public class VisualLobbyController : NetworkBehaviour {
 
-    Sprite[] spriteArray;
+    public Sprite[] spriteArray;
     public Image carImg;
     public Image teamImg;
 
@@ -22,7 +22,7 @@ public class VisualLobbyController : NetworkBehaviour {
     // Use this for initialization
     void Start()
     {
-        spriteArray = GameObject.Find("OfflineLobby").GetComponent<LobbyOverlord>().spriteList;
+        //spriteArray = GameObject.Find("OfflineLobby").GetComponent<LobbyOverlord>().spriteList;
         carImg.sprite = spriteArray[pCarChoice];
     }
 
