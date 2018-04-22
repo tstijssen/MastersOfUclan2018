@@ -8,6 +8,7 @@ public class Options : MonoBehaviour {
     public Button fullScrBtn;
     public Button resBtn;
 
+    List<string> resolutionsList;
     Resolution[] resolutions;
     public Dropdown dropdownMenu;
 
@@ -29,17 +30,24 @@ public class Options : MonoBehaviour {
         fullScr = Screen.fullScreen;
         volText.text = volDisplay.ToString("F0");
 
+
+      
+
         resolutions = Screen.resolutions;
 
-        //Screen.SetResolution(1920, 1080, true);
-        Debug.Log(resolutions.Length);
 
-        for (int i = 0; i < resolutions.Length; i++)
+       
+
+        //Screen.SetResolution(1920, 1080, true);
+
+        //foreach (Resolution res in resolutions)
+        //{
+        for (int i = 0; i < resolutions.Length; ++i)
         {
-            dropdownMenu.options[i].text = resolutions[i].ToString();
+
+            dropdownMenu.options.Add(new Dropdown.OptionData() { text = resolutions[i].ToString() });
             dropdownMenu.value = i;
 
-            dropdownMenu.onValueChanged.AddListener(delegate { Screen.SetResolution(resolutions[dropdownMenu.value].width, resolutions[dropdownMenu.value].height, true); });
         }
 
 
@@ -50,8 +58,8 @@ public class Options : MonoBehaviour {
     void Update ()
     {
         volDisplay = vol.value * 100f;
-
         volText.text = volDisplay.ToString("F0");
+        dropdownMenu.onValueChanged.AddListener(delegate { Screen.SetResolution(resolutions[dropdownMenu.value].width, resolutions[dropdownMenu.value].height, fullScrTogg); });
 	}
 
     public void CycleResolution()
@@ -72,6 +80,10 @@ public class Options : MonoBehaviour {
         else
             Screen.fullScreen = false;
 
+    
+
+        //Screen.SetResolution(,  true);
+
         AudioListener.volume = vol.value;
 
         Back();
@@ -79,10 +91,17 @@ public class Options : MonoBehaviour {
     
     public void Back()
     {
+        
+
+
+
         vol.value = AudioListener.volume;
         volText.text = volDisplay.ToString("F0");
         bool menu = GameObject.Find("MenuControl").GetComponent<Menu>().optionsMenu = false;
     }
 
-
+    string ResToString(Resolution res)
+    {
+        return res.width + " x " + res.height;
+    }
 }
