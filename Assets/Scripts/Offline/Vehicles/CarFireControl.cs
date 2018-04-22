@@ -97,7 +97,7 @@ public class CarFireControl : MonoBehaviour {
     public float m_NoMovementThreshold = 0.0001f;
 
     public TeamColours m_PlayerTeam;
-    public GameObject m_CarMat;
+    public GameObject[] m_CarMat;
     public int m_PlayerNumber;
     public bool m_Victory;  // determines whether this player has achieved victory
 
@@ -476,39 +476,42 @@ public class CarFireControl : MonoBehaviour {
 
     void OnEnable()
     {
-        Renderer ren = m_CarMat.GetComponentInChildren<Renderer>();
-        Material mat;
-        if (ren.materials.Length == 1)
-            mat = ren.material;
-        else
-            mat = ren.materials[1];
-
-        switch (GetComponentInParent<LocalPlayerSetup>().m_PlayerTeam)
+        for (int m = 0; m < m_CarMat.Length; ++m)
         {
-            case TeamColours.Red:
-                mat.color = Color.red;
-                if (GameObject.FindGameObjectWithTag("RedScore"))
-                {
-                    m_FlagScoreText = GameObject.FindGameObjectWithTag("RedScore").GetComponent<Text>();
+            Renderer ren = m_CarMat[m].GetComponentInChildren<Renderer>();
+            Material mat;
+            if (ren.materials.Length == 1)
+                mat = ren.material;
+            else
+                mat = ren.materials[1];
 
-                }
-                break;
-            case TeamColours.Blue:
-                mat.color = Color.blue;
-                if (GameObject.FindGameObjectWithTag("BlueScore"))
-                {
-                    m_FlagScoreText = GameObject.FindGameObjectWithTag("BlueScore").GetComponent<Text>();
-                }
-                break;
-            case TeamColours.Green:
-                mat.color = Color.green;
-                break;
-            case TeamColours.Yellow:
-                mat.color = Color.yellow;
-                break;
-            default:
-                break;
-        }
+            switch (GetComponentInParent<LocalPlayerSetup>().m_PlayerTeam)
+            {
+                case TeamColours.Red:
+                    mat.color = Color.red;
+                    if (GameObject.FindGameObjectWithTag("RedScore"))
+                    {
+                        m_FlagScoreText = GameObject.FindGameObjectWithTag("RedScore").GetComponent<Text>();
+
+                    }
+                    break;
+                case TeamColours.Blue:
+                    mat.color = Color.blue;
+                    if (GameObject.FindGameObjectWithTag("BlueScore"))
+                    {
+                        m_FlagScoreText = GameObject.FindGameObjectWithTag("BlueScore").GetComponent<Text>();
+                    }
+                    break;
+                case TeamColours.Green:
+                    mat.color = Color.green;
+                    break;
+                case TeamColours.Yellow:
+                    mat.color = Color.yellow;
+                    break;
+                default:
+                    break;
+            }
+        }      
     }
 
     // Use this for initialization

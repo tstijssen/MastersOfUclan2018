@@ -15,7 +15,9 @@ namespace UnityStandardAssets.Vehicles.Car
         float v;
         float triggerFire = 0.0f;
         float cameraMovement = 0.0f;
-        
+
+        float brake = 0.0f;
+
         bool fire = false;
         bool fireRelease = false;
 
@@ -56,6 +58,10 @@ namespace UnityStandardAssets.Vehicles.Car
                 triggerFire = gamePad.Triggers.Right;
                 cameraMovement = gamePad.ThumbSticks.Right.X;
 
+                if (gamePad.Buttons.X == ButtonState.Pressed)
+                    brake = 1f;
+                else
+                    brake = 0f;
 
                 if (gamePad.Buttons.A == ButtonState.Pressed)
                     v = 1f;             
@@ -117,7 +123,7 @@ namespace UnityStandardAssets.Vehicles.Car
            // Debug.Log(v);
 #if !MOBILE_INPUT
             float handbrake = CrossPlatformInputManager.GetAxis("Jump");
-            m_Car.Move(h, v, v, handbrake);
+            m_Car.Move(h, v, v, brake);
 #else
             m_Car.Move(h, v, v, 0f);
 #endif
