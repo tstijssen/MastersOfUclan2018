@@ -8,10 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Menu.unity
     guid: e7f475fef11661546b6fb7754d476734
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/OfflineLevels/FFA-Tilt.unity
     guid: 2890983a490eeb54095d416aa913007e
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/OfflineLevels/CTF-Bridges.unity
     guid: ce9ec7df21f8e394aa9f13411b3cf75a
   - enabled: 0
@@ -20,6 +20,6 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/OnlineLevels/OnlineCTFCastle.unity
     guid: a5e482280338f9143b23b18081610360
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/OfflineLevels/FFA-Bridges.unity
     guid: e2ad86ccac3dbd548b54577c42770d2d

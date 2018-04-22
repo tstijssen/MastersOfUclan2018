@@ -6,7 +6,7 @@ using XInputDotNetPure;
 
 public class SelectorMove : MonoBehaviour {
 
-    enum OnButton { offline, online, quit};
+    enum OnButton { offline, online, quit, options};
     OnButton menuBtn;
 	Menu mainMenuControl;
     GamePadState gamePad;
@@ -17,6 +17,7 @@ public class SelectorMove : MonoBehaviour {
     public GameObject offline;
     public GameObject online;
     public GameObject quit;
+    public GameObject options;
 
     // Use this for initialization
     void Start ()
@@ -85,7 +86,24 @@ public class SelectorMove : MonoBehaviour {
 			StartCoroutine (MenuChange());
         }
 
-		if(canInteract && gamePad.Buttons.A == ButtonState.Pressed)
+        if (canInteract && gamePad.ThumbSticks.Left.X > 0.5f && menuBtn != OnButton.options)
+        {
+            transform.position = options.transform.position;
+            menuBtn = OnButton.options;
+            canInteract = false;
+            StartCoroutine(MenuChange());
+        }
+
+
+        if (canInteract && gamePad.ThumbSticks.Left.X < -0.5f && menuBtn == OnButton.options)
+        {
+            transform.position = offline.transform.position;
+            menuBtn = OnButton.offline;
+            canInteract = false;
+            StartCoroutine(MenuChange());
+        }
+
+        if (canInteract && gamePad.Buttons.A == ButtonState.Pressed)
 		{
 			switch (menuBtn) {
 			case OnButton.offline:
