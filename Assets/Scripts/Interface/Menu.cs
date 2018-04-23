@@ -28,6 +28,7 @@ public class Menu : MonoBehaviour {
     public Button online;
     public Button quit;
     public GameObject menuPanel;
+    //public Button[][] menuButtons = new Button[3][3];
 
     //Transitions
     float transitionSpd;
