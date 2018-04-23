@@ -196,8 +196,8 @@ public class Menu : MonoBehaviour {
                 Debug.LogError(transitionSpd);
                 if (shutter.GetComponent<RectTransform>().position.y > Screen.height * 2)
                 {
-                    transitionSpd = 0f;
-                    Debug.Log("ShutterIfReached!!");
+                    //transitionSpd = 0f;
+                    //Debug.Log("ShutterIfReached!!");
                 }
    
                 if (players)

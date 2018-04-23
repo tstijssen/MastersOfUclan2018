@@ -33,18 +33,20 @@ public class PlatfomOptions : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        left.onClick.AddListener(DecChoice);
-        right.onClick.AddListener(IncChoice);
-        ready.onClick.AddListener(PickReady);
+        //left.onClick.AddListener(DecChoice);
+        //right.onClick.AddListener(IncChoice);
+        //ready.onClick.AddListener(PickReady);
 
         car[carPick].SetActive(true);
-		canInteract = false;
-		StartCoroutine (MenuChange());
+        isReady = false;
+
     }
 
     private void OnEnable()
     {
         isReady = false;
+        canInteract = false;
+        StartCoroutine(MenuChange());
     }
 
     // Update is called once per frame
@@ -107,7 +109,7 @@ public class PlatfomOptions : MonoBehaviour {
                 PlayerPrefs.SetInt("P4", carPick);
                 break;
         }
-
+        Debug.Log(carPick);
         if (!isReady)
             GetComponentInParent<PlatformActivator>().noPlayers++;
 

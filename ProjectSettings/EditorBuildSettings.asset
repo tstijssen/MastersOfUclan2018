@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/OfflineLevels/FFA-Tilt.unity
     guid: 2890983a490eeb54095d416aa913007e
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/OfflineLevels/CTF-Bridges.unity
     guid: ce9ec7df21f8e394aa9f13411b3cf75a
   - enabled: 0

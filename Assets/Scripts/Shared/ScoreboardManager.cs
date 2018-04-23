@@ -27,7 +27,7 @@ public class ScoreboardManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-        KillLimit = PlayerPrefs.GetInt("FFA_KillLimit");
+        //KillLimit = PlayerPrefs.GetInt("FFA_KillLimit");
         
 		for (int i = 0; i < m_Players.Length; ++i)
         {
@@ -82,7 +82,12 @@ public class ScoreboardManager : MonoBehaviour {
                 if (m_Cars[i])
                 {
                     m_Items[i].m_Score.text = m_Cars[i].m_Score.ToString();
-                    m_Items[i].m_Kills.text = m_Cars[i].m_Kills.ToString();
+
+                    if(KillLimit > 0)
+                        m_Items[i].m_Kills.text = m_Cars[i].m_Kills.ToString() + "/" + KillLimit;
+                    else
+                        m_Items[i].m_Kills.text = m_Cars[i].m_Kills.ToString();
+
                     m_Items[i].m_Deaths.text = m_Cars[i].m_Deaths.ToString();
                     Debug.Log("Populating scoreboard");
                     if (KillLimit != 0 && m_Cars[i].m_Score >= KillLimit)
