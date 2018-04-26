@@ -15,6 +15,7 @@ public class LocalVictoryManager : MonoBehaviour {
     void Start()
     {
         m_MenuButton.onClick.AddListener(LoadMenuScene);
+        m_Players = GameObject.FindGameObjectsWithTag("Player");
     }
 
     void LoadMenuScene()

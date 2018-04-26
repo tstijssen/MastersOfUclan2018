@@ -23,3 +23,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/OfflineLevels/FFA-Bridges.unity
     guid: e2ad86ccac3dbd548b54577c42770d2d
+  - enabled: 1
+    path: Assets/Scenes/OnlineLevels/OnlineBattle.unity
+    guid: ae84fa2dab1f732488373250d3b85a81

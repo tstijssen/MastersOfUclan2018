@@ -3889,6 +3889,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Damage: 10
+  m_Width: 0
   startPoint: {fileID: 1182992104}
   endPoint: {fileID: 1721764047}
 --- !u!1 &317762104
@@ -14218,7 +14219,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11475086, guid: c0978251ff7b10d4fb954a4b56acd9f0, type: 2}
       propertyPath: m_PlayScene
-      value: OnlineCTFCastle
+      value: OnlineBattle
       objectReference: {fileID: 0}
     - target: {fileID: 11475086, guid: c0978251ff7b10d4fb954a4b56acd9f0, type: 2}
       propertyPath: m_LobbyScene
@@ -14227,7 +14228,7 @@ Prefab:
     - target: {fileID: 11475086, guid: c0978251ff7b10d4fb954a4b56acd9f0, type: 2}
       propertyPath: m_GamePlayerPrefab
       value: 
-      objectReference: {fileID: 1509376984440906, guid: bbb59be500ac41f4181e6c0773e0d240,
+      objectReference: {fileID: 1657827691245122, guid: bd1e3e0fee670644ba7765e858900203,
         type: 2}
     - target: {fileID: 11475086, guid: c0978251ff7b10d4fb954a4b56acd9f0, type: 2}
       propertyPath: m_PlayerSpawnMethod
@@ -22422,6 +22423,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Damage: 10
+  m_Width: 0
   startPoint: {fileID: 1965386244}
   endPoint: {fileID: 385609882}
 --- !u!1 &1093440609
@@ -25803,6 +25805,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Damage: 10
+  m_Width: 0
   startPoint: {fileID: 337475894}
   endPoint: {fileID: 1435876977}
 --- !u!1 &1331686844
@@ -26588,6 +26591,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Damage: 10
+  m_Width: 0
   startPoint: {fileID: 845285564}
   endPoint: {fileID: 1049025633}
 --- !u!1 &1376403468
