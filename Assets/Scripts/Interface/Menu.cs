@@ -323,21 +323,25 @@ public class Menu : MonoBehaviour {
 
 	public void LaunchGame()
     {
-        transitionSpd = 3000f;
-        soundSource.PlayOneShot(accept);
-        soundSource.PlayOneShot(shutterNoise);
-        menuUp = Menus.Loading;
-        stateText.text = menuUp.ToString();      
+
+            transitionSpd = 3000f;
+            soundSource.PlayOneShot(accept);
+            soundSource.PlayOneShot(shutterNoise);
+            menuUp = Menus.Loading;
+            stateText.text = menuUp.ToString();
+        
     }
 
 
     public void LevelSelect()
     {
-        transitionSpd = 3000f;
-        soundSource.PlayOneShot(accept);
-        soundSource.PlayOneShot(shutterNoise);
-        menuUp = Menus.LevelSelect;
-        stateText.text = menuUp.ToString();       
+
+            transitionSpd = 3000f;
+            soundSource.PlayOneShot(accept);
+            soundSource.PlayOneShot(shutterNoise);
+            menuUp = Menus.LevelSelect;
+            stateText.text = menuUp.ToString();
+        
     }
 
 	public void QuitGame()
