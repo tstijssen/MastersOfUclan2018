@@ -60,7 +60,7 @@ public class OnlineFireControl : NetworkBehaviour {
     Text m_FlagScoreText;
 
     Rigidbody rb;
-    NetworkSpawnManager  m_SpawnManager;
+    public NetworkSpawnManager  m_SpawnManager;
     Vector3 previousPos;
     public float m_NoMovementThreshold = 0.0001f;
 
@@ -68,6 +68,7 @@ public class OnlineFireControl : NetworkBehaviour {
     public GameObject[] m_CarMat;
 
     public int m_PlayerNumber;
+    public GameObject m_VehicleModel;
 
     [SyncVar]
     public bool m_Victory;  // determines whether this player has achieved victory
@@ -83,41 +84,41 @@ public class OnlineFireControl : NetworkBehaviour {
         {
             if (m_GunData.gunType == FireType.TwinGuns)
             {
-                GameObject bullet = m_SpawnManager.GetFromPool(transform.position + transform.forward);
                 //GameObject bullet = (GameObject)Instantiate(m_BulletPrefab);  // get bullet object from pool
-                if (bullet != null) // check if object pool returned a bullet
+                if (true) // check if object pool returned a bullet
                 {
                     if (m_ReloadTimer <= 0.0f && m_Heat < m_HeatFunction.HeatSlider.maxValue)    // only shoot if not waiting for reload
                     {
                         Debug.Log("Shooting");
                         float vol = Random.Range(volLowRange, volHighRange);
-
+                        GameObject bullet;
                         if (m_GunData.altguns)
                         {
+                            bullet = m_SpawnManager.GetFromPool(m_GunData.Barrel1.transform.position);
+                            bullet.transform.rotation = m_GunData.Barrel1.transform.rotation;
                             m_GunData.Barrel1.GetComponent<AudioSource>().volume = vol;
                             m_GunData.Barrel1.GetComponent<AudioSource>().Play();
-                            bullet.transform.position = m_GunData.Barrel1.transform.position;
-                            bullet.transform.rotation = m_GunData.Barrel1.transform.rotation;
+                            //bullet.transform.position = m_GunData.Barrel1.transform.position;
                             m_GunData.altguns = !m_GunData.altguns;
                             m_GunData.Barrel1.transform.GetChild(0).gameObject.SetActive(true);
 
                         }
                         else
                         {
+                            bullet = m_SpawnManager.GetFromPool(m_GunData.Barrel2.transform.position);
+                            bullet.transform.rotation = m_GunData.Barrel2.transform.rotation;
                             m_GunData.Barrel2.GetComponent<AudioSource>().volume = vol;
                             m_GunData.Barrel2.GetComponent<AudioSource>().Play();
-                            bullet.transform.position = m_GunData.Barrel2.transform.position;
-                            bullet.transform.rotation = m_GunData.Barrel2.transform.rotation;
+                            //bullet.transform.position = m_GunData.Barrel2.transform.position;
                             m_GunData.altguns = !m_GunData.altguns;
                             m_GunData.Barrel2.transform.GetChild(0).gameObject.SetActive(true);
 
                         }
-                        bullet.SetActive(true);
                         m_ReloadTimer = m_GunData.ReloadTwinGuns;   // reset reload speed
 
                         // server spawns bullet on all clients using object pool
                         NetworkServer.Spawn(bullet, m_SpawnManager.assetId);
-                        StartCoroutine(Despawn(bullet, 2.0f));
+                        StartCoroutine(Despawn(bullet, 0.5f));
 
                         m_Heat += m_HeatFunction.BulletHeat;
                     }
@@ -214,8 +215,9 @@ public class OnlineFireControl : NetworkBehaviour {
             m_Fired = false;
         }
 
-        if (m_GunData.gunType == FireType.TwinGuns)
+        if (m_GunData.gunType == FireType.TwinGuns )
         {
+            Debug.Log("Disabling gunflashes");
             m_GunData.Barrel1.transform.GetChild(0).gameObject.SetActive(false);
             m_GunData.Barrel2.transform.GetChild(0).gameObject.SetActive(false);
         }
@@ -505,7 +507,6 @@ public class OnlineFireControl : NetworkBehaviour {
     // Use this for initialization
     void Start () {
 
-        m_SpawnManager = GameObject.Find("SpawnManager").GetComponent<NetworkSpawnManager>();
         m_ReloadTimer = 0.0f;
         m_HeatFunction.HealthImage.color = Color.green;
         m_Alive = false;
@@ -570,6 +571,12 @@ public class OnlineFireControl : NetworkBehaviour {
 
         if (m_Alive)
         {
+            if (!m_SpawnManager)
+                m_SpawnManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<NetworkSpawnManager>();
+
+            if (!m_VehicleModel.activeInHierarchy)
+                m_VehicleModel.SetActive(true);
+
             if(m_InDeathZone)
             {
                 m_DeathZoneTimer -= Time.deltaTime;
@@ -723,7 +730,14 @@ public class OnlineFireControl : NetworkBehaviour {
                 m_SpawnTimer = 0.0f;
                 Respawn();
             }
-        }      
+        }
+        else
+        {
+            if (m_VehicleModel.activeInHierarchy)
+                m_VehicleModel.SetActive(false);
+        }
+
+
     }
 
     public GameObject FindFurthestTarget(string trgt)

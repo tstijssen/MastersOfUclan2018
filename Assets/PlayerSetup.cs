@@ -42,6 +42,8 @@ public class PlayerSetup : NetworkBehaviour {
         GetComponent<Rigidbody>().useGravity = false;
 
         fireControl.m_PlayerNumber = playerNumber;
+        GetComponent<UnityStandardAssets.Vehicles.Car.CarAudio>().m_Camera = Camera.main;
+        transform.position = Camera.main.transform.position;
 
         if (playerColor == Color.red)
         {

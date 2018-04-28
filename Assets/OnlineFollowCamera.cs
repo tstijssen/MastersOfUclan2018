@@ -35,14 +35,10 @@ public class OnlineFollowCamera : MonoBehaviour {
             container.GetComponent<OnlineFireControl>().m_Despawned = false;
             container.transform.position = m_MenuPosition;
         }
-        else if (targets[(int)m_Selection].activeInHierarchy)
+        else if (container != null && container.GetComponent<OnlineFireControl>().m_Alive)
         {
             transform.LookAt(container.transform);
             
-        }
-        else if (container != null && container.GetComponent<OnlineFireControl>().m_Alive)
-        {
-            targets[(int)m_Selection].SetActive(true);
         }
 
         if (Input.GetMouseButtonDown(0) && VehicleSelected)
@@ -52,7 +48,7 @@ public class OnlineFollowCamera : MonoBehaviour {
             if (Physics.Raycast(ray, out hitInfo))
             {
                 Debug.Log(hitInfo.transform.tag);
-                if (hitInfo.transform.tag == "Spawn" && hitInfo.transform.GetComponent<SpawnData>().m_TeamNumber == -1 || hitInfo.transform.GetComponent<SpawnData>().m_TeamNumber == (int)container.GetComponent<OnlineFireControl>().m_PlayerTeam)
+                if (hitInfo.transform.tag == "Spawn" && (hitInfo.transform.GetComponent<SpawnData>().m_TeamNumber == -1 || hitInfo.transform.GetComponent<SpawnData>().m_TeamNumber == (int)container.GetComponent<OnlineFireControl>().m_PlayerTeam))
                 {
                     m_RestPos = hitInfo.point.y + m_SpawnHeight / 10.0f;
                     SpawnPlayer(new Vector3(hitInfo.transform.position.x, hitInfo.transform.position.y + m_SpawnHeight, hitInfo.transform.position.z), hitInfo.transform.rotation);
@@ -64,8 +60,8 @@ public class OnlineFollowCamera : MonoBehaviour {
 
     public void SetSpawn(Vector3 pos, Quaternion rot)
     {
-        SpawnPlayer(new Vector3(pos.x, pos.y + m_SpawnHeight, pos.z), rot);
         SpawnSelect.SetActive(false);
+        SpawnPlayer(new Vector3(pos.x, pos.y + m_SpawnHeight, pos.z), rot);
     }
 
     public void MouseClick(Vector3 pos)
@@ -100,8 +96,8 @@ public class OnlineFollowCamera : MonoBehaviour {
         transform.rotation = new Quaternion(0, 0, 0, 0);
         container.GetComponent<Rigidbody>().useGravity = true;
         container.GetComponent<OnlineFireControl>().m_Alive = true;
+        container.GetComponent<OnlineFireControl>().m_Despawned = false;
 
-        targets[(int)m_Selection].SetActive(true);
         Follow(targets[(int)m_Selection].transform);
     }
 

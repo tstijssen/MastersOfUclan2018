@@ -36,87 +36,98 @@ namespace UnityStandardAssets.Vehicles.Car
 
         private void Update()
         {
-            if (!m_FireControl.m_Alive || !isLocalPlayer)
+            if (!isLocalPlayer)
             {
                 return;
             }
-
             m_GamePad = GamePad.GetState(PlayerIndex.One);
             if (m_GamePad.IsConnected)
             {
-
-                if (m_SpawnSelector.gameObject.activeInHierarchy)
+                if (m_SpawnSelector.gameObject.activeInHierarchy )
                 {
-                    m_SpawnSelector.toggle = (m_GamePad.Buttons.B == ButtonState.Pressed);
-                    m_SpawnSelector.pressed = (m_GamePad.Buttons.A == ButtonState.Pressed);
+                    if (m_GamePad.Buttons.B == ButtonState.Pressed)
+                        m_SpawnSelector.CycleSelection();
+
+                    if (m_GamePad.Buttons.A == ButtonState.Pressed)
+                        m_SpawnSelector.SelectionPressed();
                 }
-
-                float oldTrigger = triggerFire;
-
-                h = m_GamePad.ThumbSticks.Left.X;
-                //v = gamePad.Buttons.A;
-                triggerFire = m_GamePad.Triggers.Right;
-                cameraMovement = m_GamePad.ThumbSticks.Right.X;
-
-                if (m_GamePad.Buttons.X == ButtonState.Pressed)
-                    brake = 1f;
-                else
-                    brake = 0f;
-
-                if (m_GamePad.Buttons.A == ButtonState.Pressed)
-                    v = 1f;
-                else if (m_GamePad.Buttons.B == ButtonState.Pressed)
-                    v = -1f;
-                else
-                    v = 0f;
-                Debug.Log(v);
-
-                if (triggerFire > 0.5f)
+                if(m_FireControl.m_Alive)
                 {
-                    fire = true;
-                }
-                else
-                {
-                    fire = false;
-                    if (triggerFire < oldTrigger && triggerFire <= 0.1f)
+                    float oldTrigger = triggerFire;
+
+                    h = m_GamePad.ThumbSticks.Left.X;
+                    //v = gamePad.Buttons.A;
+                    triggerFire = m_GamePad.Triggers.Right;
+                    cameraMovement = m_GamePad.ThumbSticks.Right.X;
+
+                    if (m_GamePad.Buttons.X == ButtonState.Pressed)
+                        brake = 1f;
+                    else
+                        brake = 0f;
+
+                    if (m_GamePad.Buttons.A == ButtonState.Pressed)
+                        v = 1f;
+                    else if (m_GamePad.Buttons.B == ButtonState.Pressed)
+                        v = -1f;
+                    else
+                        v = 0f;
+                    Debug.Log(v);
+
+                    if (triggerFire > 0.5f)
                     {
-                        fireRelease = true;
+                        fire = true;
                     }
                     else
                     {
-                        fireRelease = false;
+                        fire = false;
+                        if (triggerFire < oldTrigger && triggerFire <= 0.1f)
+                        {
+                            fireRelease = true;
+                        }
+                        else
+                        {
+                            fireRelease = false;
+                        }
                     }
-                }
+                }          
             }
         }
 
         private void FixedUpdate()
         {
             // pass the input to the car!
-            if (!m_FireControl.m_Alive || !isLocalPlayer)
+            if (!isLocalPlayer)
             {
                 return;
             }
 
             if (!m_GamePad.IsConnected)
             {
-                if(m_SpawnSelector.gameObject.activeInHierarchy)
+                if (m_SpawnSelector.gameObject.activeInHierarchy)
                 {
-                    m_SpawnSelector.toggle = Input.GetButtonDown("Fire1");
-                    m_SpawnSelector.pressed = Input.GetButtonDown("Submit");
+                    if (Input.GetButtonDown("Fire1"))
+                        m_SpawnSelector.CycleSelection();
+
+                    if (Input.GetButtonDown("Submit"))
+                        m_SpawnSelector.SelectionPressed();
                 }
-                bool shotPastFrame = fire;
-                h = CrossPlatformInputManager.GetAxis("Horizontal");
-                v = CrossPlatformInputManager.GetAxis("Vertical");
-                cameraMovement = CrossPlatformInputManager.GetAxis("AuxButtons");
-                bool braking = CrossPlatformInputManager.GetButtonDown("Jump");
-                if (braking)
-                    brake = 1f;
-                else
-                    brake = 0f;
-                fire = CrossPlatformInputManager.GetButton("Fire1");
-                if (!fire && shotPastFrame)
-                    fireRelease = true;
+                if(m_FireControl.m_Alive)
+                {
+                    bool shotPastFrame = fire;
+                    h = CrossPlatformInputManager.GetAxis("Horizontal");
+                    v = CrossPlatformInputManager.GetAxis("Vertical");
+                    cameraMovement = CrossPlatformInputManager.GetAxis("AuxButtons");
+                    bool braking = CrossPlatformInputManager.GetButtonDown("Jump");
+                    if (braking)
+                        brake = 1f;
+                    else
+                        brake = 0f;
+                    fire = Input.GetButton("Fire1");
+                    if (!fire && shotPastFrame)
+                        fireRelease = true;
+                    else
+                        fireRelease = false;
+                }            
             }
 
             if (fire)
