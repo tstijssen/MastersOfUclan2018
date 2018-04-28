@@ -100,6 +100,10 @@ public class CarFireControl : MonoBehaviour {
     public GameObject[] m_CarMat;
     public int m_PlayerNumber;
     public bool m_Victory;  // determines whether this player has achieved victory
+    HatCaptureScript m_HatCapture = null;
+    public Transform m_HatPosition;
+    bool m_HasHat = false;
+    float m_HatTimer = 0.0f;
 
     float m_RumbleCountDown = 0.0f;
     bool m_RumbleActive;
@@ -353,6 +357,12 @@ public class CarFireControl : MonoBehaviour {
             }
             else if (other.tag == "Hazard")
             {
+                if (m_HasHat)
+                {
+                    m_HatCapture.ResetHat();
+                    m_HasHat = false;
+                    m_HatCapture = null;
+                }
                 Death();
             }
             // start countdown to death
@@ -459,6 +469,14 @@ public class CarFireControl : MonoBehaviour {
         m_HasFlag = true;
     }
 
+    public void HatTaken(HatCaptureScript hat)
+    {
+        m_HatCapture = hat;
+        hat.transform.position = m_HatPosition.position;
+        hat.transform.rotation = m_HatPosition.rotation;
+        m_HasHat = true;
+    }
+
     public void RecordKill(CarFireControl car)
     {
         if (car.m_PlayerTeam == m_PlayerTeam)
@@ -543,6 +561,12 @@ public class CarFireControl : MonoBehaviour {
             m_FlagData = null;
             m_HasFlag = false;
         }
+        if(m_HasHat)
+        {
+            m_HatCapture.DropHat();
+            m_HatCapture = null;
+            m_HasHat = false;
+        }
 
         m_Deaths++;
         m_Alive = false;
@@ -582,6 +606,20 @@ public class CarFireControl : MonoBehaviour {
 
         if(m_Alive)
         {
+            // if player has the hat, increase score by 10 each second
+            if(m_HasHat)
+            {
+                m_HatTimer -= Time.deltaTime;
+                if(m_HatTimer < 0.0f)
+                {
+                    m_HatTimer = 1.0f;
+                    m_Score += 10;
+                    if(m_Score >= m_HatCapture.m_VictoryNumber)
+                    {
+                        m_Victory = true;
+                    }
+                }
+            }
             if(m_InDeathZone)
             {
                 m_DeathZoneTimer -= Time.deltaTime;
