@@ -11010,7 +11010,7 @@ MonoBehaviour:
   levelLeft: {fileID: 2062754482}
   levelRight: {fileID: 123491436}
   levelSelect: 0
-  NumOfMaps: 4
+  NumOfMaps: 3
 --- !u!1 &541939103
 GameObject:
   m_ObjectHideFlags: 0

@@ -561,7 +561,7 @@ public class OnlineFireControl : NetworkBehaviour {
     }
 
     [ClientRpc]
-    void RpcRespawn()
+    public void RpcRespawn()
     {
         if(isLocalPlayer)
         {

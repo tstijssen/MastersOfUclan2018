@@ -18,18 +18,22 @@ public class OnlineCharacterSelect : NetworkBehaviour {
     public int levelNumber;
 
     public GameObject[] vehicles;
+    public GameObject[] levelPrefabs;
     public string[] levels;
+    GameObject go;
+
     [Command]
     void Cmd_ReplacePlayer()
     {
         GameObject go = Instantiate(vehicles[playerCarSelection], transform.position, transform.rotation);
         go.GetComponent<PlayerSetup>().playerNumber = playerNumber;
         go.GetComponent<PlayerSetup>().playerColor = playerColor;
-
+        go.GetComponent<OnlineFireControl>().RpcRespawn();
         NetworkServer.Spawn(go);
 
         if(NetworkServer.ReplacePlayerForConnection(connectionToClient, go, playerControllerId))
         {
+            Debug.Log("Replacing player!");
             NetworkServer.Destroy(gameObject);
         }
     }
@@ -37,11 +41,18 @@ public class OnlineCharacterSelect : NetworkBehaviour {
     // Use this for initialization
     void Start () {
 
-        if(playerNumber == 0)
+        //if(playerNumber == 0)
+        //{
+        //    NetworkManager.singleton.ServerChangeScene(levels[levelNumber]);
+        //}
+        go = Instantiate(levelPrefabs[levelNumber]);    
+    }
+
+    void Update()
+    {
+        if (go.activeInHierarchy)
         {
-            NetworkManager.singleton.ServerChangeScene(levels[levelNumber]);
+            Cmd_ReplacePlayer();
         }
-        
-        Cmd_ReplacePlayer();
     }
 }
