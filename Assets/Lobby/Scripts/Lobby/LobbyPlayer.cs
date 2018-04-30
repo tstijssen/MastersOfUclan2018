@@ -64,16 +64,16 @@ namespace Prototype.NetworkLobby
             LobbyPlayerList._instance.AddPlayer(this);
             LobbyPlayerList._instance.DisplayDirectServerWarning(isServer && LobbyManager.s_Singleton.matchMaker == null);
 
-            //if(slot == 1)
-            //{
-            //    mapScript.gameObject.SetActive(true);
-            //}
-            //else
-            //{
-            //    mapScript = GameObject.FindGameObjectWithTag("LevelSelect").GetComponent<LevelSelect>();
-            //    mapLeftSelect = mapScript.levelLeft;
-            //    mapRightSelect = mapScript.levelRight;
-            //}
+            mapScript = GameObject.FindGameObjectWithTag("LevelSelect").GetComponent<LevelSelect>();
+            mapLeftSelect = mapScript.levelLeft;
+            mapRightSelect = mapScript.levelRight;
+
+            mapLeftSelect.interactable = true;
+            mapRightSelect.interactable = true;
+
+            mapLeftSelect.onClick.AddListener(OnMapLeft);
+
+            mapRightSelect.onClick.AddListener(OnMapRight);
 
             if (isLocalPlayer)
             {
@@ -132,13 +132,6 @@ namespace Prototype.NetworkLobby
         {
             carLeftSelect.interactable = true;
             carRightSelect.interactable = true;
-
-            mapLeftSelect.interactable = true;
-            mapRightSelect.interactable = true;
-
-            mapLeftSelect.onClick.AddListener(OnMapLeft);
-
-            mapRightSelect.onClick.AddListener(OnMapRight);
 
             remoteIcone.gameObject.SetActive(false);
             localIcone.gameObject.SetActive(true);
@@ -320,6 +313,12 @@ namespace Prototype.NetworkLobby
             CheckRemoveButton();
         }
 
+        [ClientRpc]
+        public void RpcUpdateLevelIndicator(int newLevel)
+        {
+            mapScript.levelSelect = newLevel;
+        }
+
         //====== Server Command
 
         [Command]
@@ -390,6 +389,7 @@ namespace Prototype.NetworkLobby
         {
             hostMap = mapScript.levelSelect;
             Debug.Log("Selected map = " + hostMap);
+            RpcUpdateLevelIndicator(hostMap);
         }
 
         [Command]
@@ -397,6 +397,7 @@ namespace Prototype.NetworkLobby
         {
             hostMap = mapScript.levelSelect;
             Debug.Log("Selected map = " + hostMap);
+            RpcUpdateLevelIndicator(hostMap);
         }
 
         //Cleanup thing when get destroy (which happen when client kick or disconnect)

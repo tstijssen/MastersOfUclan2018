@@ -92,11 +92,17 @@ MonoBehaviour:
   playerColor: {r: 0, g: 0, b: 0, a: 0}
   playerCarSelection: 0
   playerNumber: 0
+  levelNumber: 0
   vehicles:
   - {fileID: 1657827691245122, guid: bd1e3e0fee670644ba7765e858900203, type: 2}
   - {fileID: 1880217765586136, guid: 073ff601218119d44b51527574d8c631, type: 2}
   - {fileID: 1823493357491054, guid: 7f081ef4766e75443b3c965e6134526b, type: 2}
   - {fileID: 1755083280081346, guid: 7e317593ebb88c44fa74c74aa2f38aeb, type: 2}
+  levels:
+  - OnlineBattle
+  - OnlineBattle
+  - OnlineBattle
+  - OnlineBattle
 --- !u!114 &114283887292728108
 MonoBehaviour:
   m_ObjectHideFlags: 1

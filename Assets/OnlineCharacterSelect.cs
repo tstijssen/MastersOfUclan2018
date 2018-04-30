@@ -14,9 +14,11 @@ public class OnlineCharacterSelect : NetworkBehaviour {
     [SyncVar]
     public int playerNumber;
 
+    [SyncVar]
+    public int levelNumber;
+
     public GameObject[] vehicles;
-
-
+    public string[] levels;
     [Command]
     void Cmd_ReplacePlayer()
     {
@@ -34,7 +36,12 @@ public class OnlineCharacterSelect : NetworkBehaviour {
 
     // Use this for initialization
     void Start () {
-        //NetworkManager.singleton.ServerChangeScene("OnlineBattle");
+
+        if(playerNumber == 0)
+        {
+            NetworkManager.singleton.ServerChangeScene(levels[levelNumber]);
+        }
+        
         Cmd_ReplacePlayer();
     }
 }
