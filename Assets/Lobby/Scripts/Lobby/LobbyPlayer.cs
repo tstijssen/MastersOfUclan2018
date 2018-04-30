@@ -28,6 +28,11 @@ namespace Prototype.NetworkLobby
         public GameObject localIcone;
         public GameObject remoteIcone;
 
+
+        public LevelSelect mapScript;
+        public Button mapLeftSelect;
+        public Button mapRightSelect;
+
         //OnMyName function will be invoked on clients when server change the value of playerName
         //[SyncVar(hook = "OnMyName")]
         //public string playerName = "";
@@ -35,6 +40,9 @@ namespace Prototype.NetworkLobby
         public Color playerColor = Color.white;
         [SyncVar(hook = "OnMyVehicle")]
         public int playerVehicle = 0;
+
+        [SyncVar(hook = "OnMapChange")]
+        public int hostMap = 0;
 
         public Color OddRowColor = new Color(250.0f / 255.0f, 250.0f / 255.0f, 250.0f / 255.0f, 1.0f);
         public Color EvenRowColor = new Color(180.0f / 255.0f, 180.0f / 255.0f, 180.0f / 255.0f, 1.0f);
@@ -47,7 +55,6 @@ namespace Prototype.NetworkLobby
         //static Color OddRowColor = new Color(250.0f / 255.0f, 250.0f / 255.0f, 250.0f / 255.0f, 1.0f);
         //static Color EvenRowColor = new Color(180.0f / 255.0f, 180.0f / 255.0f, 180.0f / 255.0f, 1.0f);
 
-
         public override void OnClientEnterLobby()
         {
             base.OnClientEnterLobby();
@@ -56,6 +63,17 @@ namespace Prototype.NetworkLobby
 
             LobbyPlayerList._instance.AddPlayer(this);
             LobbyPlayerList._instance.DisplayDirectServerWarning(isServer && LobbyManager.s_Singleton.matchMaker == null);
+
+            //if(slot == 1)
+            //{
+            //    mapScript.gameObject.SetActive(true);
+            //}
+            //else
+            //{
+            //    mapScript = GameObject.FindGameObjectWithTag("LevelSelect").GetComponent<LevelSelect>();
+            //    mapLeftSelect = mapScript.levelLeft;
+            //    mapRightSelect = mapScript.levelRight;
+            //}
 
             if (isLocalPlayer)
             {
@@ -71,6 +89,7 @@ namespace Prototype.NetworkLobby
             //OnMyName(playerName);
             OnMyColor(playerColor);
             OnMyVehicle(playerVehicle);
+            OnMapChange(hostMap);
         }
 
         public override void OnStartAuthority()
@@ -113,6 +132,13 @@ namespace Prototype.NetworkLobby
         {
             carLeftSelect.interactable = true;
             carRightSelect.interactable = true;
+
+            mapLeftSelect.interactable = true;
+            mapRightSelect.interactable = true;
+
+            mapLeftSelect.onClick.AddListener(OnMapLeft);
+
+            mapRightSelect.onClick.AddListener(OnMapRight);
 
             remoteIcone.gameObject.SetActive(false);
             localIcone.gameObject.SetActive(true);
@@ -221,6 +247,11 @@ namespace Prototype.NetworkLobby
             playerVehicle = newSelection;
         }
 
+        public void OnMapChange(int newMap)
+        {
+            hostMap = newMap;
+        }
+
         //===== UI Handler
 
         //Note that those handler use Command function, as we need to change the value on the server not locally
@@ -238,6 +269,16 @@ namespace Prototype.NetworkLobby
         public void OnVehicleRight()
         {
             CmdVehicleRight();
+        }
+
+        public void OnMapLeft()
+        {
+            CmdMapLeft();
+        }
+
+        public void OnMapRight()
+        {
+            CmdMapRight();
         }
 
         public void OnReadyClicked()
@@ -342,6 +383,20 @@ namespace Prototype.NetworkLobby
             playerVehicle = GetComponent<VisualLobbyController>().pCarChoice;
             Debug.Log("Selected vehicle = " + playerVehicle);
 
+        }
+
+        [Command]
+        public void CmdMapLeft()
+        {
+            hostMap = mapScript.levelSelect;
+            Debug.Log("Selected map = " + hostMap);
+        }
+
+        [Command]
+        public void CmdMapRight()
+        {
+            hostMap = mapScript.levelSelect;
+            Debug.Log("Selected map = " + hostMap);
         }
 
         //Cleanup thing when get destroy (which happen when client kick or disconnect)

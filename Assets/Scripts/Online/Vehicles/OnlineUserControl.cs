@@ -30,7 +30,7 @@ namespace UnityStandardAssets.Vehicles.Car
             // get the car controller
             m_Car = GetComponent<CarController>();
             m_FireControl = GetComponent<OnlineFireControl>();
-            m_SpawnSelector = GameObject.Find("ControllerMouse").GetComponent<OnlineControllerInput>();
+            //m_SpawnSelector = GameObject.Find("ControllerMouse").GetComponent<OnlineControllerInput>();
         }
 
 
@@ -43,14 +43,6 @@ namespace UnityStandardAssets.Vehicles.Car
             m_GamePad = GamePad.GetState(PlayerIndex.One);
             if (m_GamePad.IsConnected)
             {
-                if (m_SpawnSelector.gameObject.activeInHierarchy )
-                {
-                    if (m_GamePad.Buttons.B == ButtonState.Pressed)
-                        m_SpawnSelector.CycleSelection();
-
-                    if (m_GamePad.Buttons.A == ButtonState.Pressed)
-                        m_SpawnSelector.SelectionPressed();
-                }
                 if(m_FireControl.m_Alive)
                 {
                     float oldTrigger = triggerFire;
@@ -103,14 +95,6 @@ namespace UnityStandardAssets.Vehicles.Car
 
             if (!m_GamePad.IsConnected)
             {
-                if (m_SpawnSelector.gameObject.activeInHierarchy)
-                {
-                    if (Input.GetButtonDown("Fire1"))
-                        m_SpawnSelector.CycleSelection();
-
-                    if (Input.GetButtonDown("Submit"))
-                        m_SpawnSelector.SelectionPressed();
-                }
                 if(m_FireControl.m_Alive)
                 {
                     bool shotPastFrame = fire;

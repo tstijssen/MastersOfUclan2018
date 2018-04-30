@@ -1085,8 +1085,12 @@ MonoBehaviour:
   removePlayerButton: {fileID: 114772991074356430}
   localIcone: {fileID: 1983240771090078}
   remoteIcone: {fileID: 1903544230203568}
+  mapScript: {fileID: 0}
+  mapLeftSelect: {fileID: 0}
+  mapRightSelect: {fileID: 0}
   playerColor: {r: 1, g: 1, b: 1, a: 1}
   playerVehicle: 0
+  hostMap: 0
   OddRowColor: {r: 0.98039216, g: 0.98039216, b: 0.98039216, a: 1}
   EvenRowColor: {r: 0.7058824, g: 0.7058824, b: 0.7058824, a: 1}
 --- !u!114 &114582503920845490

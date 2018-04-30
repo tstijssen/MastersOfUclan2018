@@ -88,15 +88,13 @@ public class OnlineFollowCamera : MonoBehaviour {
 
     public void SpawnPlayer(Vector3 position, Quaternion rotation)
     {
-        container.transform.position = position;
-        container.transform.rotation = Quaternion.identity;
-        container.transform.rotation = rotation;
         targets[(int)m_Selection].transform.position = position;
         targets[(int)m_Selection].transform.rotation = new Quaternion(0, 0, 0, 0);
         transform.rotation = new Quaternion(0, 0, 0, 0);
         container.GetComponent<Rigidbody>().useGravity = true;
         container.GetComponent<OnlineFireControl>().m_Alive = true;
         container.GetComponent<OnlineFireControl>().m_Despawned = false;
+        //container.GetComponent<OnlineFireControl>().RpcRespawn(position, rotation);
 
         Follow(targets[(int)m_Selection].transform);
     }

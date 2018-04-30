@@ -11,8 +11,9 @@ public class LevelSelect : MonoBehaviour {
 
     public Button levelLeft;
     public Button levelRight;
-    int levelSelect = 0;
-
+    public int levelSelect = 0;
+    public int NumOfMaps;
+    
     // Use this for initialization
     void Start ()
     {
@@ -35,24 +36,27 @@ public class LevelSelect : MonoBehaviour {
             case 2:
                 levelName.text = "FFA Tilt";
                 break;
+            case 3:
+                levelName.text = "HAT Cross";
+                break;
         }
 
         PlayerPrefs.SetInt("Level", levelSelect);
     }
 
 
-    void IncLvl()
+    public void IncLvl()
     {
         levelSelect++;
-        if (levelSelect > 2)
+        if (levelSelect > NumOfMaps - 1)
             levelSelect = 0;
     }
 
-    void DecLvl()
+    public void DecLvl()
     {
         levelSelect--;
         if (levelSelect < 0)
-            levelSelect = 2;
+            levelSelect = NumOfMaps - 1;
     }
 
 

@@ -509,7 +509,7 @@ public class OnlineFireControl : NetworkBehaviour {
 
         m_ReloadTimer = 0.0f;
         m_HeatFunction.HealthImage.color = Color.green;
-        m_Alive = false;
+        m_Alive = true;
         m_Despawned = false;
         m_Score = 0;
         m_Kills = 0;
@@ -522,6 +522,7 @@ public class OnlineFireControl : NetworkBehaviour {
             m_GunData.RamCollider.SetActive(false);
 
         ColourInPlayer();
+        RpcRespawn();
     }
 
     private void Death()
@@ -547,14 +548,31 @@ public class OnlineFireControl : NetworkBehaviour {
 
     private void Respawn()
     {
-        m_Despawned = true;
+        RpcRespawn();
         m_HP = 100.0f;
+        m_Alive = true;
+   
         m_CarData.DeathParticles.SetActive(false);
         //Transform respawnTarget = FindFurthestTarget("Respawn").transform;
         //transform.position = respawnTarget.position;
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         transform.rotation = Quaternion.identity;
+    }
+
+    [ClientRpc]
+    void RpcRespawn()
+    {
+        if(isLocalPlayer)
+        {
+            Transform spawnPoint;
+
+            GameObject[] spawnPoints = GameObject.FindGameObjectsWithTag("Spawn");
+            spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)].transform;
+
+            transform.position = new Vector3(spawnPoint.position.x, spawnPoint.position.y + 1.0f, spawnPoint.position.z);
+            transform.rotation = spawnPoint.rotation;
+        }
     }
 
     private void Update()

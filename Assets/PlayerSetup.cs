@@ -20,30 +20,27 @@ public class PlayerSetup : NetworkBehaviour {
     public GameObject[] vehicles;
     public OnlineFireControl fireControl;
     
-    public OnlineFollowCamera localCamera;
-
+    public GameObject localCamera;
+    public Vector3 cameraPos;
     public override void OnStartLocalPlayer()
     {
         Debug.Log("Setting camera");
-        localCamera = Camera.main.GetComponent<OnlineFollowCamera>();
-        GetComponent<UnityStandardAssets.Vehicles.Car.OnlineUserControl>().m_Camera = localCamera.gameObject;
-        localCamera.container = this.gameObject;
-        localCamera.targets = vehicles;
+        localCamera = Camera.main.gameObject;
+        cameraPos = localCamera.transform.position;
+        GetComponent<UnityStandardAssets.Vehicles.Car.OnlineUserControl>().m_Camera = localCamera;
+        localCamera.transform.parent = this.transform;
+        localCamera.transform.localPosition = cameraPos;
+        //localCamera.targets = vehicles;
         fireControl.m_HitIndicator = GameObject.Find("HitIndicator").GetComponent<Image>();
-        GameObject.Find("ControllerMouse").GetComponent<OnlineControllerInput>().container = fireControl.gameObject;
+        //GameObject.Find("ControllerMouse").GetComponent<OnlineControllerInput>().container = fireControl.gameObject;
 
         Debug.Log("camera done");
-
-
     }
 
     private void Start()
     {
-        GetComponent<Rigidbody>().useGravity = false;
-
         fireControl.m_PlayerNumber = playerNumber;
         GetComponent<UnityStandardAssets.Vehicles.Car.CarAudio>().m_Camera = Camera.main;
-        transform.position = Camera.main.transform.position;
 
         if (playerColor == Color.red)
         {
@@ -97,5 +94,10 @@ public class PlayerSetup : NetworkBehaviour {
         //        break;
         //}
         //vehiclePrefabs[playerCarSelection].SetActive(true);
+    }
+
+    void Update()
+    {
+        localCamera.transform.LookAt(transform);
     }
 }

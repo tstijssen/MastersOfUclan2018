@@ -26,3 +26,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/OnlineLevels/OnlineBattle.unity
     guid: ae84fa2dab1f732488373250d3b85a81
+  - enabled: 1
+    path: Assets/Scenes/OnlineLevels/Loader.unity
+    guid: fbc3a142cc5f4b14eb071bac03580090

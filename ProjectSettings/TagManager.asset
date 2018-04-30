@@ -23,6 +23,7 @@ TagManager:
   - Spawn
   - Player 1
   - Shell
+  - LevelSelect
   layers:
   - Default
   - TransparentFX
