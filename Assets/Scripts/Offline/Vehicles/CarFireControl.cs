@@ -657,7 +657,7 @@ public class CarFireControl : MonoBehaviour {
             }
 
             // activate smoke
-            if (m_CarData.Health < 50.0f)
+            if (m_CarData.Health < m_CarData.Health / 2)
             {
                 m_CarData.DamageParticles.SetActive(true);
             }

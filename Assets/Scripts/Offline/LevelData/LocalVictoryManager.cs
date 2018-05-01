@@ -25,43 +25,51 @@ public class LocalVictoryManager : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        for (int i = 0; i < m_Players.Length; ++i)
+        if(m_Players.Length == 0)
         {
-            if (m_Players[i].activeInHierarchy)
+            m_Players = GameObject.FindGameObjectsWithTag("Player");
+        }
+        else
+        {
+            for (int i = 0; i < m_Players.Length; ++i)
             {
-                CarFireControl car = m_Players[i].GetComponentInChildren<CarFireControl>();               
-                if (car && car.gameObject.activeInHierarchy && car.m_Victory)
+                if (m_Players[i].activeInHierarchy)
                 {
-                    // a player has won the game
-                    m_Panel.SetActive(true);
-
-                    for (int p = 0; p < m_Players.Length; ++p)
+                    CarFireControl car = m_Players[i].GetComponentInChildren<CarFireControl>();
+                    if (car && car.gameObject.activeInHierarchy && car.m_Victory)
                     {
-                        m_Players[p].GetComponentInChildren<CarFireControl>().Respawn();
+                        // a player has won the game
+                        m_Panel.SetActive(true);
+
+                        for (int p = 0; p < m_Players.Length; ++p)
+                        {
+                            m_Players[p].GetComponentInChildren<CarFireControl>().Respawn();
+                        }
+
+                        string victorColour = "";
+
+                        switch (car.m_PlayerTeam)
+                        {
+                            case TeamColours.Red:
+                                victorColour = "RED";
+                                break;
+                            case TeamColours.Blue:
+                                victorColour = "BLUE";
+                                break;
+                            case TeamColours.Green:
+                                victorColour = "GREEN";
+                                break;
+                            case TeamColours.Yellow:
+                                victorColour = "YELLOW";
+                                break;
+                        }
+
+                        m_VictoryDesc.text = "Player " + (i + 1) + " has won \n for team " + victorColour;
+                        m_VictoryData.text = "Score: " + car.m_Score + "\nKills: " + car.m_Kills + "\nDeaths: " + car.m_Deaths;
                     }
-
-                    string victorColour = "";
-
-                    switch (car.m_PlayerTeam)
-                    {
-                        case TeamColours.Red:
-                            victorColour = "RED";
-                            break;
-                        case TeamColours.Blue:
-                            victorColour = "BLUE";
-                            break;
-                        case TeamColours.Green:
-                            victorColour = "GREEN";
-                            break;
-                        case TeamColours.Yellow:
-                            victorColour = "YELLOW";
-                            break;
-                    }
-
-                    m_VictoryDesc.text = "Player " + (i + 1) + " has won \n for team " + victorColour;
-                    m_VictoryData.text = "Score: " + car.m_Score + "\nKills: " + car.m_Kills + "\nDeaths: " + car.m_Deaths;
                 }
             }
         }
+        
     }
 }

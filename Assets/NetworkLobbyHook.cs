@@ -10,12 +10,14 @@ public class NetworkLobbyHook : LobbyHook {
     {
         Debug.Log("In Hook!");
         LobbyPlayer lobbyProfile = lobbyPlayer.GetComponent<LobbyPlayer>();
-        PlayerSetup localPlayer = gamePlayer.GetComponent<PlayerSetup>();
+        OnlineCharacterSelect localPlayer = gamePlayer.GetComponent<OnlineCharacterSelect>();
 
         //localPlayer.playerName = lobbyProfile.playerName;
         localPlayer.playerNumber = lobbyProfile.slot;
         localPlayer.playerColor = lobbyProfile.playerColor;
         localPlayer.playerCarSelection = lobbyProfile.playerVehicle;
+        localPlayer.levelNumber = lobbyProfile.hostMap;
+        localPlayer.rulesNumber = lobbyProfile.hostRulesNumber;
         Debug.Log(lobbyProfile.slot + " car = " + localPlayer.playerCarSelection);
     }
 }

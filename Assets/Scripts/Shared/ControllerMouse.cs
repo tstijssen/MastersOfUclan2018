@@ -26,7 +26,7 @@ public class ControllerMouse : MonoBehaviour {
         h = 0.0f;
         v = 0.0f;
         selectedTarget = -1;
-        //transform.position = targets[selectedTarget].transform.position;
+
         canInteract = false;
         pressed = false;
         toggle = false;

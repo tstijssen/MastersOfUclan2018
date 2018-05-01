@@ -35,13 +35,13 @@ public class VisualLobbyController : NetworkBehaviour {
                 pCar.text = "Gun Car";
                 break;
             case 1:
-                pCar.text = "Train";
+                pCar.text = "Laser Car";
                 break;
             case 2:
-                pCar.text = "Boat";
+                pCar.text = "Ram Train";
                 break;
             case 3:
-                pCar.text = "Future Car";
+                pCar.text = "Broadside";
                 break;
         }
         carImg.sprite = spriteArray[pCarChoice];

@@ -15,7 +15,7 @@ public class OnlineBullet : MonoBehaviour {
     public bool m_Active;
 
     // Use this for initialization
-    void Start () {
+    void OnEnable () {
         m_LifeReset = m_BulletLife;
         m_Active = false;
     }
@@ -24,12 +24,6 @@ public class OnlineBullet : MonoBehaviour {
 	void Update () {
         // move bullet and decrease life counter
         transform.localPosition += transform.forward * m_BulletSpeed * Time.deltaTime;
-        m_BulletLife -= Time.deltaTime;
-
-        if (m_BulletLife < 0)
-        {
-            ResetBullet();
-        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -42,23 +36,12 @@ public class OnlineBullet : MonoBehaviour {
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log(other.tag);
-        if (other.tag == "Scenery")
-        {
-            ResetBullet();
-            Debug.Log("BulletReset");
-
-        }
-    }
-
     // reset bullet life counter and return it to the object pool for reuse
-    public void ResetBullet()
-    {
-        m_BulletLife = m_LifeReset;
-        m_Active = false;
-        gameObject.SetActive(false);
-        Debug.Log(gameObject.activeInHierarchy);
-    }
+    //public void ResetBullet()
+    //{
+    //    m_BulletLife = m_LifeReset;
+    //    m_Active = false;
+    //    gameObject.SetActive(false);
+    //    Debug.Log(gameObject.activeInHierarchy);
+    //}
 }
