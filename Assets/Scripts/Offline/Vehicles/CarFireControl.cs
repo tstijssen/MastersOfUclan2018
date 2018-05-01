@@ -13,7 +13,7 @@ public enum TeamColours { Red, Blue, Green, Yellow };
 [System.Serializable]
 public struct HeatFunction
 {
-    public Slider HealthSlider;
+    public Slider HealthSlider; //
     public Slider HeatSlider;
     public Image HealthImage;
     public Image HeatImage;
@@ -43,10 +43,10 @@ public struct GunData
 [System.Serializable]
 public struct CarData
 {
-    public float Health;
+    public float Health; //
     public float RespawnDuration;
-    public GameObject DamageParticles;
-    public GameObject DeathParticles;
+    public GameObject DamageParticles; // 
+    public GameObject DeathParticles; //
     public AudioClip HitSound;
 
     public Text[] ScoreText;
@@ -64,7 +64,7 @@ public class CarFireControl : MonoBehaviour {
 
     private float m_SpawnTimer;
     public bool m_Despawned;
-    public bool m_Alive;
+    public bool m_Alive; //
     public int m_Score;
     public int m_Kills;
     public int m_Deaths;
