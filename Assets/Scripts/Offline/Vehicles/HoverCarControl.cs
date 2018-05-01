@@ -44,8 +44,13 @@ public class HoverCarControl : MonoBehaviour
     string TurnMove = "Horizontal";
     string FireButton = "Fire1";
 
+    public GameObject cliffArray;
+
     GamePadState gamePad;
 
+    int pointNo = 0;
+    bool moving = false;
+    float speed = 0f;
   void Start()
   {
         m_body = GetComponent<Rigidbody>();
@@ -57,7 +62,14 @@ public class HoverCarControl : MonoBehaviour
         VerticalMove = GetComponentInParent<LocalPlayerSetup>().m_VerticalMove;
         m_FireControl = GetComponent<CarFireControl>();
         gamePad = GetComponentInParent<LocalPlayerSetup>().m_GamePadState;
+        
+    }
 
+    private void Awake()
+    {
+        moving = true;
+        pointNo = 0;
+        speed = 7000f;
     }
 
     void OnDrawGizmos()
@@ -89,6 +101,12 @@ public class HoverCarControl : MonoBehaviour
 	
   void Update()
   {
+        if (moving)
+            speed = 700f;
+        else
+            speed = 0f;
+
+        transform.LookAt(cliffArray.GetComponent<WapointsCliff>().waypoints[pointNo].transform);
 
         if(!m_FireControl.m_Alive)
         {
@@ -96,32 +114,32 @@ public class HoverCarControl : MonoBehaviour
         }
         bool fire = false;
         bool fireRelease = false;
-        float aclAxis = 0.0f;
+        float aclAxis = 10.0f;
         float aclSAxis = 0.0f;
         float turnAxis = 0.0f;
 
-        if (gamePad.IsConnected)
-        {
-            gamePad = GetComponentInParent<LocalPlayerSetup>().m_GamePadState;
+        //if (gamePad.IsConnected)
+        //{
+        //    gamePad = GetComponentInParent<LocalPlayerSetup>().m_GamePadState;
 
-            aclSAxis = gamePad.ThumbSticks.Left.X;
-            aclAxis = gamePad.ThumbSticks.Left.Y;
+        //    aclSAxis = gamePad.ThumbSticks.Left.X;
+        //    aclAxis = gamePad.ThumbSticks.Left.Y;
 
-            turnAxis = gamePad.ThumbSticks.Right.X;
+        //    turnAxis = gamePad.ThumbSticks.Right.X;
 
-            fire = (gamePad.Buttons.A == ButtonState.Pressed);
-            fireRelease = (gamePad.Buttons.A == ButtonState.Released);
-        }
-        else
-        {
-            // shooting
-            fire = Input.GetButton(FireButton);
-            fireRelease = Input.GetButtonUp(FireButton);
+        //    fire = (gamePad.Buttons.A == ButtonState.Pressed);
+        //    fireRelease = (gamePad.Buttons.A == ButtonState.Released);
+        //}
+        //else
+        //{
+        //    // shooting
+        //    fire = Input.GetButton(FireButton);
+        //    fireRelease = Input.GetButtonUp(FireButton);
 
-            aclAxis = Input.GetAxis(VerticalMove);
-            aclSAxis = Input.GetAxis(HorizontalMove);
-            turnAxis = Input.GetAxis(TurnMove);
-        }
+        //    aclAxis = Input.GetAxis(VerticalMove);
+        //    aclSAxis = Input.GetAxis(HorizontalMove);
+        //    turnAxis = Input.GetAxis(TurnMove);
+        //}
 
         if (fire)
             m_FireControl.Shoot();
@@ -129,7 +147,7 @@ public class HoverCarControl : MonoBehaviour
             m_FireControl.ShootRelease();
 
         // Main Thrust
-        m_currThrust = 0.0f;
+        m_currThrust = 10.0f;
         if (aclAxis > m_deadZone)
           m_currThrust = aclAxis * m_forwardAcl;
         else if (aclAxis < -m_deadZone)
@@ -175,8 +193,8 @@ public class HoverCarControl : MonoBehaviour
     }
 
     // Forward
-    if (Mathf.Abs(m_currThrust) > 0)
-      m_body.AddForce(transform.forward * m_currThrust);
+    //if (Mathf.Abs(m_currThrust) > 0)
+      m_body.AddForce(transform.forward * speed);
 
     if (Mathf.Abs(m_sideThrust) > 0)
       m_body.AddForce(transform.right * m_sideThrust);
@@ -190,4 +208,27 @@ public class HoverCarControl : MonoBehaviour
       m_body.AddRelativeTorque(Vector3.up * CurrentTurnAngle * m_turnStrength);
     }
   }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "CliffPoint")
+        {
+            pointNo++;
+
+            if(pointNo > cliffArray.GetComponent<WapointsCliff>().waypoints.Length)
+                moving = false;
+
+
+        }
+    }
+
+    void SetPoint()
+    {
+        for (int i = 0; i < cliffArray.GetComponent<WapointsCliff>().waypoints.Length; i ++)
+        {
+
+        }
+    }
+
 }

@@ -28,6 +28,7 @@ public class Menu : MonoBehaviour {
     public Button online;
     public Button quit;
     public GameObject menuPanel;
+    //public Button[][] menuButtons = new Button[3][3];
 
     //Transitions
     float transitionSpd;
@@ -196,8 +197,8 @@ public class Menu : MonoBehaviour {
                 Debug.LogError(transitionSpd);
                 if (shutter.GetComponent<RectTransform>().position.y > Screen.height * 2)
                 {
-                    transitionSpd = 0f;
-                    Debug.Log("ShutterIfReached!!");
+                    //transitionSpd = 0f;
+                    //Debug.Log("ShutterIfReached!!");
                 }
    
                 if (players)

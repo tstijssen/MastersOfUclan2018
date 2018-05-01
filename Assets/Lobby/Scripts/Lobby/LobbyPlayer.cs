@@ -28,6 +28,13 @@ namespace Prototype.NetworkLobby
         public GameObject localIcone;
         public GameObject remoteIcone;
 
+
+        public LevelSelect mapScript;
+        public Button mapLeftSelect;
+        public Button mapRightSelect;
+        public Button rulesRightButton;
+        public Button rulesLeftButton;
+
         //OnMyName function will be invoked on clients when server change the value of playerName
         //[SyncVar(hook = "OnMyName")]
         //public string playerName = "";
@@ -35,6 +42,12 @@ namespace Prototype.NetworkLobby
         public Color playerColor = Color.white;
         [SyncVar(hook = "OnMyVehicle")]
         public int playerVehicle = 0;
+
+        [SyncVar(hook = "OnMapChange")]
+        public int hostMap = 0;
+
+        [SyncVar(hook = "OnRulesChange")]
+        public int hostRulesNumber = 1;
 
         public Color OddRowColor = new Color(250.0f / 255.0f, 250.0f / 255.0f, 250.0f / 255.0f, 1.0f);
         public Color EvenRowColor = new Color(180.0f / 255.0f, 180.0f / 255.0f, 180.0f / 255.0f, 1.0f);
@@ -47,7 +60,6 @@ namespace Prototype.NetworkLobby
         //static Color OddRowColor = new Color(250.0f / 255.0f, 250.0f / 255.0f, 250.0f / 255.0f, 1.0f);
         //static Color EvenRowColor = new Color(180.0f / 255.0f, 180.0f / 255.0f, 180.0f / 255.0f, 1.0f);
 
-
         public override void OnClientEnterLobby()
         {
             base.OnClientEnterLobby();
@@ -56,6 +68,24 @@ namespace Prototype.NetworkLobby
 
             LobbyPlayerList._instance.AddPlayer(this);
             LobbyPlayerList._instance.DisplayDirectServerWarning(isServer && LobbyManager.s_Singleton.matchMaker == null);
+
+            mapScript = GameObject.FindGameObjectWithTag("LevelSelect").GetComponent<LevelSelect>();
+            mapLeftSelect = mapScript.levelLeft;
+            mapRightSelect = mapScript.levelRight;
+            rulesLeftButton = mapScript.rulesLeft;
+            rulesRightButton = mapScript.rulesRight;
+
+            mapLeftSelect.interactable = true;
+            mapRightSelect.interactable = true;
+            rulesRightButton.interactable = true;
+            rulesLeftButton.interactable = true;
+
+            mapLeftSelect.onClick.AddListener(OnMapLeft);
+            mapRightSelect.onClick.AddListener(OnMapRight);
+
+            rulesRightButton.onClick.AddListener(OnRulesRight);
+            rulesLeftButton.onClick.AddListener(OnRulesLeft);
+
 
             if (isLocalPlayer)
             {
@@ -71,6 +101,8 @@ namespace Prototype.NetworkLobby
             //OnMyName(playerName);
             OnMyColor(playerColor);
             OnMyVehicle(playerVehicle);
+            OnMapChange(hostMap);
+            OnRulesChange(hostRulesNumber);
         }
 
         public override void OnStartAuthority()
@@ -221,6 +253,16 @@ namespace Prototype.NetworkLobby
             playerVehicle = newSelection;
         }
 
+        public void OnMapChange(int newMap)
+        {
+            hostMap = newMap;
+        }
+
+        public void OnRulesChange(int newRule)
+        {
+            hostRulesNumber = newRule;
+        }
+
         //===== UI Handler
 
         //Note that those handler use Command function, as we need to change the value on the server not locally
@@ -238,6 +280,26 @@ namespace Prototype.NetworkLobby
         public void OnVehicleRight()
         {
             CmdVehicleRight();
+        }
+
+        public void OnMapLeft()
+        {
+            CmdMapLeft();
+        }
+
+        public void OnMapRight()
+        {
+            CmdMapRight();
+        }
+
+        public void OnRulesRight()
+        {
+            CmdRulesRight();
+        }
+
+        public void OnRulesLeft()
+        {
+            CmdRulesLeft();
         }
 
         public void OnReadyClicked()
@@ -277,6 +339,18 @@ namespace Prototype.NetworkLobby
         public void RpcUpdateRemoveButton()
         {
             CheckRemoveButton();
+        }
+
+        [ClientRpc]
+        public void RpcUpdateLevelIndicator(int newLevel)
+        {
+            mapScript.levelSelect = newLevel;
+        }
+
+        [ClientRpc]
+        public void RpcUpdateRulesNumber(int newRule)
+        {
+            mapScript.rulesNumber = newRule;
         }
 
         //====== Server Command
@@ -342,6 +416,36 @@ namespace Prototype.NetworkLobby
             playerVehicle = GetComponent<VisualLobbyController>().pCarChoice;
             Debug.Log("Selected vehicle = " + playerVehicle);
 
+        }
+
+        [Command]
+        public void CmdMapLeft()
+        {
+            hostMap = mapScript.levelSelect;
+            Debug.Log("Selected map = " + hostMap);
+            RpcUpdateLevelIndicator(hostMap);
+        }
+
+        [Command]
+        public void CmdMapRight()
+        {
+            hostMap = mapScript.levelSelect;
+            Debug.Log("Selected map = " + hostMap);
+            RpcUpdateLevelIndicator(hostMap);
+        }
+
+        [Command]
+        public void CmdRulesLeft()
+        {
+            hostRulesNumber = mapScript.rulesNumber;
+            RpcUpdateRulesNumber(hostRulesNumber);
+        }
+
+        [Command]
+        public void CmdRulesRight()
+        {
+            hostRulesNumber = mapScript.rulesNumber;
+            RpcUpdateRulesNumber(hostRulesNumber);
         }
 
         //Cleanup thing when get destroy (which happen when client kick or disconnect)

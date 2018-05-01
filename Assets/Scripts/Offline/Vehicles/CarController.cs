@@ -68,9 +68,9 @@ namespace UnityStandardAssets.Vehicles.Car
             m_MaxHandbrakeTorque = float.MaxValue;
 
             m_Rigidbody = GetComponent<Rigidbody>();
+            
             m_CurrentTorque = m_FullTorqueOverAllWheels - (m_TractionControl*m_FullTorqueOverAllWheels);
         }
-
 
         private void GearChanging()
         {
@@ -247,6 +247,7 @@ namespace UnityStandardAssets.Vehicles.Car
             {
                 var turnadjust = (transform.eulerAngles.y - m_OldRotation) * m_SteerHelper;
                 Quaternion velRotation = Quaternion.AngleAxis(turnadjust, Vector3.up);
+
                 m_Rigidbody.velocity = velRotation * m_Rigidbody.velocity;
             }
             m_OldRotation = transform.eulerAngles.y;

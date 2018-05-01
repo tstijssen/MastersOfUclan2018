@@ -603,10 +603,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4835610279427132}
   - component: {fileID: 54571929369678886}
-  - component: {fileID: 114279129639876092}
-  - component: {fileID: 114100979562527434}
-  - component: {fileID: 114016050079822370}
-  - component: {fileID: 114297662376494726}
   - component: {fileID: 65435180381998178}
   m_Layer: 0
   m_Name: TrainTest
@@ -2701,46 +2697,6 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &114016050079822370
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1601884966112692}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d672030e0b0cb94b95f16cfeccede8a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_CarDriveType: 1
-  m_WheelColliders:
-  - {fileID: 146913820205662656}
-  - {fileID: 146609230059464966}
-  - {fileID: 146620054825805348}
-  - {fileID: 146989919632550706}
-  m_WheelMeshes:
-  - {fileID: 1818303770937168}
-  - {fileID: 1042630046645240}
-  - {fileID: 1463821440773500}
-  - {fileID: 1419414902846272}
-  m_WheelEffects:
-  - {fileID: 114396097852903950}
-  - {fileID: 114998730879284854}
-  - {fileID: 114515599823682990}
-  - {fileID: 114805511660924668}
-  m_CentreOfMassOffset: {x: 0, y: 0, z: 0}
-  m_MaximumSteerAngle: 25
-  m_SteerHelper: 0.644
-  m_TractionControl: 1
-  m_FullTorqueOverAllWheels: 2500
-  m_ReverseTorque: 500
-  m_MaxHandbrakeTorque: 100000000
-  m_Downforce: 100
-  m_SpeedType: 0
-  m_Topspeed: 150
-  m_RevRangeBoundary: 1
-  m_SlipLimit: 0.3
-  m_BrakeTorque: 20000
 --- !u!114 &114100611935764060
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2768,29 +2724,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114100979562527434
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1601884966112692}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54ff6a0331df4b4489829b5897c6150a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  engineSoundStyle: 1
-  lowAccelClip: {fileID: 8300000, guid: c4d8928c75c21af43998193f0f038429, type: 3}
-  lowDecelClip: {fileID: 8300000, guid: 5699dddcce16c4543b95951c4ce0e092, type: 3}
-  highAccelClip: {fileID: 8300000, guid: 03e3bd08a6e70684dbe299a3e185fdd2, type: 3}
-  highDecelClip: {fileID: 8300000, guid: 03bf91d88fce91c41995d27de63cc967, type: 3}
-  pitchMultiplier: 1
-  lowPitchMin: 1
-  lowPitchMax: 6
-  highPitchMultiplier: 0.25
-  maxRolloffDistance: 500
-  dopplerLevel: 1
-  useDoppler: 1
 --- !u!114 &114114137152100346
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2932,55 +2865,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multiplier: 1
---- !u!114 &114279129639876092
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1601884966112692}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 367268284b1ca034cb392b088cef1b89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114297662376494726
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1601884966112692}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74114e3dcdd90b44481ceb2a4f5a36e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_CarData:
-    Health: 100
-    RespawnDuration: 3
-    DamageParticles: {fileID: 1521217909306042}
-    DeathParticles: {fileID: 1983850537679972}
-    HitSound: {fileID: 8300000, guid: c5842d44cf85bff45923f3951ae10c11, type: 3}
-    DeathCounter: {fileID: 0}
-    Shield: {fileID: 1504891866060234}
-  m_GunData:
-    gunType: 3
-    Barrel1: {fileID: 0}
-    Barrel2: {fileID: 0}
-    BulletPool: {fileID: 0}
-    BeamBarrel: {fileID: 0}
-    RamCollider: {fileID: 1752706466354780}
-    altguns: 0
-    fired: 0
-    ReloadTwinGuns: 0.1
-  m_HeatFunction:
-    HealthSlider: {fileID: 114114137152100346}
-    HeatSlider: {fileID: 114131443573035240}
-    HealthImage: {fileID: 114832295867111060}
-    HeatImage: {fileID: 114536934764143220}
-    BeamHeat: 100
-    BulletHeat: 7.5
-    RamHeat: 100
-    HeatDrain: 15
 --- !u!114 &114396097852903950
 MonoBehaviour:
   m_ObjectHideFlags: 1

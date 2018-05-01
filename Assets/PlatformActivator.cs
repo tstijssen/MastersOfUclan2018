@@ -63,7 +63,7 @@ public class PlatformActivator : MonoBehaviour
                     noReadyPlayers++;
                 }
             }
-            if (noPlayers == noReadyPlayers)
+            if (noPlayers == noReadyPlayers && noPlayers > 0)
             {
                 levelSelectTxt.SetActive(true);
                 allReady = true;

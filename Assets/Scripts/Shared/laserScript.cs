@@ -4,6 +4,7 @@ using System.Collections;
 public class laserScript : MonoBehaviour {
 
     public float m_Damage;    // continuous, as long as inside beam, divided by frametime
+    public float m_Width;
     public Transform startPoint;
 	public Transform endPoint;
     private Transform linecastedTransform;
@@ -26,8 +27,8 @@ public class laserScript : MonoBehaviour {
         }
 
         laserLine = GetComponentInChildren<LineRenderer>();
-        laserLine.startWidth = 2.0f;
-        laserLine.endWidth = 2.0f;
+        laserLine.startWidth = m_Width;
+        laserLine.endWidth = m_Width;
 
         laserLine.SetPosition (0, startPoint.position);
         laserLine.SetPosition(1, linecastedTransform.position);

@@ -124,7 +124,7 @@ public class FollowCamera : MonoBehaviour {
         transform.rotation = Quaternion.identity;
         transform.Rotate(90.0f, 90.0f, 0.0f);
         transform.position = m_MenuPosition;
-        CharacterSelect.SetActive(true);
+        SpawnSelect.SetActive(true);
         if(TeamSelect)
         {
             TeamSelect.SetActive(false);
@@ -135,7 +135,7 @@ public class FollowCamera : MonoBehaviour {
     public void TeamCamera()
     {
         MenuCamera();
-        CharacterSelect.SetActive(false);
+        SpawnSelect.SetActive(false);
         TeamSelect.SetActive(true);
     }
 }

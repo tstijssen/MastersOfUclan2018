@@ -9,6 +9,7 @@ public class FlagCaptureScript : MonoBehaviour {
     public float m_ReturnTime;
     public TeamColours m_FlagColour;
     public GameObject m_FlagModel;
+    public int m_VictoryNumber = 0;
     Vector3 m_HomePos;
     Quaternion m_HomeRot;
     float m_Timer;

@@ -23,6 +23,9 @@ TagManager:
   - Spawn
   - Player 1
   - Shell
+  - Hat
+  - Base
+  - CliffPoint
   layers:
   - Default
   - TransparentFX
