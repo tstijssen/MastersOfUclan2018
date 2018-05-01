@@ -55,6 +55,8 @@ namespace UnityStandardAssets.Vehicles.Car
             m_RandomPerlin = Random.value*100;
 
             m_Rigidbody = GetComponent<Rigidbody>();
+
+            m_Driving = true;
         }
 
 
@@ -211,6 +213,12 @@ namespace UnityStandardAssets.Vehicles.Car
             }
         }
 
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.tag == "Finish")
+                m_Driving = false;
+        }
 
         public void SetTarget(Transform target)
         {
