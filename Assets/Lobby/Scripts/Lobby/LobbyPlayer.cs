@@ -32,6 +32,8 @@ namespace Prototype.NetworkLobby
         public LevelSelect mapScript;
         public Button mapLeftSelect;
         public Button mapRightSelect;
+        public Button rulesRightButton;
+        public Button rulesLeftButton;
 
         //OnMyName function will be invoked on clients when server change the value of playerName
         //[SyncVar(hook = "OnMyName")]
@@ -43,6 +45,9 @@ namespace Prototype.NetworkLobby
 
         [SyncVar(hook = "OnMapChange")]
         public int hostMap = 0;
+
+        [SyncVar(hook = "OnRulesChange")]
+        public int hostRulesNumber = 1;
 
         public Color OddRowColor = new Color(250.0f / 255.0f, 250.0f / 255.0f, 250.0f / 255.0f, 1.0f);
         public Color EvenRowColor = new Color(180.0f / 255.0f, 180.0f / 255.0f, 180.0f / 255.0f, 1.0f);
@@ -67,13 +72,20 @@ namespace Prototype.NetworkLobby
             mapScript = GameObject.FindGameObjectWithTag("LevelSelect").GetComponent<LevelSelect>();
             mapLeftSelect = mapScript.levelLeft;
             mapRightSelect = mapScript.levelRight;
+            rulesLeftButton = mapScript.rulesLeft;
+            rulesRightButton = mapScript.rulesRight;
 
             mapLeftSelect.interactable = true;
             mapRightSelect.interactable = true;
+            rulesRightButton.interactable = true;
+            rulesLeftButton.interactable = true;
 
             mapLeftSelect.onClick.AddListener(OnMapLeft);
-
             mapRightSelect.onClick.AddListener(OnMapRight);
+
+            rulesRightButton.onClick.AddListener(OnRulesRight);
+            rulesLeftButton.onClick.AddListener(OnRulesLeft);
+
 
             if (isLocalPlayer)
             {
@@ -90,6 +102,7 @@ namespace Prototype.NetworkLobby
             OnMyColor(playerColor);
             OnMyVehicle(playerVehicle);
             OnMapChange(hostMap);
+            OnRulesChange(hostRulesNumber);
         }
 
         public override void OnStartAuthority()
@@ -245,6 +258,11 @@ namespace Prototype.NetworkLobby
             hostMap = newMap;
         }
 
+        public void OnRulesChange(int newRule)
+        {
+            hostRulesNumber = newRule;
+        }
+
         //===== UI Handler
 
         //Note that those handler use Command function, as we need to change the value on the server not locally
@@ -272,6 +290,16 @@ namespace Prototype.NetworkLobby
         public void OnMapRight()
         {
             CmdMapRight();
+        }
+
+        public void OnRulesRight()
+        {
+            CmdRulesRight();
+        }
+
+        public void OnRulesLeft()
+        {
+            CmdRulesLeft();
         }
 
         public void OnReadyClicked()
@@ -317,6 +345,12 @@ namespace Prototype.NetworkLobby
         public void RpcUpdateLevelIndicator(int newLevel)
         {
             mapScript.levelSelect = newLevel;
+        }
+
+        [ClientRpc]
+        public void RpcUpdateRulesNumber(int newRule)
+        {
+            mapScript.rulesNumber = newRule;
         }
 
         //====== Server Command
@@ -398,6 +432,20 @@ namespace Prototype.NetworkLobby
             hostMap = mapScript.levelSelect;
             Debug.Log("Selected map = " + hostMap);
             RpcUpdateLevelIndicator(hostMap);
+        }
+
+        [Command]
+        public void CmdRulesLeft()
+        {
+            hostRulesNumber = mapScript.rulesNumber;
+            RpcUpdateRulesNumber(hostRulesNumber);
+        }
+
+        [Command]
+        public void CmdRulesRight()
+        {
+            hostRulesNumber = mapScript.rulesNumber;
+            RpcUpdateRulesNumber(hostRulesNumber);
         }
 
         //Cleanup thing when get destroy (which happen when client kick or disconnect)

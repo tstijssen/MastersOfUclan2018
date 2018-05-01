@@ -25,7 +25,7 @@ public class LocalVictoryManager : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if(!m_Players[0])
+        if(m_Players.Length == 0)
         {
             m_Players = GameObject.FindGameObjectsWithTag("Player");
         }

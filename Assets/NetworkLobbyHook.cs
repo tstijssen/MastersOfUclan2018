@@ -17,7 +17,7 @@ public class NetworkLobbyHook : LobbyHook {
         localPlayer.playerColor = lobbyProfile.playerColor;
         localPlayer.playerCarSelection = lobbyProfile.playerVehicle;
         localPlayer.levelNumber = lobbyProfile.hostMap;
+        localPlayer.rulesNumber = lobbyProfile.hostRulesNumber;
         Debug.Log(lobbyProfile.slot + " car = " + localPlayer.playerCarSelection);
-
     }
 }

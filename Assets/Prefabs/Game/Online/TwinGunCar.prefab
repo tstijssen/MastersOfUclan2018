@@ -644,11 +644,11 @@ GameObject:
   - component: {fileID: 114330418586591536}
   - component: {fileID: 114125471356038174}
   - component: {fileID: 65940344226384470}
-  - component: {fileID: 114477662295832596}
   - component: {fileID: 114352132595817326}
   - component: {fileID: 114701441486229264}
   - component: {fileID: 114985635067429934}
   - component: {fileID: 114016522157946022}
+  - component: {fileID: 114243379485994200}
   m_Layer: 0
   m_Name: TwinGunCar
   m_TagString: Player
@@ -3140,6 +3140,19 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114243379485994200
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1657827691245122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cd1ff11cff6b1240911fcfa1e2ff0e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lerpRate: 5
+  threshold: 0.5
 --- !u!114 &114268765005427392
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3313,27 +3326,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multiplier: 1
---- !u!114 &114477662295832596
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1657827691245122}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TransformSyncMode: 3
-  m_SendInterval: 0.09090909
-  m_SyncRotationAxis: 2
-  m_RotationSyncCompression: 0
-  m_SyncSpin: 0
-  m_MovementTheshold: 0.001
-  m_VelocityThreshold: 0.0001
-  m_SnapThreshold: 5
-  m_InterpolateRotation: 1
-  m_InterpolateMovement: 1
 --- !u!114 &114535894125242908
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3532,6 +3524,7 @@ MonoBehaviour:
   - {fileID: 1105226595039844}
   fireControl: {fileID: 114985635067429934}
   localCamera: {fileID: 0}
+  cameraPos: {x: 0, y: 0, z: 0}
 --- !u!114 &114714530908066702
 MonoBehaviour:
   m_ObjectHideFlags: 1

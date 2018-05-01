@@ -2892,8 +2892,9 @@ GameObject:
   - component: {fileID: 1315917211}
   - component: {fileID: 1315917210}
   - component: {fileID: 1315917209}
+  - component: {fileID: 1315917214}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: MainCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2997,6 +2998,54 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1315917214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1315917208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6de89dab1faed3141a3442e54e559bc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ScorePanels:
+  - {fileID: 671316950}
+  - {fileID: 989780904}
+  - {fileID: 2089855603}
+  - {fileID: 1669456826}
+  m_Players: []
+  m_Items:
+  - m_PlayerNumber: {fileID: 1551557103}
+    m_Vehicle: {fileID: 1518597832}
+    m_Colour: {fileID: 1069580934}
+    m_Score: {fileID: 376196154}
+    m_Kills: {fileID: 1638944062}
+    m_Deaths: {fileID: 28086621}
+  - m_PlayerNumber: {fileID: 798692870}
+    m_Vehicle: {fileID: 1347249290}
+    m_Colour: {fileID: 494907508}
+    m_Score: {fileID: 695697641}
+    m_Kills: {fileID: 1808475052}
+    m_Deaths: {fileID: 1693790548}
+  - m_PlayerNumber: {fileID: 234483942}
+    m_Vehicle: {fileID: 87275996}
+    m_Colour: {fileID: 1947170779}
+    m_Score: {fileID: 1774394221}
+    m_Kills: {fileID: 255772204}
+    m_Deaths: {fileID: 1884304296}
+  - m_PlayerNumber: {fileID: 1155813347}
+    m_Vehicle: {fileID: 531730036}
+    m_Colour: {fileID: 1799522926}
+    m_Score: {fileID: 942927395}
+    m_Kills: {fileID: 210002342}
+    m_Deaths: {fileID: 1921044730}
+  m_CarSprites:
+  - {fileID: 21300000, guid: 6ff00736f0b2b1d49bc9da62629ef6f3, type: 3}
+  - {fileID: 21300000, guid: 819df23adaca6b34fa05421cef5a563a, type: 3}
+  - {fileID: 21300000, guid: ecae42c145deb114585da71637d0b292, type: 3}
+  - {fileID: 21300000, guid: 4fbd69cde251bbe439f591dae736aa49, type: 3}
+  KillLimit: 0
 --- !u!1 &1347249288
 GameObject:
   m_ObjectHideFlags: 0
@@ -4052,7 +4101,6 @@ GameObject:
   - component: {fileID: 1675043753}
   - component: {fileID: 1675043756}
   - component: {fileID: 1675043755}
-  - component: {fileID: 1675043754}
   m_Layer: 5
   m_Name: TestPanel
   m_TagString: Untagged
@@ -4083,58 +4131,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1675043754
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1675043752}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 985a2e75e16d3d444836411dcc4cf335, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ScorePanels:
-  - {fileID: 671316950}
-  - {fileID: 989780904}
-  - {fileID: 2089855603}
-  - {fileID: 1669456826}
-  m_Players:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  m_Items:
-  - m_PlayerNumber: {fileID: 1551557103}
-    m_Vehicle: {fileID: 1518597832}
-    m_Colour: {fileID: 1069580934}
-    m_Score: {fileID: 376196154}
-    m_Kills: {fileID: 1638944062}
-    m_Deaths: {fileID: 28086621}
-  - m_PlayerNumber: {fileID: 798692870}
-    m_Vehicle: {fileID: 1347249290}
-    m_Colour: {fileID: 494907508}
-    m_Score: {fileID: 695697641}
-    m_Kills: {fileID: 1808475052}
-    m_Deaths: {fileID: 1693790548}
-  - m_PlayerNumber: {fileID: 234483942}
-    m_Vehicle: {fileID: 87275996}
-    m_Colour: {fileID: 1947170779}
-    m_Score: {fileID: 1774394221}
-    m_Kills: {fileID: 255772204}
-    m_Deaths: {fileID: 1884304296}
-  - m_PlayerNumber: {fileID: 1155813347}
-    m_Vehicle: {fileID: 531730036}
-    m_Colour: {fileID: 1799522926}
-    m_Score: {fileID: 942927395}
-    m_Kills: {fileID: 210002342}
-    m_Deaths: {fileID: 1921044730}
-  m_CarSprites:
-  - {fileID: 21300000, guid: 6ff00736f0b2b1d49bc9da62629ef6f3, type: 3}
-  - {fileID: 21300000, guid: 819df23adaca6b34fa05421cef5a563a, type: 3}
-  - {fileID: 21300000, guid: ecae42c145deb114585da71637d0b292, type: 3}
-  - {fileID: 21300000, guid: 4fbd69cde251bbe439f591dae736aa49, type: 3}
-  KillLimit: 0
 --- !u!114 &1675043755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4938,11 +4934,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db08c583398b19c458317f61570e4c26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Players:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  m_Players: []
   m_Panel: {fileID: 1426011705}
   m_VictoryDesc: {fileID: 1789512135}
   m_VictoryData: {fileID: 2132928348}

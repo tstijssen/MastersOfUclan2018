@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114147415281983644}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -93,6 +93,7 @@ MonoBehaviour:
   playerCarSelection: 0
   playerNumber: 0
   levelNumber: 0
+  rulesNumber: 0
   vehicles:
   - {fileID: 1657827691245122, guid: bd1e3e0fee670644ba7765e858900203, type: 2}
   - {fileID: 1880217765586136, guid: 073ff601218119d44b51527574d8c631, type: 2}
@@ -102,10 +103,7 @@ MonoBehaviour:
   - {fileID: 1099824571476122, guid: 779c791d7bc50504592a1bb6073bae08, type: 2}
   - {fileID: 1316479536435288, guid: 0bc0a11dea78ea644ad93349a97e8e79, type: 2}
   - {fileID: 1878933471535178, guid: b1c38768fc8bb684cba8c1fa49a72eaf, type: 2}
-  levels:
-  - OnlineBattle
-  - OnlineBattle
-  - OnlineBattle
+  levelNames: []
 --- !u!114 &114283887292728108
 MonoBehaviour:
   m_ObjectHideFlags: 1

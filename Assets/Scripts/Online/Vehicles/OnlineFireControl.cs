@@ -90,29 +90,21 @@ public class OnlineFireControl : NetworkBehaviour {
                     if (m_ReloadTimer <= 0.0f && m_Heat < m_HeatFunction.HeatSlider.maxValue)    // only shoot if not waiting for reload
                     {
                         Debug.Log("Shooting");
-                        float vol = Random.Range(volLowRange, volHighRange);
+                        m_Fired = true;
                         GameObject bullet;
                         if (m_GunData.altguns)
                         {
                             bullet = m_SpawnManager.GetFromPool(m_GunData.Barrel1.transform.position);
                             bullet.transform.rotation = m_GunData.Barrel1.transform.rotation;
-                            m_GunData.Barrel1.GetComponent<AudioSource>().volume = vol;
-                            m_GunData.Barrel1.GetComponent<AudioSource>().Play();
                             //bullet.transform.position = m_GunData.Barrel1.transform.position;
                             m_GunData.altguns = !m_GunData.altguns;
-                            m_GunData.Barrel1.transform.GetChild(0).gameObject.SetActive(true);
-
                         }
                         else
                         {
                             bullet = m_SpawnManager.GetFromPool(m_GunData.Barrel2.transform.position);
                             bullet.transform.rotation = m_GunData.Barrel2.transform.rotation;
-                            m_GunData.Barrel2.GetComponent<AudioSource>().volume = vol;
-                            m_GunData.Barrel2.GetComponent<AudioSource>().Play();
                             //bullet.transform.position = m_GunData.Barrel2.transform.position;
                             m_GunData.altguns = !m_GunData.altguns;
-                            m_GunData.Barrel2.transform.GetChild(0).gameObject.SetActive(true);
-
                         }
                         m_ReloadTimer = m_GunData.ReloadTwinGuns;   // reset reload speed
 
@@ -215,8 +207,9 @@ public class OnlineFireControl : NetworkBehaviour {
             m_Fired = false;
         }
 
-        if (m_GunData.gunType == FireType.TwinGuns )
+        if (m_GunData.gunType == FireType.TwinGuns  && m_Fired)
         {
+            m_Fired = false;
             Debug.Log("Disabling gunflashes");
             m_GunData.Barrel1.transform.GetChild(0).gameObject.SetActive(false);
             m_GunData.Barrel2.transform.GetChild(0).gameObject.SetActive(false);
@@ -560,7 +553,6 @@ public class OnlineFireControl : NetworkBehaviour {
         transform.rotation = Quaternion.identity;
     }
 
-    [ClientRpc]
     public void RpcRespawn()
     {
         if(isLocalPlayer)
@@ -589,6 +581,8 @@ public class OnlineFireControl : NetworkBehaviour {
 
         if (m_Alive)
         {
+
+
             if (!m_SpawnManager)
                 m_SpawnManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<NetworkSpawnManager>();
 
@@ -681,6 +675,19 @@ public class OnlineFireControl : NetworkBehaviour {
                 {
                     m_GunData.BeamBarrel.GetComponent<AudioSource>().Play();
                 }
+            }
+
+            if(m_GunData.gunType == FireType.TwinGuns && m_Fired)
+            {
+                float vol = Random.Range(volLowRange, volHighRange);
+
+                m_GunData.Barrel1.GetComponent<AudioSource>().volume = vol;
+                m_GunData.Barrel1.GetComponent<AudioSource>().Play();
+                m_GunData.Barrel1.transform.GetChild(0).gameObject.SetActive(true);
+
+                m_GunData.Barrel2.GetComponent<AudioSource>().volume = vol;
+                m_GunData.Barrel2.GetComponent<AudioSource>().Play();
+                m_GunData.Barrel2.transform.GetChild(0).gameObject.SetActive(true);
             }
 
             if (m_GunData.gunType == FireType.Cannon && m_GunData.fired)
