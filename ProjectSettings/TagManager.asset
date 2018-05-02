@@ -26,6 +26,8 @@ TagManager:
   - Hat
   - Base
   - CliffPoint
+  - missile
+  - shell
   layers:
   - Default
   - TransparentFX

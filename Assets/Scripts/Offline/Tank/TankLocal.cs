@@ -85,9 +85,9 @@ public class TankLocal : MonoBehaviour {
             actualSpeed = m_Speed;
         }
 
-        Hover();
-        Move();
-        Shoot();
+        //Hover();
+        //Move();
+        //Shoot();
 
         if(Input.GetButtonDown("Reset"))
         {
