@@ -335,6 +335,12 @@ namespace Prototype.NetworkLobby
             return true;
         }
 
+        public void MainMenuCblk()
+        {
+            SceneManager.LoadSceneAsync("Menu");
+            Destroy(this.gameObject);
+        }
+
         // --- Countdown management
 
         public override void OnLobbyServerPlayersReady()

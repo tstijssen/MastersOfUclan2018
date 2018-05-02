@@ -29,3 +29,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/OnlineLevels/Loader.unity
     guid: fbc3a142cc5f4b14eb071bac03580090
+  - enabled: 1
+    path: Assets/Scenes/OnlineLobby.unity
+    guid: f6432743b421dff44bd720dddec1194e

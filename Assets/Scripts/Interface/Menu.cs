@@ -47,7 +47,7 @@ public class Menu : MonoBehaviour {
 
     //Lobby Online
     public Button onlineBack;
-    public GameObject onlineLobby;
+    //public GameObject onlineLobby;
 
     //Options
     public GameObject optionsUI;
@@ -71,6 +71,7 @@ public class Menu : MonoBehaviour {
     {
         canInteract = false;
         StartCoroutine(MenuChange());
+        //DontDestroyOnLoad(gameObject);
 
         //DEV
         stateText.text = menuUp.ToString();
@@ -134,8 +135,8 @@ public class Menu : MonoBehaviour {
                     if (offlineLobby.activeInHierarchy)
                         offlineLobby.SetActive(false);
 
-                    if (onlineLobby.activeInHierarchy)
-                        onlineLobby.SetActive(false);
+                    //if (onlineLobby.activeInHierarchy)
+                    //    onlineLobby.SetActive(false);
                 }
 
                 shutter.GetComponent<RectTransform>().Translate((-Vector3.up * transitionSpd) * Time.deltaTime);
@@ -213,15 +214,15 @@ public class Menu : MonoBehaviour {
 
 
                 break;
-            case Menus.OnlineLobby:
-                if (!onlineLobby.activeInHierarchy)
-                    onlineLobby.SetActive(true);
+            //case Menus.OnlineLobby:
+            //    if (!onlineLobby.activeInHierarchy)
+            //        onlineLobby.SetActive(true);
 
-                if (shutter.GetComponent<RectTransform>().position.y > Screen.height * 2)
-                    transitionSpd = 0f;
+            //    if (shutter.GetComponent<RectTransform>().position.y > Screen.height * 2)
+            //        transitionSpd = 0f;
 
-                shutter.GetComponent<RectTransform>().Translate((Vector3.up * transitionSpd) * Time.deltaTime);
-                break;
+            //    shutter.GetComponent<RectTransform>().Translate((Vector3.up * transitionSpd) * Time.deltaTime);
+            //    break;
             case Menus.Loading:
 
                 if (menuPanel.activeInHierarchy)
@@ -306,15 +307,12 @@ public class Menu : MonoBehaviour {
 
 	public void LaunchOnline()
     {
-        transitionSpd = 3000f;
-        soundSource.PlayOneShot(accept);
-        soundSource.PlayOneShot(shutterNoiseOpen);
-        menuUp = Menus.OnlineLobby;
-        stateText.text = menuUp.ToString();
+        SceneManager.LoadScene("OnlineLobby");
     }
 
 	public void ToMenu()
     {
+        Debug.Log("Going to menu!");
         transitionSpd = 3000f;
         soundSource.PlayOneShot(accept);
         soundSource.PlayOneShot(shutterNoise);
