@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace UnityStandardAssets.Vehicles.Car
@@ -44,7 +45,8 @@ namespace UnityStandardAssets.Vehicles.Car
         private float m_AvoidOtherCarSlowdown;    // how much to slow down due to colliding with another car, whilst avoiding
         private float m_AvoidPathOffset;          // direction (-1 or 1) in which to offset path to avoid other car, whilst avoiding
         private Rigidbody m_Rigidbody;
-
+        public float hp;
+        public Image hpImage;
 
         private void Awake()
         {
@@ -62,6 +64,17 @@ namespace UnityStandardAssets.Vehicles.Car
 
         private void FixedUpdate()
         {
+            //health.value = hp;
+            hpImage.fillAmount = hp;
+            //Debug.Log(hp);
+            //Debug.Log(health.value);
+            if (hp < 0f)
+            {
+                gameObject.SetActive(false);
+            }
+
+
+
             if (m_Target == null || !m_Driving)
             {
                 // Car should not be moving,
@@ -218,6 +231,30 @@ namespace UnityStandardAssets.Vehicles.Car
         {
             if (other.gameObject.tag == "Finish")
                 m_Driving = false;
+
+            if (other.gameObject.tag == "TrainScoop")
+            {
+                hp -= 0.05f;
+                //health.value -= 5;
+            }
+            else if (other.gameObject.tag == "Bullet")
+            {
+                //health.value -= 1;
+                hp -= 0.01f;
+
+            }
+            else if (other.gameObject.tag == "Beam")
+            {
+                //health.value -= 1;
+                hp -= 0.01f;
+
+            }
+            else if (other.gameObject.tag == "Shell")
+            {
+                //health.value -= 1;
+                hp -= 0.01f;
+
+            }
         }
 
         public void SetTarget(Transform target)
