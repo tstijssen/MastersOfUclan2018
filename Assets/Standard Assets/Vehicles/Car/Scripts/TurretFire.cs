@@ -69,10 +69,9 @@ public class TurretFire : MonoBehaviour {
                     }                   
                 }
             }
-        }
-    
-
-
-		
+        }		
 	}
+
+   
+
 }

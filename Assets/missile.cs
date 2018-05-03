@@ -10,7 +10,7 @@ public class missile : MonoBehaviour {
     public GameObject turret;
     Quaternion startRot;
     public GameObject explosion;
-   
+    
 
     //values for internal use
     private Quaternion _lookRotation;
@@ -42,6 +42,7 @@ public class missile : MonoBehaviour {
         }
         else
         {
+
             speed = 50f;
             transform.LookAt(Target);
         }
