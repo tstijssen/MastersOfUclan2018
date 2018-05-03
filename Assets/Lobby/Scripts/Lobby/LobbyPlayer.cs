@@ -70,8 +70,6 @@ namespace Prototype.NetworkLobby
             LobbyPlayerList._instance.DisplayDirectServerWarning(isServer && LobbyManager.s_Singleton.matchMaker == null);
 
             mapScript = GameObject.FindGameObjectWithTag("LevelSelect").GetComponent<LevelSelect>();
-            mapLeftSelect = mapScript.levelLeft;
-            mapRightSelect = mapScript.levelRight;
             rulesLeftButton = mapScript.rulesLeft;
             rulesRightButton = mapScript.rulesRight;
 
