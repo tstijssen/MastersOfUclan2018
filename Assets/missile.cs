@@ -9,10 +9,14 @@ public class missile : MonoBehaviour {
     public float RotationSpeed = 20f;
     public GameObject turret;
     Quaternion startRot;
+    public GameObject explosion;
+   
 
     //values for internal use
     private Quaternion _lookRotation;
     private Vector3 _direction;
+
+    float speed;
 
     // Use this for initialization
     void Start ()
@@ -23,16 +27,28 @@ public class missile : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        //find the vector pointing from our position to the target
-        _direction = (Target.position - transform.position).normalized;
+        if (gameObject.tag == "missile")
+        {
+            speed = 10f;
 
-        //create the rotation we need to be in to look at the target
-        _lookRotation = Quaternion.LookRotation(_direction);
+            //find the vector pointing from our position to the target
+            _direction = (Target.position - transform.position).normalized;
 
-        //rotate us over time according to speed until we are in the required rotation
-        transform.rotation = Quaternion.Slerp(transform.rotation, _lookRotation, Time.deltaTime * RotationSpeed);
+            //create the rotation we need to be in to look at the target
+            _lookRotation = Quaternion.LookRotation(_direction);
 
-        transform.Translate(Vector3.forward * 10f * Time.deltaTime);
+            //rotate us over time according to speed until we are in the required rotation
+            transform.rotation = Quaternion.Slerp(transform.rotation, _lookRotation, Time.deltaTime * RotationSpeed);
+        }
+        else
+        {
+            speed = 50f;
+            transform.LookAt(Target);
+        }
+
+
+
+        transform.Translate(Vector3.forward * speed * Time.deltaTime);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -41,6 +57,8 @@ public class missile : MonoBehaviour {
         {
             Debug.Log("Hit");
             turret.GetComponent<TurretFire>().fired = false;
+            explosion.transform.position = transform.position;
+            explosion.SetActive(true);
             transform.rotation = startRot;
             gameObject.SetActive(false);
 
