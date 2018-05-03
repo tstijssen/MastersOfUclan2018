@@ -8,6 +8,8 @@ public class WarehouseDamage : MonoBehaviour {
     public float hp;
     public Image hpImage;
 
+    public GameObject endgameScreen;
+
 	// Use this for initialization
 	void Start ()
     {
@@ -24,7 +26,10 @@ public class WarehouseDamage : MonoBehaviour {
         //Debug.Log(health.value);
         if(hp < 0f)
         {
+
             Debug.Log("game end");
+            Time.timeScale = 0.01f;
+            endgameScreen.SetActive(true);
         }
     }
 

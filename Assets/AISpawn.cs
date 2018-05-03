@@ -28,6 +28,7 @@ public class AISpawn : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        
         Respawn(ai1, timer1, ai1Pos);
         Respawn(ai2, timer2, ai2Pos);
         Respawn(ai3, timer3, ai3Pos);
@@ -35,21 +36,20 @@ public class AISpawn : MonoBehaviour {
 
     void Respawn(GameObject ai, float timer, Vector3 pos)
     {
-
-        if (ai.activeInHierarchy)
+        Debug.Log("Updating");
+        if (!ai.activeInHierarchy)
         {
-            spawnTimer = Random.Range(3, 7);
-        }
-        else 
             timer += Time.deltaTime;
-
-            if(timer > 5f)
+            Debug.Log(timer);
+            if(timer > 3f)
             {
+            Debug.Log("SPawning");
                 ai.transform.position = pos;
                 ai.SetActive(true);
                 timer = 0;
             }
-
+            
+        }
     }
 
 }
