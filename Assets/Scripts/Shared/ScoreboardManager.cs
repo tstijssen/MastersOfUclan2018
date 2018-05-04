@@ -27,7 +27,7 @@ public class ScoreboardManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-        //KillLimit = PlayerPrefs.GetInt("FFA_KillLimit");
+        KillLimit = PlayerPrefs.GetInt("FFAKillLimit");
         
 		for (int i = 0; i < m_Players.Length; ++i)
         {

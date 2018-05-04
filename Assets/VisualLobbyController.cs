@@ -10,6 +10,8 @@ public class VisualLobbyController : NetworkBehaviour {
     public Image carImg;
     public Image teamImg;
 
+    public GameObject[] playerCarChoices;
+
     public Text pCar;
     public Text pTeam;
 
@@ -23,7 +25,8 @@ public class VisualLobbyController : NetworkBehaviour {
     void Start()
     {
         //spriteArray = GameObject.Find("OfflineLobby").GetComponent<LobbyOverlord>().spriteList;
-        carImg.sprite = spriteArray[pCarChoice];
+        //carImg.sprite = spriteArray[pCarChoice];
+        playerCarChoices[pCarChoice].SetActive(true);
     }
 
     // Update is called once per frame
@@ -44,29 +47,14 @@ public class VisualLobbyController : NetworkBehaviour {
                 pCar.text = "Broadside";
                 break;
         }
-        carImg.sprite = spriteArray[pCarChoice];
 
-        switch (pTeamChoice)
+        for (int i = 0; i < playerCarChoices.Length; ++i)
         {
-            //case 0:
-            //    pTeam.text = "Red";
-            //    teamImg.color = Color.red;
-            //    break;
-            //case 1:
-            //    pTeam.text = "Blue";
-            //    teamImg.color = Color.blue;
-            //    break;
-            //case 2:
-            //    pTeam.text = "Yellow";
-            //    teamImg.color = Color.yellow;
-            //    break;
-            //case 3:
-            //    pTeam.text = "Green";
-            //    teamImg.color = Color.green;
-            //    break;
+            if (i == pCarChoice)
+                playerCarChoices[i].SetActive(true);
+            else
+                playerCarChoices[i].SetActive(false);
         }
-
-
 
         //PlayerPrefs.SetInt("pCar", pCarChoice);
         //PlayerPrefs.SetInt("pTeam", pTeamChoice);

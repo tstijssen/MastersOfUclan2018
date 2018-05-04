@@ -22,8 +22,8 @@ public class PickupManager : MonoBehaviour {
     {
         validSpawn = false;
         // spawn pickup
-        float xPos = Random.Range(-33.0f, 33.0f);
-        float zPos = Random.Range(-33.0f, 33.0f);
+        float xPos = Random.Range(-61.0f, 61.0f);
+        float zPos = Random.Range(-61.0f, 61.0f);
         float yPos = 10.0f;
         targetPos = new Vector3(xPos, yPos, zPos);
     }

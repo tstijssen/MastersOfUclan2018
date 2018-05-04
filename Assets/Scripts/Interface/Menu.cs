@@ -36,18 +36,9 @@ public class Menu : MonoBehaviour {
     public AudioClip shutterNoise;
     public AudioClip shutterNoiseOpen;
 
-    //Lobby Offline
-    public Button back;
-    public Button levelSelectBtn;
-    public GameObject offlineLobbyUI;
     public GameObject offlineLobby;
     public GameObject getPlayersReady;
-    bool players;
     bool canInteract = false;   //whether the controller inputs are used this frame
-
-    //Lobby Online
-    public Button onlineBack;
-    public GameObject onlineLobby;
 
     //Options
     public GameObject optionsUI;
@@ -61,16 +52,12 @@ public class Menu : MonoBehaviour {
     AsyncOperation loadLevel;
     bool loading = false;
 
-    //Level Select
-    public GameObject levelSelect;
-    public GameObject levelSelectUI;
-    public Button launchGame;
-
     // Use this for initialization
     void Start ()
     {
         canInteract = false;
         StartCoroutine(MenuChange());
+        //DontDestroyOnLoad(gameObject);
 
         //DEV
         stateText.text = menuUp.ToString();
@@ -89,20 +76,12 @@ public class Menu : MonoBehaviour {
         online.onClick.AddListener(LaunchOnline);
         quit.onClick.AddListener(QuitGame);
         optionsBtn.onClick.AddListener(LoadOptions);
-
-        //Lobby
-        back.onClick.AddListener(ToMenu);
-        launchGame.onClick.AddListener(LaunchGame);
-        levelSelectBtn.onClick.AddListener(LevelSelect);
-        onlineBack.onClick.AddListener(ToMenu);
-        
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
         gamePad = GetComponent<MenuControllerDetect>().state[0];
-        players = getPlayersReady.GetComponent<PlatformActivator>().allReady;
         optionsUI.SetActive(optionsMenu);
         menuPanel.SetActive(!optionsMenu);
         
@@ -134,8 +113,8 @@ public class Menu : MonoBehaviour {
                     if (offlineLobby.activeInHierarchy)
                         offlineLobby.SetActive(false);
 
-                    if (onlineLobby.activeInHierarchy)
-                        onlineLobby.SetActive(false);
+                    //if (onlineLobby.activeInHierarchy)
+                    //    onlineLobby.SetActive(false);
                 }
 
                 shutter.GetComponent<RectTransform>().Translate((-Vector3.up * transitionSpd) * Time.deltaTime);
@@ -144,9 +123,6 @@ public class Menu : MonoBehaviour {
                 if (!offlineLobby.activeInHierarchy)
                    offlineLobby.SetActive(true);
 
-                if (!offlineLobbyUI.activeInHierarchy)
-                    offlineLobbyUI.SetActive(true);
-
                 if (shutter.GetComponent<RectTransform>().position.y > Screen.height * 2)
                     transitionSpd = 0f;
 
@@ -154,19 +130,6 @@ public class Menu : MonoBehaviour {
 
                 if (menuPanel.activeInHierarchy)
                     menuPanel.SetActive(false);
-
-                if (players)
-                {
-                    canInteract = getPlayersReady.GetComponent<PlatformActivator>().Platforms[0].GetComponent<PlatfomOptions>().canInteract;
-                    if (canInteract && gamePad.Buttons.Y == ButtonState.Pressed)
-                    {
-                        LevelSelect();
-                        Debug.Log("Start");
-                        canInteract = false;
-                        StartCoroutine(MenuChange());
-                    }
-                    Debug.Log("players ready");
-                }
 
                 break;      
             case Menus.LevelSelect:
@@ -182,15 +145,6 @@ public class Menu : MonoBehaviour {
                     if (offlineLobby.activeInHierarchy)
                         offlineLobby.SetActive(false);
 
-                    if (offlineLobbyUI.activeInHierarchy)
-                        offlineLobbyUI.SetActive(false);
-
-                    if (!levelSelect.activeInHierarchy)
-                        levelSelect.SetActive(true);
-
-                    if (!levelSelectUI.activeInHierarchy)
-                        levelSelectUI.SetActive(true);
-
                     transitionSpd = -3000f;
                 }
 
@@ -200,28 +154,17 @@ public class Menu : MonoBehaviour {
                     //transitionSpd = 0f;
                     //Debug.Log("ShutterIfReached!!");
                 }
-   
-                if (players)
-                {
-                    if (canInteract && gamePad.Buttons.Y == ButtonState.Pressed)
-                    {
-                        LaunchGame();
-                        Debug.Log("Start");
-                    }
-                    Debug.Log("players ready");
-                }
-
-
+ 
                 break;
-            case Menus.OnlineLobby:
-                if (!onlineLobby.activeInHierarchy)
-                    onlineLobby.SetActive(true);
+            //case Menus.OnlineLobby:
+            //    if (!onlineLobby.activeInHierarchy)
+            //        onlineLobby.SetActive(true);
 
-                if (shutter.GetComponent<RectTransform>().position.y > Screen.height * 2)
-                    transitionSpd = 0f;
+            //    if (shutter.GetComponent<RectTransform>().position.y > Screen.height * 2)
+            //        transitionSpd = 0f;
 
-                shutter.GetComponent<RectTransform>().Translate((Vector3.up * transitionSpd) * Time.deltaTime);
-                break;
+            //    shutter.GetComponent<RectTransform>().Translate((Vector3.up * transitionSpd) * Time.deltaTime);
+            //    break;
             case Menus.Loading:
 
                 if (menuPanel.activeInHierarchy)
@@ -235,11 +178,6 @@ public class Menu : MonoBehaviour {
 
                     transitionSpd = 0f;
                     shutter.GetComponent<RectTransform>().localPosition = new Vector3(0f, 0f, 0f);
-                    if (levelSelect.activeInHierarchy)
-                        offlineLobby.SetActive(false);
-
-                    if (levelSelectUI.activeInHierarchy)
-                        levelSelectUI.SetActive(false);
                 }
 
                 shutter.GetComponent<RectTransform>().Translate((-Vector3.up * transitionSpd) * Time.deltaTime);               
@@ -306,15 +244,12 @@ public class Menu : MonoBehaviour {
 
 	public void LaunchOnline()
     {
-        transitionSpd = 3000f;
-        soundSource.PlayOneShot(accept);
-        soundSource.PlayOneShot(shutterNoiseOpen);
-        menuUp = Menus.OnlineLobby;
-        stateText.text = menuUp.ToString();
+        SceneManager.LoadScene("OnlineLobby");
     }
 
 	public void ToMenu()
     {
+        Debug.Log("Going to menu!");
         transitionSpd = 3000f;
         soundSource.PlayOneShot(accept);
         soundSource.PlayOneShot(shutterNoise);

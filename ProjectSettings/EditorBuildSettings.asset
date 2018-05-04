@@ -9,23 +9,11 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: e7f475fef11661546b6fb7754d476734
   - enabled: 1
-    path: Assets/Scenes/OfflineLevels/FFA-Tilt.unity
-    guid: 2890983a490eeb54095d416aa913007e
-  - enabled: 0
-    path: Assets/Scenes/OfflineLevels/CTF-Bridges.unity
-    guid: ce9ec7df21f8e394aa9f13411b3cf75a
-  - enabled: 0
-    path: Assets/Scenes/OnlineLevels/Level1Online.unity
-    guid: a88ce9bc1bce28c45b5d2d586f7aec5b
-  - enabled: 0
-    path: Assets/Scenes/OnlineLevels/OnlineCTFCastle.unity
-    guid: a5e482280338f9143b23b18081610360
-  - enabled: 1
-    path: Assets/Scenes/OfflineLevels/FFA-Bridges.unity
-    guid: e2ad86ccac3dbd548b54577c42770d2d
-  - enabled: 1
-    path: Assets/Scenes/OnlineLevels/OnlineBattle.unity
-    guid: ae84fa2dab1f732488373250d3b85a81
-  - enabled: 1
     path: Assets/Scenes/OnlineLevels/Loader.unity
     guid: fbc3a142cc5f4b14eb071bac03580090
+  - enabled: 1
+    path: Assets/Scenes/OnlineLobby.unity
+    guid: f6432743b421dff44bd720dddec1194e
+  - enabled: 1
+    path: Assets/Scenes/OfflineLevels/OfflineBattle.unity
+    guid: 33d468bfc3ee28c4c9030da6b29226a2

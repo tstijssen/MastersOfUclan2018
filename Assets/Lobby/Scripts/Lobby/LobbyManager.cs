@@ -74,6 +74,8 @@ namespace Prototype.NetworkLobby
                 if (topPanel.isInGame)
                 {
                     ChangeTo(lobbyPanel);
+                    topPanel.ToggleVisibility(false);
+
                     if (_isMatchmaking)
                     {
                         if (conn.playerControllers[0].unetView.isServer)
@@ -99,10 +101,10 @@ namespace Prototype.NetworkLobby
                 }
                 else
                 {
+                    topPanel.ToggleVisibility(true);
                     ChangeTo(mainMenuPanel);
                 }
 
-                topPanel.ToggleVisibility(true);
                 topPanel.isInGame = false;
             }
             else
@@ -280,6 +282,7 @@ namespace Prototype.NetworkLobby
             LobbyPlayer newPlayer = obj.GetComponent<LobbyPlayer>();
             newPlayer.ToggleJoinButton(numPlayers + 1 >= minPlayers);
 
+            Debug.Log("Instantiating player");
 
             for (int i = 0; i < lobbySlots.Length; ++i)
             {
@@ -333,6 +336,12 @@ namespace Prototype.NetworkLobby
                 _lobbyHooks.OnLobbyServerSceneLoadedForPlayer(this, lobbyPlayer, gamePlayer);
 
             return true;
+        }
+
+        public void MainMenuCblk()
+        {
+            SceneManager.LoadSceneAsync("Menu");
+            Destroy(this.gameObject);
         }
 
         // --- Countdown management
