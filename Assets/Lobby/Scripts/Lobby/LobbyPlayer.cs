@@ -16,9 +16,8 @@ namespace Prototype.NetworkLobby
         static List<int> _colorInUse = new List<int>();
 
         //public Button colorButton;
-        public Image colorImage;
-        public Button carLeftSelect;
-        public Button carRightSelect;
+        public GameObject[] colourItems;
+        public Button CarSwitch;
 
         //public InputField nameInput;
         public Button readyButton;
@@ -28,10 +27,8 @@ namespace Prototype.NetworkLobby
         public GameObject localIcone;
         public GameObject remoteIcone;
 
-
         public LevelSelect mapScript;
-        public Button mapLeftSelect;
-        public Button mapRightSelect;
+        public Button MapSwitch;
         public Button rulesRightButton;
         public Button rulesLeftButton;
 
@@ -70,16 +67,15 @@ namespace Prototype.NetworkLobby
             LobbyPlayerList._instance.DisplayDirectServerWarning(isServer && LobbyManager.s_Singleton.matchMaker == null);
 
             mapScript = GameObject.FindGameObjectWithTag("LevelSelect").GetComponent<LevelSelect>();
+            MapSwitch = mapScript.levelSwitch;
             rulesLeftButton = mapScript.rulesLeft;
             rulesRightButton = mapScript.rulesRight;
 
-            mapLeftSelect.interactable = true;
-            mapRightSelect.interactable = true;
+            MapSwitch.interactable = true;
             rulesRightButton.interactable = true;
             rulesLeftButton.interactable = true;
 
-            mapLeftSelect.onClick.AddListener(OnMapLeft);
-            mapRightSelect.onClick.AddListener(OnMapRight);
+            MapSwitch.onClick.AddListener(OnMapClicked);
 
             rulesRightButton.onClick.AddListener(OnRulesRight);
             rulesLeftButton.onClick.AddListener(OnRulesLeft);
@@ -126,8 +122,8 @@ namespace Prototype.NetworkLobby
         void SetupOtherPlayer()
         {
             //nameInput.interactable = false;
-            carLeftSelect.interactable = false;
-            carRightSelect.interactable = false;
+            CarSwitch.interactable = false;
+            
 
             removePlayerButton.interactable = NetworkServer.active;
 
@@ -141,8 +137,7 @@ namespace Prototype.NetworkLobby
 
         void SetupLocalPlayer()
         {
-            carLeftSelect.interactable = true;
-            carRightSelect.interactable = true;
+            CarSwitch.interactable = true;
 
             remoteIcone.gameObject.SetActive(false);
             localIcone.gameObject.SetActive(true);
@@ -174,10 +169,8 @@ namespace Prototype.NetworkLobby
             readyButton.onClick.RemoveAllListeners();
             readyButton.onClick.AddListener(OnReadyClicked);
 
-            carLeftSelect.onClick.RemoveAllListeners();
-            carLeftSelect.onClick.AddListener(OnVehicleLeft);
-            carRightSelect.onClick.RemoveAllListeners();
-            carRightSelect.onClick.AddListener(OnVehicleRight);
+            CarSwitch.onClick.RemoveAllListeners();
+            CarSwitch.onClick.AddListener(OnVehicleClicked);
 
             //when OnClientEnterLobby is called, the loval PlayerController is not yet created, so we need to redo that here to disable
             //the add button if we reach maxLocalPlayer. We pass 0, as it was already counted on OnClientEnterLobby
@@ -209,8 +202,7 @@ namespace Prototype.NetworkLobby
                 readyButton.interactable = false;
                 //colorButton.interactable = false;
                 //nameInput.interactable = false;
-                carLeftSelect.interactable = false;
-                carRightSelect.interactable = false;
+                CarSwitch.interactable = false;
             }
             else
             {
@@ -222,8 +214,7 @@ namespace Prototype.NetworkLobby
                 readyButton.interactable = isLocalPlayer;
                 //colorButton.interactable = isLocalPlayer;
                 //nameInput.interactable = isLocalPlayer;
-                carLeftSelect.interactable = isLocalPlayer;
-                carRightSelect.interactable = isLocalPlayer;
+                CarSwitch.interactable = isLocalPlayer;
             }
         }
 
@@ -243,7 +234,10 @@ namespace Prototype.NetworkLobby
         public void OnMyColor(Color newColor)
         {
             playerColor = newColor;
-            colorImage.color = newColor;
+            for (int i = 0; i < colourItems.Length; ++i)
+            {
+                colourItems[i].GetComponent<Renderer>().material.color = newColor;
+            }
         }
 
         public void OnMyVehicle(int newSelection)
@@ -270,24 +264,14 @@ namespace Prototype.NetworkLobby
             CmdColorChange();
         }
 
-        public void OnVehicleLeft()
+        public void OnVehicleClicked()
         {
-            CmdVehicleLeft();
+            CmdVehicleSwitch();
         }
 
-        public void OnVehicleRight()
+        public void OnMapClicked()
         {
-            CmdVehicleRight();
-        }
-
-        public void OnMapLeft()
-        {
-            CmdMapLeft();
-        }
-
-        public void OnMapRight()
-        {
-            CmdMapRight();
+            CmdMapSwitch();
         }
 
         public void OnRulesRight()
@@ -323,7 +307,7 @@ namespace Prototype.NetworkLobby
         public void ToggleJoinButton(bool enabled)
         {
             readyButton.gameObject.SetActive(enabled);
-            waitingPlayerButton.gameObject.SetActive(!enabled);
+            //waitingPlayerButton.gameObject.SetActive(!enabled);
         }
 
         [ClientRpc]
@@ -399,33 +383,15 @@ namespace Prototype.NetworkLobby
         //}
 
         [Command]
-        public void CmdVehicleLeft()
-        {
-            GetComponent<VisualLobbyController>().DecCar();
-            playerVehicle = GetComponent<VisualLobbyController>().pCarChoice;
-            Debug.Log("Selected vehicle = " + playerVehicle);
-
-        }
-
-        [Command]
-        public void CmdVehicleRight()
+        public void CmdVehicleSwitch()
         {
             GetComponent<VisualLobbyController>().IncCar();
             playerVehicle = GetComponent<VisualLobbyController>().pCarChoice;
             Debug.Log("Selected vehicle = " + playerVehicle);
-
         }
 
         [Command]
-        public void CmdMapLeft()
-        {
-            hostMap = mapScript.levelSelect;
-            Debug.Log("Selected map = " + hostMap);
-            RpcUpdateLevelIndicator(hostMap);
-        }
-
-        [Command]
-        public void CmdMapRight()
+        public void CmdMapSwitch()
         {
             hostMap = mapScript.levelSelect;
             Debug.Log("Selected map = " + hostMap);

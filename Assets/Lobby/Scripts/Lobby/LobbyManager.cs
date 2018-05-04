@@ -280,6 +280,7 @@ namespace Prototype.NetworkLobby
             LobbyPlayer newPlayer = obj.GetComponent<LobbyPlayer>();
             newPlayer.ToggleJoinButton(numPlayers + 1 >= minPlayers);
 
+            Debug.Log("Instantiating player");
 
             for (int i = 0; i < lobbySlots.Length; ++i)
             {
