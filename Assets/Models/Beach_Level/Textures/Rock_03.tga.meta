@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 3746ee3bd430b894696fde1a01bd2a41
 timeCreated: 1525463725
+=======
+guid: 9b1d03942265f0640b98d906de31f596
+timeCreated: 1525289793
+>>>>>>> Online
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}
@@ -45,8 +50,14 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
+<<<<<<< HEAD
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
+=======
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+>>>>>>> Online
   alphaUsage: 1
   alphaIsTransparency: 0
   spriteTessellationDetail: -1

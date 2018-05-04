@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 3075f0d8114e3e24db27d48d1aecd39d
 timeCreated: 1525463725
+=======
+guid: be07371ed44bd604e96a97a09c59b9c3
+timeCreated: 1525289794
+>>>>>>> Online
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}
@@ -34,9 +39,15 @@ TextureImporter:
     filterMode: -1
     aniso: -1
     mipBias: -1
+<<<<<<< HEAD
     wrapU: 1
     wrapV: 1
     wrapW: 1
+=======
+    wrapU: -1
+    wrapV: -1
+    wrapW: -1
+>>>>>>> Online
   nPOTScale: 1
   lightmap: 0
   compressionQuality: 50
@@ -45,8 +56,14 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
+<<<<<<< HEAD
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
+=======
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+>>>>>>> Online
   alphaUsage: 1
   alphaIsTransparency: 0
   spriteTessellationDetail: -1
@@ -66,6 +83,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+<<<<<<< HEAD
   - buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -76,6 +94,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+=======
+>>>>>>> Online
   spriteSheet:
     serializedVersion: 2
     sprites: []
