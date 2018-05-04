@@ -23,9 +23,14 @@ public class missile : MonoBehaviour {
     {
         startRot = transform.rotation;
 	}
-	
-	// Update is called once per frame
-	void Update ()
+
+    private void OnEnable()
+    {
+        transform.rotation = new Quaternion(startRot.x, turret.transform.rotation.y, startRot.z, startRot.w);
+    }
+
+    // Update is called once per frame
+    void Update ()
     {
         if (gameObject.tag == "missile")
         {

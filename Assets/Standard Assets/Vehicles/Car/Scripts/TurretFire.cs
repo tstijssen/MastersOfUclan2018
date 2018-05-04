@@ -40,7 +40,7 @@ public class TurretFire : MonoBehaviour {
                 missile.SetActive(true);
                 if(!fired)
                 {
-                missile.transform.position = transform.position + Vector3.up;
+                missile.transform.position = transform.position;
                     fired = true;
                 }
             }
