@@ -5195,118 +5195,6 @@ MonoBehaviour:
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
-  menuUp: 0
-  timer: 0
-  stateText: {fileID: 245312174}
-  moveSelect: {fileID: 8300000, guid: e1d9faef8af8f4e4da16c159e3150644, type: 3}
-  accept: {fileID: 8300000, guid: 2e64dc5687567664987b4c3cdd10d988, type: 3}
-  offline: {fileID: 1341679157}
-  online: {fileID: 368123213}
-  quit: {fileID: 708171715}
-  menuPanel: {fileID: 1376403468}
-  shutter: {fileID: 1624680567}
-  shutterNoise: {fileID: 8300000, guid: 6e6f3137837e4d045839a9f43c668c4f, type: 3}
-  shutterNoiseOpen: {fileID: 8300000, guid: 3899dbd6d6c54594b8dd6deb638514bb, type: 3}
-  back: {fileID: 646103623}
-  levelSelectBtn: {fileID: 1138075021}
-  offlineLobbyUI: {fileID: 1953107585}
-  offlineLobby: {fileID: 1771930374}
-  getPlayersReady: {fileID: 1067730375}
-  onlineBack: {fileID: 727334793}
-  onlineLobby: {fileID: 727334790}
-  optionsUI: {fileID: 1432384369}
-  optionsBtn: {fileID: 302077417}
-  optionsMenu: 0
-  loadingGif: {fileID: 1530615965}
-  loadText: {fileID: 2123213238}
-  loadAnim: {fileID: 0}
-  levelSelect: {fileID: 1388517527}
-  levelSelectUI: {fileID: 1804554081}
-  launchGame: {fileID: 1691400088}
---- !u!82 &347117824
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 347117821}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 49d95b1e0af1a1e40a5f04a748cfb8d1, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 1
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
---- !u!114 &347117825
-MonoBehaviour:
-=======
   m_Material: {fileID: 0}
   m_Color: {r: 0.05763408, g: 0.09918059, b: 0.19117647, a: 1}
   m_RaycastTarget: 1
@@ -5325,7 +5213,6 @@ MonoBehaviour:
   m_FillOrigin: 0
 --- !u!222 &480632173
 CanvasRenderer:
->>>>>>> Online
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
