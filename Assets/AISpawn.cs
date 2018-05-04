@@ -8,6 +8,10 @@ public class AISpawn : MonoBehaviour {
     public GameObject ai2;
     public GameObject ai3;
 
+    public GameObject ai1Tele;
+    public GameObject ai2Tele;
+    public GameObject ai3Tele;
+
     Vector3 ai1Pos;
     Vector3 ai2Pos;
     Vector3 ai3Pos;
@@ -16,7 +20,7 @@ public class AISpawn : MonoBehaviour {
     float timer2 = 0f;
     float timer3 = 0f;
 
-        float spawnTimer = 0;
+    float spawnTimer = 0;
     // Use this for initialization
     void Start ()
     {
@@ -28,28 +32,50 @@ public class AISpawn : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        
-        Respawn(ai1, timer1, ai1Pos);
-        Respawn(ai2, timer2, ai2Pos);
-        Respawn(ai3, timer3, ai3Pos);
-    }
-
-    void Respawn(GameObject ai, float timer, Vector3 pos)
-    {
-        Debug.Log("Updating");
-        if (!ai.activeInHierarchy)
+        if(!ai1.activeInHierarchy)
         {
-            timer += Time.deltaTime;
-            Debug.Log(timer);
-            if(timer > 3f)
+            timer1 += Time.deltaTime;
+            Debug.Log(timer1);
+            if (timer1 > spawnTimer)
             {
-            Debug.Log("SPawning");
-                ai.transform.position = pos;
-                ai.SetActive(true);
-                timer = 0;
+                Debug.Log("SPawning");
+                ai1Tele.transform.position = ai1Pos;
+                ai1Tele.SetActive(true);   
+                ai1.transform.position = ai1Pos;
+                ai1.SetActive(true);
+                timer1 = 0;
+                spawnTimer = Random.Range(5, 9);
             }
-            
+        }
+        if (!ai2.activeInHierarchy)
+        {
+            timer2 += Time.deltaTime;
+            Debug.Log(timer2);
+            if (timer2 > spawnTimer)
+            {
+                Debug.Log("SPawning");
+                ai2Tele.transform.position = ai2Pos;
+                ai2Tele.SetActive(true);
+                ai2.transform.position = ai2Pos;
+                ai2.SetActive(true);
+                timer2 = 0;
+                spawnTimer = Random.Range(2, 4);
+            }
+        }
+        if (!ai3.activeInHierarchy)
+        {
+            timer3 += Time.deltaTime;
+            Debug.Log(timer3);
+            if (timer3 > spawnTimer)
+            {
+                Debug.Log("SPawning");
+                ai3Tele.transform.position = ai3Pos;
+                ai3Tele.SetActive(true);
+                ai1.transform.position = ai1Pos;
+                ai1.SetActive(true);
+                timer3 = 0;
+                spawnTimer = Random.Range(1, 3);
+            };
         }
     }
-
 }
