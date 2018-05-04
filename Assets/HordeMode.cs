@@ -14,16 +14,15 @@ public class HordeMode : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
-
-    public void ResumeGame()
-    {
-        pauseMenu.SetActive(!pauseMenu.activeInHierarchy);
         if (pauseMenu.activeInHierarchy)
             Time.timeScale = 0f;
         else
             Time.timeScale = 1f;
+    }
+
+    public void ResumeGame()
+    {
+        pauseMenu.SetActive(!pauseMenu.activeInHierarchy);
     }
 
     public void Restart()

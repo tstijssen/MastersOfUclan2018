@@ -23,12 +23,10 @@ public class TurretFire : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+
 	}
 
-    private void Awake()
-    {
-        timer = 0;
-    }
+
 
     // Update is called once per frame
     void Update ()

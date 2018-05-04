@@ -47,6 +47,7 @@ namespace UnityStandardAssets.Vehicles.Car
         private Rigidbody m_Rigidbody;
         public float hp;
         public Image hpImage;
+        public GameObject splode;
 
         private void Awake()
         {
@@ -58,18 +59,34 @@ namespace UnityStandardAssets.Vehicles.Car
 
             m_Rigidbody = GetComponent<Rigidbody>();
 
+            
             m_Driving = true;
         }
 
+        private void OnEnable()
+        {
+            // get the car controller reference
+            m_CarController = GetComponent<CarController>();
+
+            // give the random perlin a random value
+            m_RandomPerlin = Random.value * 100;
+
+            m_Rigidbody = GetComponent<Rigidbody>();
+
+
+
+            m_Driving = true;
+        }
 
         private void FixedUpdate()
         {
-            //health.value = hp;
             hpImage.fillAmount = hp;
-            //Debug.Log(hp);
-            //Debug.Log(health.value);
+
             if (hp < 0f)
             {
+                splode.transform.position = transform.position;
+                splode.SetActive(true);
+                hp = 1;
                 gameObject.SetActive(false);
             }
 
@@ -240,7 +257,7 @@ namespace UnityStandardAssets.Vehicles.Car
             else if (other.gameObject.tag == "Bullet")
             {
                 //health.value -= 1;
-                hp -= 0.01f;
+                hp -= 0.1f;
 
             }
             else if (other.gameObject.tag == "Beam")
@@ -257,7 +274,7 @@ namespace UnityStandardAssets.Vehicles.Car
             }
         }
 
-        public void SetTarget(Transform target)
+            public void SetTarget(Transform target)
         {
             m_Target = target;
             m_Driving = true;

@@ -36,7 +36,7 @@ public class AISpawn : MonoBehaviour {
         {
             timer1 += Time.deltaTime;
             Debug.Log(timer1);
-            if (timer1 > spawnTimer)
+            if (timer1 > 7f)
             {
                 Debug.Log("SPawning");
                 ai1Tele.transform.position = ai1Pos;
@@ -44,37 +44,35 @@ public class AISpawn : MonoBehaviour {
                 ai1.transform.position = ai1Pos;
                 ai1.SetActive(true);
                 timer1 = 0;
-                spawnTimer = Random.Range(5, 9);
             }
         }
         if (!ai2.activeInHierarchy)
         {
             timer2 += Time.deltaTime;
             Debug.Log(timer2);
-            if (timer2 > spawnTimer)
+            if (timer2 > 3f)
             {
                 Debug.Log("SPawning");
                 ai2Tele.transform.position = ai2Pos;
                 ai2Tele.SetActive(true);
                 ai2.transform.position = ai2Pos;
                 ai2.SetActive(true);
-                timer2 = 0;
-                spawnTimer = Random.Range(2, 4);
+                timer2 = 0;      
             }
         }
         if (!ai3.activeInHierarchy)
         {
             timer3 += Time.deltaTime;
             Debug.Log(timer3);
-            if (timer3 > spawnTimer)
+            if (timer3 > 3f)
             {
                 Debug.Log("SPawning");
                 ai3Tele.transform.position = ai3Pos;
                 ai3Tele.SetActive(true);
-                ai1.transform.position = ai1Pos;
-                ai1.SetActive(true);
+                ai3.transform.position = ai3Pos;
+                ai3.SetActive(true);
                 timer3 = 0;
-                spawnTimer = Random.Range(1, 3);
+               
             };
         }
     }
