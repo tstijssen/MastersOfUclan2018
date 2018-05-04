@@ -13,7 +13,7 @@ public class HatCaptureScript : MonoBehaviour {
         m_HomePos = this.transform.position;
         m_HomeRot = this.transform.rotation;
         m_State = FlagState.Home;
-        m_VictoryNumber = PlayerPrefs.GetInt("HatScoreLimit");
+        m_VictoryNumber = PlayerPrefs.GetInt("HATScoreLimit");
     }
 	
 	// Update is called once per frame

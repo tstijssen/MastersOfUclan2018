@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class LevelSelect : MonoBehaviour {
 
-
-
     public Text levelName;
     public Text rulesText;
 
@@ -54,6 +52,9 @@ public class LevelSelect : MonoBehaviour {
         {
             case 0:
                 levelName.text = "FFA Castle";
+                PlayerPrefs.SetInt("HATScoreLimit", 0);
+                PlayerPrefs.SetInt("FFAKillLimit", rulesNumber);
+
                 levelName.transform.parent.GetComponent<Text>().text = "FFA Castle";
                 rulesText.text = "First to " + rulesNumber + " kills";
                 rulesText.transform.parent.GetComponent<Text>().text = "First to " + rulesNumber + " kills";
@@ -72,6 +73,9 @@ public class LevelSelect : MonoBehaviour {
                 break;
             case 1:
                 levelName.text = "HAT Castle";
+                PlayerPrefs.SetInt("HATScoreLimit", rulesNumber);
+                PlayerPrefs.SetInt("FFAKillLimit", 0);
+
                 levelName.transform.parent.GetComponent<Text>().text = "HAT Castle";
                 rulesText.text = "Hold Hat for " + rulesNumber + " seconds";
                 rulesText.transform.parent.GetComponent<Text>().text = "Hold Hat for " + rulesNumber + " seconds";
@@ -90,6 +94,9 @@ public class LevelSelect : MonoBehaviour {
                 break;
             case 2:
                 levelName.text = "FFA Arena";
+                PlayerPrefs.SetInt("HATScoreLimit", 0);
+                PlayerPrefs.SetInt("FFAKillLimit", rulesNumber);
+
                 levelName.transform.parent.GetComponent<Text>().text = "FFA Arena";
                 rulesText.text = "First to " + rulesNumber + " kills";
                 rulesText.transform.parent.GetComponent<Text>().text = "First to " + rulesNumber + " kills";
@@ -108,6 +115,9 @@ public class LevelSelect : MonoBehaviour {
                 break;
             case 3:
                 levelName.text = "HAT Arena";
+                PlayerPrefs.SetInt("HATScoreLimit", rulesNumber);
+                PlayerPrefs.SetInt("FFAKillLimit", 0);
+
                 levelName.transform.parent.GetComponent<Text>().text = "HAT Arena";
                 rulesText.text = "Hold Hat for " + rulesNumber + " seconds";
                 rulesText.transform.parent.GetComponent<Text>().text = "Hold Hat for " + rulesNumber + " seconds";
@@ -126,6 +136,9 @@ public class LevelSelect : MonoBehaviour {
                 break;
             case 4:
                 levelName.text = "FFA Tilt";
+                PlayerPrefs.SetInt("HATScoreLimit", 0);
+                PlayerPrefs.SetInt("FFAKillLimit", rulesNumber);
+
                 levelName.transform.parent.GetComponent<Text>().text = "FFA Tilt";
                 rulesText.text = "First to " + rulesNumber + " kills";
                 rulesText.transform.parent.GetComponent<Text>().text = "First to " + rulesNumber + " kills";

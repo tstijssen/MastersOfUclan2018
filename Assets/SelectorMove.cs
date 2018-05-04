@@ -20,7 +20,7 @@ public class SelectorMove : MonoBehaviour {
     public GameObject options;
 
     // Use this for initialization
-    void Start ()
+    void OnEnable ()
     {
         selector = GetComponent<Image>();
 		canInteract = false;

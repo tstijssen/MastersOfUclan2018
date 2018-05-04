@@ -100,10 +100,17 @@ MonoBehaviour:
   - {fileID: 1823493357491054, guid: 7f081ef4766e75443b3c965e6134526b, type: 2}
   - {fileID: 1755083280081346, guid: 7e317593ebb88c44fa74c74aa2f38aeb, type: 2}
   levelPrefabs:
-  - {fileID: 1099824571476122, guid: 779c791d7bc50504592a1bb6073bae08, type: 2}
-  - {fileID: 1316479536435288, guid: 0bc0a11dea78ea644ad93349a97e8e79, type: 2}
-  - {fileID: 1878933471535178, guid: b1c38768fc8bb684cba8c1fa49a72eaf, type: 2}
-  levelNames: []
+  - {fileID: 1875413569274768, guid: e798a730b7d806f4db2e8eb24a64ae6a, type: 2}
+  - {fileID: 1236471425079990, guid: 7fd20b6b28919684f8dab691382102eb, type: 2}
+  - {fileID: 1045529418233652, guid: 6e7bce12a1f91d6458bb7e7de025f3cb, type: 2}
+  - {fileID: 1266069409618602, guid: 13a39447d8da8a44492631028f4dcb64, type: 2}
+  - {fileID: 1807569405813156, guid: ef694c6a7eb00ca43adcf8d25b6c0f91, type: 2}
+  levelNames:
+  - FFA-Castle
+  - HAT-Castle
+  - FFA-Arena
+  - HAT-Arena
+  - FFA-Tilt
 --- !u!114 &114283887292728108
 MonoBehaviour:
   m_ObjectHideFlags: 1

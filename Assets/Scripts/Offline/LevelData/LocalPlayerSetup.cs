@@ -23,17 +23,17 @@ public class LocalPlayerSetup : MonoBehaviour {
         switch (this.name)
         {
             case "Player1":
-                vehicleSelection = PlayerPrefs.GetInt("P1");
+                vehicleSelection = PlayerPrefs.GetInt("m_PlayerPref1");
                 break;
 
             case "Player2":
-                vehicleSelection = PlayerPrefs.GetInt("P2");
+                vehicleSelection = PlayerPrefs.GetInt("m_PlayerPref2");
                 break;
             case "Player3":
-                vehicleSelection = PlayerPrefs.GetInt("P3");
+                vehicleSelection = PlayerPrefs.GetInt("m_PlayerPref3");
                 break;
             case "Player4":
-                vehicleSelection = PlayerPrefs.GetInt("P4");
+                vehicleSelection = PlayerPrefs.GetInt("m_PlayerPref4");
                 break;
         }
         m_Camera.GetComponent<FollowCamera>().SetSelection(vehicleSelection);

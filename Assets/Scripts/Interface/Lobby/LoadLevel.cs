@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class LoadLevel : MonoBehaviour {
 
-    public GameObject[] levels = new GameObject[3];
+    public GameObject[] levels;
 
-    // Use this for initialization
-    void Start () {
-        levels[PlayerPrefs.GetInt("Level")].SetActive(true);
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+    // Load level before any other script starts
+    void Awake () {
+        int levelNo = PlayerPrefs.GetInt("Level");
+        GameObject go = Instantiate(levels[levelNo]);
 	}
 }

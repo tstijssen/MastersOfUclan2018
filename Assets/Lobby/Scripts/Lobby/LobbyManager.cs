@@ -74,6 +74,8 @@ namespace Prototype.NetworkLobby
                 if (topPanel.isInGame)
                 {
                     ChangeTo(lobbyPanel);
+                    topPanel.ToggleVisibility(false);
+
                     if (_isMatchmaking)
                     {
                         if (conn.playerControllers[0].unetView.isServer)
@@ -99,10 +101,10 @@ namespace Prototype.NetworkLobby
                 }
                 else
                 {
+                    topPanel.ToggleVisibility(true);
                     ChangeTo(mainMenuPanel);
                 }
 
-                topPanel.ToggleVisibility(true);
                 topPanel.isInGame = false;
             }
             else

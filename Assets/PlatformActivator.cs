@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using XInputDotNetPure;
 
 public class PlatformActivator : MonoBehaviour
 {
-    public GameObject levelSelectTxt;
     Menu levelScreen;
     public GameObject[] Platforms;
     public GamePadState[] gamePadStates;
@@ -14,9 +15,17 @@ public class PlatformActivator : MonoBehaviour
     public int noReadyPlayers;
     public bool allReady = false;
 
+    // countdown variables
+    float timer;
+    int currentTime;
+    public int m_CountdownLength;
+    public GameObject m_CountdownObj;
+    bool m_CountdownActive;
     // Use this for initialization
     void Start()
     {
+        m_CountdownActive = false;
+        timer = 0f;
         gamePadStates = new GamePadState[Platforms.Length];
         for (int i = 0; i < Platforms.Length; ++i)
         {
@@ -36,18 +45,10 @@ public class PlatformActivator : MonoBehaviour
             {
                 if (!Platforms[i].activeInHierarchy)
                     Platforms[i].SetActive(true);
-
-                Platforms[i].GetComponent<PlatfomOptions>().gamePad = gamePadStates[i];
-
-                //if(gamePadStates[i].Buttons.A == ButtonState.Pressed)
-                //    playersReady[i] = true;
-
-
+                Platforms[i].GetComponent<OfflineControllerPlayer>().controllerState = gamePadStates[i];
             }
             else
                 Platforms[i].SetActive(false);
-
-            //Debug.Log(gamePadStates.Length);
 
             noPlayers = 0;
             noReadyPlayers = 0;
@@ -58,37 +59,46 @@ public class PlatformActivator : MonoBehaviour
                     noPlayers++;
                 }
 
-                if (Platforms[j].GetComponent<PlatfomOptions>().isReady)
+                if (Platforms[j].GetComponent<OfflineLobbyPlayer>().m_Ready)
                 {
                     noReadyPlayers++;
                 }
             }
-            if (noPlayers == noReadyPlayers && noPlayers > 0)
+        }
+        if (noPlayers == noReadyPlayers && noPlayers > 0)
+        {
+            allReady = true;
+            if(!m_CountdownActive)
             {
-                levelSelectTxt.SetActive(true);
-                allReady = true;
+                m_CountdownActive = true;
+                timer = 1f;
+                currentTime = m_CountdownLength;
+                m_CountdownObj.transform.parent.gameObject.SetActive(true);
             }
         }
+        else
+        {
+            m_CountdownActive = false;
+            allReady = false;
+            m_CountdownObj.transform.parent.gameObject.SetActive(false);
 
+        }
 
+        if (allReady && m_CountdownActive)
+        {
+            timer -= Time.deltaTime;
+            m_CountdownObj.GetComponent<Text>().text = currentTime.ToString();
 
-    }
+            if (timer <= 0.0f)
+            {
+                currentTime--;
+                timer = 1f;
+            }
 
-    private void LateUpdate()
-    {
-        //if (allReady)
-        //{
-        //    for (int i = 0; i < Platforms.Length; ++i)
-        //    {
-        //        gamePadStates[i] = GameObject.Find("MenuControl").GetComponent<MenuControllerDetect>().state[i];
-        //        if (gamePadStates[i].Buttons.B == ButtonState.Pressed)
-        //        {
-        //            levelScreen.menuUp = Menu.Menus.LevelSelect;
-        //            Debug.Log("Start");
-        //        }
-        //    }
-
-        //}
-
+            if(currentTime < 0)
+            {
+                SceneManager.LoadScene("OfflineBattle");
+            }
+        }
     }
 }
