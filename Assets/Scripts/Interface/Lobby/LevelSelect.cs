@@ -155,6 +155,27 @@ public class LevelSelect : MonoBehaviour {
                     rulesLeft.transform.localPosition = FFARuleButtonPositions[2];
                 }
                 break;
+            case 5:
+                levelName.text = "FFA Beach";
+                PlayerPrefs.SetInt("HATScoreLimit", 0);
+                PlayerPrefs.SetInt("FFAKillLimit", rulesNumber);
+
+                levelName.transform.parent.GetComponent<Text>().text = "FFA Beach";
+                rulesText.text = "First to " + rulesNumber + " kills";
+                rulesText.transform.parent.GetComponent<Text>().text = "First to " + rulesNumber + " kills";
+
+                //place ffa rule increment buttons to be directly over the number in the ui
+                if (rulesNumber > 9)
+                {
+                    rulesRight.transform.localPosition = FFARuleButtonPositions[1];
+                    rulesLeft.transform.localPosition = FFARuleButtonPositions[3];
+                }
+                else
+                {
+                    rulesRight.transform.localPosition = FFARuleButtonPositions[0];
+                    rulesLeft.transform.localPosition = FFARuleButtonPositions[2];
+                }
+                break;
         }
 
         PlayerPrefs.SetInt("Level", levelSelect);

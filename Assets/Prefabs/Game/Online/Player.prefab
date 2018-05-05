@@ -105,12 +105,14 @@ MonoBehaviour:
   - {fileID: 1045529418233652, guid: 6e7bce12a1f91d6458bb7e7de025f3cb, type: 2}
   - {fileID: 1266069409618602, guid: 13a39447d8da8a44492631028f4dcb64, type: 2}
   - {fileID: 1807569405813156, guid: ef694c6a7eb00ca43adcf8d25b6c0f91, type: 2}
+  - {fileID: 1183432577919910, guid: ffb76ae59fb39324e852a3325ca42c7d, type: 2}
   levelNames:
   - FFA-Castle
   - HAT-Castle
   - FFA-Arena
   - HAT-Arena
   - FFA-Tilt
+  - FFA-Beach
 --- !u!114 &114283887292728108
 MonoBehaviour:
   m_ObjectHideFlags: 1
