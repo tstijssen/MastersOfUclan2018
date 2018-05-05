@@ -20,12 +20,11 @@ public class LocalPlayerSetup : MonoBehaviour {
     void Start()
     {
         int vehicleSelection = 0;
-        switch (this.name)
+        switch (gameObject.name)
         {
             case "Player1":
                 vehicleSelection = PlayerPrefs.GetInt("m_PlayerPref1");
                 break;
-
             case "Player2":
                 vehicleSelection = PlayerPrefs.GetInt("m_PlayerPref2");
                 break;
@@ -35,7 +34,11 @@ public class LocalPlayerSetup : MonoBehaviour {
             case "Player4":
                 vehicleSelection = PlayerPrefs.GetInt("m_PlayerPref4");
                 break;
+            default:
+                Debug.Log("PlayerReadWrong");
+                break;
         }
+        Debug.Log(vehicleSelection);
         m_Camera.GetComponent<FollowCamera>().SetSelection(vehicleSelection);
     }
 

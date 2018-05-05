@@ -10,8 +10,13 @@ public class laserScript : MonoBehaviour {
     private Transform linecastedTransform;
 	LineRenderer laserLine;
 
-	// Use this for initialization
-	void OnEnable () {
+    private void Awake()
+    {
+        gameObject.SetActive(false);
+    }
+
+    // Use this for initialization
+    void OnEnable () {
 	}
 	
 	// Update is called once per frame
