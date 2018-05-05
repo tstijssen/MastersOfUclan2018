@@ -81,10 +81,9 @@ public class Menu : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if(menuUp != Menus.Splash)
-        {
-            gamePad = GetComponent<MenuControllerDetect>().state[0];
-        }
+  
+        gamePad = GetComponent<MenuControllerDetect>().state[0];
+        
         optionsUI.SetActive(optionsMenu);
         menuPanel.SetActive(!optionsMenu);
         
