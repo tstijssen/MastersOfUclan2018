@@ -39,7 +39,6 @@ public class Menu : MonoBehaviour {
 
     public GameObject offlineLobby;
     public GameObject getPlayersReady;
-    bool canInteract = false;   //whether the controller inputs are used this frame
     public bool canInteract = false;   //whether the controller inputs are used this frame
 
     //Options
@@ -86,15 +85,10 @@ public class Menu : MonoBehaviour {
     {
   
         gamePad = GetComponent<MenuControllerDetect>().state[0];
-<<<<<<< HEAD
-        
-        optionsUI.SetActive(optionsMenu);
-        menuPanel.SetActive(!optionsMenu);
-        
-=======
-        optionsUI.SetActive(optionsMenu);   
->>>>>>> MenuBugtesting
 
+        optionsUI.SetActive(optionsMenu);
+       
+        
         switch (menuUp)
         {
             case Menus.Splash:
@@ -109,7 +103,6 @@ public class Menu : MonoBehaviour {
                 break;
             case Menus.Main:
                 if (!menuPanel.activeInHierarchy && !optionsMenu)
-                    menuPanel.SetActive(true);             
                 {
                     menuPanel.SetActive(true);
                     selector.StartWait();
@@ -283,7 +276,6 @@ public class Menu : MonoBehaviour {
         StartCoroutine(MenuChange());
     }
 
-	public void LaunchGame()
     public void LaunchGame()
     {
 
