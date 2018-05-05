@@ -5871,10 +5871,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Players:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 2107812658}
+  - {fileID: 1916965275}
+  - {fileID: 1375116484}
+  - {fileID: 308635875}
   m_Panel: {fileID: 1050239838}
   m_VictoryDesc: {fileID: 1652611507}
   m_VictoryData: {fileID: 947829757}
