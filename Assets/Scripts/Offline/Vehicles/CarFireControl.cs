@@ -555,6 +555,7 @@ public class CarFireControl : MonoBehaviour {
     public void Death()
     {
         RumblePlayer(0.5f);
+
         if (m_HasFlag)
         {
             m_FlagData.DropFlag();

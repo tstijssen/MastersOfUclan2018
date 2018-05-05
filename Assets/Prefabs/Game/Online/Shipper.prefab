@@ -3208,7 +3208,7 @@ MonoBehaviour:
     BulletHeat: 3
     RamHeat: 0
     HeatDrain: 15
-  m_BulletPrefab: {fileID: 1325183690101082, guid: e6ce821d935a0484685db0ba08953897,
+  m_BulletPrefab: {fileID: 1893784054251872, guid: d690fd2e617ae074893a6dd7e4568b50,
     type: 2}
   m_HitIndicator: {fileID: 0}
   m_Despawned: 0
