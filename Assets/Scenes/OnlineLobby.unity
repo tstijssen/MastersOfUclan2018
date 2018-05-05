@@ -502,7 +502,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &90769864
 RectTransform:
   m_ObjectHideFlags: 0
@@ -749,7 +749,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 111269212}
-  - component: {fileID: 111269213}
   m_Layer: 0
   m_Name: Area
   m_TagString: Untagged
@@ -774,28 +773,6 @@ Transform:
   m_Father: {fileID: 1383517296}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &111269213
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114677603548210970, guid: 8f3b8c1801e527f49a5fca8e43de8e58,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 111269211}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03f706c600c278549a79117e304f4578, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Platforms:
-  - {fileID: 323301941}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  noPlayers: 0
-  noReadyPlayers: 0
-  allReady: 0
-  m_CountdownLength: 0
-  m_CountdownObj: {fileID: 0}
 --- !u!4 &131384717
 Transform:
   m_ObjectHideFlags: 0
@@ -1747,7 +1724,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &269684684
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2391,11 +2368,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 42ca970a1e3cd9746843e0be4861212a, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &323301941 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1619165695076436, guid: 42ca970a1e3cd9746843e0be4861212a,
-    type: 2}
-  m_PrefabInternal: {fileID: 319482188}
 --- !u!1 &330715377
 GameObject:
   m_ObjectHideFlags: 0
