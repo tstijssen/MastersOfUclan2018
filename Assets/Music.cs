@@ -24,5 +24,9 @@ public class Music : MonoBehaviour {
             source.PlayOneShot(levelMusic[musicChoice]);
             source.loop = true;
         }
+        else
+        {
+            musicChoice++;
+        }
     }
 }
