@@ -44,6 +44,11 @@ public class OfflineControllerPlayer : MonoBehaviour {
 
     }
 
+    public void SetButton()
+    {
+        CurrentButton = ListOfButtons[btnIndex];
+    }
+
     void OnEnable()
     {
         canInteract = false;
@@ -61,12 +66,9 @@ public class OfflineControllerPlayer : MonoBehaviour {
 
         if (canInteract && controllerState.IsConnected)
         {
-            Debug.Log("Can Interact and Connected");
             if(controllerState.ThumbSticks.Left.Y > ThumbstickMargin)
             {
-                CurrentButton.GetComponent<Image>().color = Color.white;
-
-                if (btnIndex < ListOfButtons.Length)
+                if (btnIndex < ListOfButtons.Length - 1)
                     btnIndex++;
 
                 CurrentButton = ListOfButtons[btnIndex];
@@ -78,8 +80,6 @@ public class OfflineControllerPlayer : MonoBehaviour {
 
             if (controllerState.ThumbSticks.Left.Y < -ThumbstickMargin)
             {
-                CurrentButton.GetComponent<Image>().color = Color.white;
-
                 if (btnIndex > 0)
                     btnIndex--;
 
@@ -90,7 +90,7 @@ public class OfflineControllerPlayer : MonoBehaviour {
                 StartCoroutine(ButtonClick());
             }
 
-            if (controllerState.Buttons.A == ButtonState.Pressed)
+            if (CurrentButton.interactable && controllerState.Buttons.A == ButtonState.Pressed)
             {
                 Debug.Log("Pressing A");
                 CurrentButton.onClick.Invoke();

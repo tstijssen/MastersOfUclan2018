@@ -91,10 +91,6 @@ public class Options : MonoBehaviour {
     
     public void Back()
     {
-        
-
-
-
         vol.value = AudioListener.volume;
         volText.text = volDisplay.ToString("F0");
         bool menu = GameObject.Find("MenuControl").GetComponent<Menu>().optionsMenu = false;
