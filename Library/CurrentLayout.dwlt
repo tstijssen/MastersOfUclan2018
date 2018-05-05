@@ -13,8 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PixelRect:
     serializedVersion: 2
-    x: 8
-    y: 51
+    x: 1918
+    y: 96
     width: 1664
     height: 951
   m_ShowMode: 4
@@ -45,7 +45,11 @@ MonoBehaviour:
   m_MinSize: {x: 683, y: 492}
   m_MaxSize: {x: 14004, y: 14042}
   vertical: 0
+<<<<<<< HEAD
   controlID: 9
+=======
+  controlID: 114
+>>>>>>> 141fd291b4db4b98a3a46310009988bbd4bdda41
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -209,7 +213,11 @@ MonoBehaviour:
   m_MinSize: {x: 406, y: 492}
   m_MaxSize: {x: 10002, y: 14042}
   vertical: 1
+<<<<<<< HEAD
   controlID: 10
+=======
+  controlID: 115
+>>>>>>> 141fd291b4db4b98a3a46310009988bbd4bdda41
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -233,7 +241,11 @@ MonoBehaviour:
   m_MinSize: {x: 406, y: 221}
   m_MaxSize: {x: 8006, y: 4021}
   vertical: 0
+<<<<<<< HEAD
   controlID: 84
+=======
+  controlID: 116
+>>>>>>> 141fd291b4db4b98a3a46310009988bbd4bdda41
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -310,10 +322,17 @@ MonoBehaviour:
   m_DepthBufferBits: 0
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 8
     y: 432
     width: 1385
     height: 548
+=======
+    x: 1918
+    y: 690
+    width: 1325
+    height: 335
+>>>>>>> 141fd291b4db4b98a3a46310009988bbd4bdda41
   m_PersistentViewDataDictionary: {fileID: 0}
   m_SearchFilter:
     m_NameFilter: 
@@ -327,10 +346,15 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
+<<<<<<< HEAD
     - Assets/Scripts/Offline/Vehicles
+=======
+    - Assets/Textures
+>>>>>>> 141fd291b4db4b98a3a46310009988bbd4bdda41
   m_ViewMode: 1
   m_StartGridSize: 63
   m_LastFolders:
+<<<<<<< HEAD
   - Assets/Scripts/Offline/Vehicles
   m_LastFoldersGridSize: 63
   m_LastProjectPath: C:\Users\tstijssen\Documents\GitHub\MastersOfUclan2018
@@ -340,6 +364,17 @@ MonoBehaviour:
     m_SelectedIDs: 486c0000
     m_LastClickedID: 27720
     m_ExpandedIDs: 00000000845800008c5800002a5900004c590000585a0000b25b0000ae5d0000725e0000a65e0000f65e0000005f0000205f00009c5f00009a610000966200001a630000666500008e660000d26600008267000088680000a0680000ea68000032690000fa6a00001a6b00008a6b00008c6c0000f46c0000c86d0000266e0000866f00008c6f0000e66f0000f26f000002700000f870000000710000007500008c750000d27500007e760000ba760000ca7700002c78000058790000ac790000e87900002a8600002c8600002e8600003086000032860000348600003686000000ca9a3bffffff7f
+=======
+  - Assets/Textures
+  m_LastFoldersGridSize: 16
+  m_LastProjectPath: C:\Users\tjkendall\Documents\GitHub\MastersOfUclan2018
+  m_IsLocked: 0
+  m_FolderTreeState:
+    scrollPos: {x: 0, y: 966}
+    m_SelectedIDs: dc9f0000
+    m_LastClickedID: 40924
+    m_ExpandedIDs: 00000000ee9700002a98000032980000289a00006e9a0000709a0000a49a0000829b0000ca9b0000009c0000dc9c0000ac9d0000fa9d0000dc9f000078a000001ca1000020a1000028a10000c4a100002ea20000a0a300005aa4000074a4000016b0000018b000001ab000001cb000001eb0000020b0000022b0000024b0000026b0000028b000002ab000002cb000002eb0000000ca9a3bffffff7f
+>>>>>>> 141fd291b4db4b98a3a46310009988bbd4bdda41
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -367,7 +402,11 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
+<<<<<<< HEAD
     m_ExpandedIDs: 00000000845800002a5900004c590000b25b0000ae5d0000725e0000fc5e0000005f00009c5f00009a610000966200001a630000666500008e66000082670000886800008c6c0000266e0000e66f0000f26f000002700000f870000000750000ca7700002c78000058790000ac790000e87900002a8600002c8600002e86000030860000328600003486000036860000
+=======
+    m_ExpandedIDs: 00000000ee9700002a98000032980000289a00006e9a0000709a0000a49a0000829b0000ca9b0000009c0000dc9c0000ac9d0000fa9d000078a000001ca1000020a1000028a10000c4a100002ea20000a0a300005aa4000074a4000016b0000018b000001ab000001cb000001eb0000020b0000022b0000024b0000026b0000028b000002ab000002cb000002eb00000
+>>>>>>> 141fd291b4db4b98a3a46310009988bbd4bdda41
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -395,7 +434,7 @@ MonoBehaviour:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
     m_HadKeyboardFocusLastEvent: 1
-    m_ExpandedInstanceIDs: c6230000
+    m_ExpandedInstanceIDs: c62300009a950000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -444,9 +483,15 @@ MonoBehaviour:
   m_DepthBufferBits: 0
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 1397
     y: 100
     width: 275
+=======
+    x: 3247
+    y: 145
+    width: 335
+>>>>>>> 141fd291b4db4b98a3a46310009988bbd4bdda41
     height: 880
   m_PersistentViewDataDictionary: {fileID: 0}
   m_ScrollPosition: {x: 0, y: 67.95508}
@@ -478,6 +523,7 @@ MonoBehaviour:
   m_DepthBufferBits: 0
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 8
     y: 100
     width: 266
@@ -488,6 +534,18 @@ MonoBehaviour:
     m_SelectedIDs: 44080000
     m_LastClickedID: 0
     m_ExpandedIDs: 8874faff9074fafff89efdff68b3fdfffabbfdff84c5fdfffecafdff22d1fdff7a38feff208efeff90a6feffc865fffffc66fffff068ffff266affff6c7dffffc0a6fffff6b5ffff00000000589000003ad00000f0d3000002d700007cd900001a3701002c3701004e3a0100d4450100fa4501001247010076490100b44901000a5f01001e66010048670100727201007e780100607d010018980100a49b01004a9d0100de9d0100c2a50100
+=======
+    x: 1918
+    y: 145
+    width: 326
+    height: 524
+  m_PersistentViewDataDictionary: {fileID: 0}
+  m_TreeViewState:
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: fe950000
+    m_LastClickedID: 0
+    m_ExpandedIDs: acb8ffff00000000
+>>>>>>> 141fd291b4db4b98a3a46310009988bbd4bdda41
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -506,7 +564,11 @@ MonoBehaviour:
       m_ClientGUIView: {fileID: 4}
     m_SearchString: 
   m_ExpandedScenes:
+<<<<<<< HEAD
   - OfflineBattle
+=======
+  - Menu
+>>>>>>> 141fd291b4db4b98a3a46310009988bbd4bdda41
   m_CurrenRootInstanceID: 0
   m_Locked: 0
   m_CurrentSortingName: TransformSorting
@@ -609,10 +671,17 @@ MonoBehaviour:
   m_DepthBufferBits: 32
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 278
     y: 100
     width: 1115
     height: 609
+=======
+    x: 2248
+    y: 145
+    width: 995
+    height: 524
+>>>>>>> 141fd291b4db4b98a3a46310009988bbd4bdda41
   m_PersistentViewDataDictionary: {fileID: 0}
   m_MaximizeOnPlay: 0
   m_Gizmos: 0

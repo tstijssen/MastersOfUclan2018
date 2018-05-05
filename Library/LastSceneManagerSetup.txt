@@ -1,4 +1,8 @@
 sceneSetups:
+<<<<<<< HEAD
 - path: Assets/Scenes/OfflineLevels/OfflineBattle.unity
+=======
+- path: Assets/Scenes/Menu.unity
+>>>>>>> 141fd291b4db4b98a3a46310009988bbd4bdda41
   isLoaded: 1
   isActive: 1
