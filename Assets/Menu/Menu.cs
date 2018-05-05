@@ -29,6 +29,7 @@ public class Menu : MonoBehaviour {
     public Button quit;
     public GameObject menuPanel;
     //public Button[][] menuButtons = new Button[3][3];
+    public SelectorMove selector;
 
     //Transitions
     float transitionSpd;
@@ -38,7 +39,7 @@ public class Menu : MonoBehaviour {
 
     public GameObject offlineLobby;
     public GameObject getPlayersReady;
-    bool canInteract = false;   //whether the controller inputs are used this frame
+    public bool canInteract = false;   //whether the controller inputs are used this frame
 
     //Options
     public GameObject optionsUI;
@@ -51,12 +52,12 @@ public class Menu : MonoBehaviour {
     public Image loadAnim;
     AsyncOperation loadLevel;
     bool loading = false;
+    bool pastSplashScreen = false;
 
     // Use this for initialization
     void Start ()
     {
         canInteract = false;
-        StartCoroutine(MenuChange());
         //DontDestroyOnLoad(gameObject);
 
         //DEV
@@ -82,9 +83,7 @@ public class Menu : MonoBehaviour {
 	void Update ()
     {
         gamePad = GetComponent<MenuControllerDetect>().state[0];
-        optionsUI.SetActive(optionsMenu);
-        menuPanel.SetActive(!optionsMenu);
-        
+        optionsUI.SetActive(optionsMenu);   
 
         switch (menuUp)
         {
@@ -100,14 +99,25 @@ public class Menu : MonoBehaviour {
                 break;
             case Menus.Main:
                 if (!menuPanel.activeInHierarchy && !optionsMenu)
-                    menuPanel.SetActive(true);             
+                {
+                    menuPanel.SetActive(true);
+                    selector.StartWait();
+                }
+                else if (optionsMenu)
+                    menuPanel.SetActive(false);
 
                 if (shutter.GetComponent<RectTransform>().position.y < Screen.height /1.6)
                 {
                     transitionSpd = 0f;
                     shutter.GetComponent<RectTransform>().localPosition = new Vector3(0f, 0f, 0f);
 
-                    if(splashTitle.activeInHierarchy)
+                    if(!pastSplashScreen)
+                    {
+                        StartCoroutine(MenuChange());
+                        pastSplashScreen = true;
+                    }
+
+                    if (splashTitle.activeInHierarchy)
                         splashTitle.SetActive(false);
 
                     if (offlineLobby.activeInHierarchy)
@@ -204,6 +214,7 @@ public class Menu : MonoBehaviour {
         Debug.Log("Delaying");
         yield return new WaitForSeconds(0.25f);
         canInteract = true;   // After the wait is over, the player can interact with the menu again.
+        selector.canInteract = true;
     }
 
     IEnumerator AsynchronousLoad(string scene)
@@ -250,14 +261,17 @@ public class Menu : MonoBehaviour {
 	public void ToMenu()
     {
         Debug.Log("Going to menu!");
+        selector.canInteract = false;
         transitionSpd = 3000f;
         soundSource.PlayOneShot(accept);
         soundSource.PlayOneShot(shutterNoise);
         menuUp = Menus.Main;
         stateText.text = menuUp.ToString();
+        canInteract = false;
+        StartCoroutine(MenuChange());
     }
 
-	public void LaunchGame()
+    public void LaunchGame()
     {
 
             transitionSpd = 3000f;

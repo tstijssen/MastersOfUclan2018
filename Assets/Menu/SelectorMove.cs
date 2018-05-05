@@ -12,7 +12,8 @@ public class SelectorMove : MonoBehaviour {
     GamePadState gamePad;
     Image selector;
     float alpha;
-	bool canInteract;
+	public bool canInteract = false;
+    bool interactInitialized = false;
 
     public GameObject offline;
     public GameObject online;
@@ -22,10 +23,8 @@ public class SelectorMove : MonoBehaviour {
     // Use this for initialization
     void OnEnable ()
     {
+        mainMenuControl = GameObject.Find ("MenuControl").GetComponent<Menu> ();
         selector = GetComponent<Image>();
-		canInteract = false;
-		StartCoroutine (MenuChange());
-		mainMenuControl = GameObject.Find ("MenuControl").GetComponent<Menu> ();
     }
 	
 	// Update is called once per frame
@@ -33,6 +32,12 @@ public class SelectorMove : MonoBehaviour {
     {
         gamePad = GameObject.Find("MenuControl").GetComponent<MenuControllerDetect>().state[0];
         Debug.Log(gamePad.IsConnected);
+        if(!interactInitialized)
+        {
+            canInteract = mainMenuControl.canInteract;
+            if (canInteract)
+                interactInitialized = true;
+        }
 
         if (gamePad.IsConnected)
         {
@@ -47,10 +52,15 @@ public class SelectorMove : MonoBehaviour {
         else if (selector.color.a > 0.8f)
             alpha = -0.07f;
 
-        MainMenuControl();
-        
+        MainMenuControl();     
     }
 
+
+    public void StartWait()
+    {
+        canInteract = false;
+        StartCoroutine(MenuChange());
+    }
 
     void MainMenuControl()
     {
@@ -86,40 +96,41 @@ public class SelectorMove : MonoBehaviour {
 			StartCoroutine (MenuChange());
         }
 
-        if (canInteract && gamePad.ThumbSticks.Left.X > 0.5f && menuBtn != OnButton.options)
-        {
-            transform.position = options.transform.position;
-            menuBtn = OnButton.options;
-            canInteract = false;
-            StartCoroutine(MenuChange());
-        }
+        //if (canInteract && gamePad.ThumbSticks.Left.X > 0.5f && menuBtn != OnButton.options)
+        //{
+        //    transform.position = options.transform.position;
+        //    menuBtn = OnButton.options;
+        //    canInteract = false;
+        //    StartCoroutine(MenuChange());
+        //}
 
 
-        if (canInteract && gamePad.ThumbSticks.Left.X < -0.5f && menuBtn == OnButton.options)
-        {
-            transform.position = offline.transform.position;
-            menuBtn = OnButton.offline;
-            canInteract = false;
-            StartCoroutine(MenuChange());
-        }
+        //if (canInteract && gamePad.ThumbSticks.Left.X < -0.5f && menuBtn == OnButton.options)
+        //{
+        //    transform.position = offline.transform.position;
+        //    menuBtn = OnButton.offline;
+        //    canInteract = false;
+        //    StartCoroutine(MenuChange());
+        //}
 
         if (canInteract && gamePad.Buttons.A == ButtonState.Pressed)
 		{
-			switch (menuBtn) {
+            canInteract = false;
+            switch (menuBtn) {
 			case OnButton.offline:
 				mainMenuControl.LaunchOffline ();
 				break;
 			case OnButton.online:
 				mainMenuControl.LaunchOnline ();
 				break;
+            case OnButton.options:
+                mainMenuControl.LoadOptions();
+                break;
 			case OnButton.quit:
 				mainMenuControl.QuitGame ();
 				break;
 			}
-			canInteract = false;
-			StartCoroutine (MenuChange());
-		}
-
+        }
     }
 
 	IEnumerator MenuChange()
