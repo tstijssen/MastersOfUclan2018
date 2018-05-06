@@ -34,7 +34,7 @@ public class NetworkSpawnManager : MonoBehaviour {
         {
             if (!obj.activeInHierarchy)
             {
-                Debug.Log("Activating object " + obj.name + " at " + position);
+                Debug.Log("Activating object " + obj.name);
                 obj.transform.position = position;
                 obj.SetActive(true);
                 return obj;

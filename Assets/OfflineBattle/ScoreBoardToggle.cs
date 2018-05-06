@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class ScoreBoardToggle : MonoBehaviour {
 
     public GameObject scoreboard;
-    public GameObject pauseMenu;
+    public GameObject pauseMenu = null;
     bool pauseEnabled = false;
     bool canInteract;
 
@@ -29,7 +29,7 @@ public class ScoreBoardToggle : MonoBehaviour {
 
         }
 
-        if (canInteract && Input.GetButton("Cancel"))
+        if (pauseMenu && canInteract && Input.GetButton("Cancel"))
         {
             ShowPauseMenu();
             canInteract = false;

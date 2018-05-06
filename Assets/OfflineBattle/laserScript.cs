@@ -26,9 +26,7 @@ public class laserScript : MonoBehaviour {
 
         if (Physics.Linecast(startPoint.transform.position, endPoint.transform.position, out hitInfo))
         {
-            Debug.Log("Before " + linecastedTransform.position);
                 linecastedTransform.position.Set(hitInfo.transform.position.x, linecastedTransform.position.y, hitInfo.transform.position.z);
-            Debug.Log("After " + linecastedTransform.position);
         }
 
         laserLine = GetComponentInChildren<LineRenderer>();
