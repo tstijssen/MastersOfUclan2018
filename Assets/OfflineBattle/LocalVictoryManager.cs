@@ -14,12 +14,15 @@ public class LocalVictoryManager : MonoBehaviour {
 
     void Start()
     {
-        m_MenuButton.onClick.AddListener(LoadMenuScene);
+        if(m_MenuButton)
+        {
+            m_MenuButton.onClick.AddListener(LoadMenuScene);
+        }
     }
 
     void LoadMenuScene()
     {
-        SceneManager.LoadSceneAsync("Menu");
+        SceneManager.LoadScene("Menu");
     }
 
     // Update is called once per frame

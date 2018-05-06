@@ -46,6 +46,7 @@ namespace Prototype.NetworkLobby
             _players.Add(player);
 
             player.transform.SetParent(playerListContentTransform, false);
+            player.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -13.41f);
             //addButtonRow.transform.SetAsLastSibling();
 
             PlayerListModified();

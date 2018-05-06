@@ -5,9 +5,13 @@ using UnityEngine;
 public class HatCaptureScript : MonoBehaviour {
 
     public FlagState m_State;
+    public GameObject m_ScoreText;
     Vector3 m_HomePos;
     Quaternion m_HomeRot;
     public int m_VictoryNumber;
+    OnlineFireControl m_OnlineOwner;
+    CarFireControl m_LocalOwner;
+
     // Use this for initialization
     void Start () {
         m_HomePos = this.transform.position;
@@ -29,11 +33,22 @@ public class HatCaptureScript : MonoBehaviour {
         if (other.tag == "Player")
         {
             CarFireControl car = other.GetComponent<CarFireControl>();
-            if (car.m_Alive)
+            if (car && car.m_Alive)
             {
                 if (m_State != FlagState.Taken)
                 {
                     TakeHat(car);
+                }
+            }
+            else
+            {
+                OnlineFireControl onlineCar = other.GetComponent<OnlineFireControl>();
+                if(onlineCar && onlineCar.m_Alive)
+                {
+                    if (m_State != FlagState.Taken)
+                    {
+                        TakeHat(onlineCar);
+                    }
                 }
             }
         }
@@ -44,11 +59,21 @@ public class HatCaptureScript : MonoBehaviour {
         }
     }
 
+    private void TakeHat(OnlineFireControl onlinePlayer)
+    {
+        Debug.Log("taking flag");
+        onlinePlayer.HatTaken(this);
+        transform.parent = onlinePlayer.transform;
+        m_OnlineOwner = onlinePlayer;
+        m_State = FlagState.Taken;
+    }
+
     private void TakeHat(CarFireControl player)
     {
         Debug.Log("taking flag");
         player.HatTaken(this);
         transform.parent = player.transform;
+        m_LocalOwner = player;
         m_State = FlagState.Taken;
     }
     public void DropHat()

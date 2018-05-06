@@ -104,6 +104,7 @@ public class CarFireControl : MonoBehaviour {
     public Transform m_HatPosition;
     bool m_HasHat = false;
     float m_HatTimer = 0.0f;
+    float m_TotalHatTIme = 0.0f;
 
     float m_RumbleCountDown = 0.0f;
     bool m_RumbleActive;
@@ -605,11 +606,15 @@ public class CarFireControl : MonoBehaviour {
             if(m_HasHat)
             {
                 m_HatTimer -= Time.deltaTime;
-                if(m_HatTimer < 0.0f)
+                m_TotalHatTIme += Time.deltaTime;
+
+                m_HatCapture.m_ScoreText.GetComponent<Text>().text = transform.parent.name + "\n   " + (m_HatCapture.m_VictoryNumber - m_TotalHatTIme).ToString() + " sec left";
+
+                if (m_HatTimer < 0.0f)
                 {
                     m_HatTimer = 1.0f;
                     m_Score += 10;
-                    if(m_Score >= m_HatCapture.m_VictoryNumber)
+                    if (m_TotalHatTIme >= m_HatCapture.m_VictoryNumber)
                     {
                         m_Victory = true;
                     }

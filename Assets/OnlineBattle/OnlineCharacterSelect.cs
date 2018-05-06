@@ -24,6 +24,7 @@ public class OnlineCharacterSelect : NetworkBehaviour {
     public GameObject[] levelPrefabs;
     public string[] levelNames;
     GameObject go = null;
+    public Material[] skyBoxes;
 
     [Command]
     void Cmd_ReplacePlayer()
@@ -46,6 +47,7 @@ public class OnlineCharacterSelect : NetworkBehaviour {
         if (!go)
         {
             go = Instantiate(levelPrefabs[levelNumber]);
+            RenderSettings.skybox = skyBoxes[levelNumber];
 
             string levelType = levelNames[levelNumber].Substring(0, 3); // first 3 chars in name is type (e.g. FFA, CTF)
 

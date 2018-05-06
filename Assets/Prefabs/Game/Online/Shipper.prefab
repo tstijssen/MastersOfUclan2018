@@ -627,6 +627,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!1 &1666169180851842
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4057645101530894}
+  m_Layer: 0
+  m_Name: HatPos
+  m_TagString: Hat
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1711247708252632
 GameObject:
   m_ObjectHideFlags: 1
@@ -1042,6 +1057,19 @@ Transform:
   m_Father: {fileID: 4166008842325466}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -30, y: 90, z: 0}
+--- !u!4 &4057645101530894
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1666169180851842}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.04, y: 2.018, z: -1.404}
+  m_LocalScale: {x: 1, y: 2, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4250375395686182}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4110269816144302
 Transform:
   m_ObjectHideFlags: 1
@@ -1182,6 +1210,7 @@ Transform:
   - {fileID: 4010656960704370}
   - {fileID: 224992131982704456}
   - {fileID: 4015054268710206}
+  - {fileID: 4057645101530894}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3088,6 +3117,7 @@ MonoBehaviour:
   - {fileID: 1731041732830896}
   m_PlayerNumber: 0
   m_VehicleModel: {fileID: 1174130157090752}
+  m_HatPosition: {fileID: 4057645101530894}
   m_Victory: 0
 --- !u!114 &114113452792539336
 MonoBehaviour:

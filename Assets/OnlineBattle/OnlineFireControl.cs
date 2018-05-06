@@ -70,6 +70,12 @@ public class OnlineFireControl : NetworkBehaviour {
     public int m_PlayerNumber;
     public GameObject m_VehicleModel;
 
+    HatCaptureScript m_HatCapture = null;
+    public Transform m_HatPosition;
+    bool m_HasHat = false;
+    float m_HatTimer = 0.0f;
+    float m_TotalHatTIme = 0.0f;
+
     [SyncVar]
     public bool m_Victory;  // determines whether this player has achieved victory
 
@@ -107,6 +113,7 @@ public class OnlineFireControl : NetworkBehaviour {
                             m_GunData.altguns = !m_GunData.altguns;
                         }
                         m_ReloadTimer = m_GunData.ReloadTwinGuns;   // reset reload speed
+                        bullet.GetComponent<OnlineBullet>().m_Owner = this;
 
                         // server spawns bullet on all clients using object pool
                         NetworkServer.Spawn(bullet, m_SpawnManager.assetId);
@@ -292,6 +299,7 @@ public class OnlineFireControl : NetworkBehaviour {
 
                     }
                 }
+
             }
             //else if (other.tag == "Shell")    // NOT NETWORKED
             //{ 
@@ -329,6 +337,12 @@ public class OnlineFireControl : NetworkBehaviour {
             }
             else if (other.tag == "Hazard")
             {
+                if (m_HasHat)
+                {
+                    m_HatCapture.ResetHat();
+                    m_HasHat = false;
+                    m_HatCapture = null;
+                }
                 Death();
             }
             // start countdown to death
@@ -410,6 +424,15 @@ public class OnlineFireControl : NetworkBehaviour {
         m_RumbleCountDown = 0.2f; // amount in seconds for rumble to reset
         m_RumbleActive = true;
     }
+
+    public void HatTaken(HatCaptureScript hat)
+    {
+        m_HatCapture = hat;
+        hat.transform.position = m_HatPosition.position;
+        hat.transform.rotation = m_HatPosition.rotation;
+        m_HasHat = true;
+    }
+
 
     private void RotateHitIndicator(Vector3 hitPos)
     {
@@ -528,6 +551,13 @@ public class OnlineFireControl : NetworkBehaviour {
             m_HasFlag = false;
         }
 
+        if (m_HasHat)
+        {
+            m_HatCapture.DropHat();
+            m_HatCapture = null;
+            m_HasHat = false;
+        }
+
         m_Deaths++;
         m_Alive = false;
         m_InDeathZone = false;
@@ -537,6 +567,8 @@ public class OnlineFireControl : NetworkBehaviour {
         m_ReloadPowerUpTimer = 0.0f;
         m_SpawnTimer = m_CarData.RespawnDuration;
         m_CarData.DeathParticles.SetActive(true);
+        m_CarData.Shield.SetActive(false);
+        m_ShieldPowerUp = false;
     }
 
     private void Respawn()
@@ -581,13 +613,28 @@ public class OnlineFireControl : NetworkBehaviour {
 
         if (m_Alive)
         {
+            // if player has the hat, increase score by 10 each second
+            if (m_HasHat)
+            {
+                m_HatTimer -= Time.deltaTime;
+                m_TotalHatTIme += Time.deltaTime;
 
+                m_HatCapture.m_ScoreText.GetComponent<Text>().text = "Player" + (m_PlayerNumber + 1).ToString() + "\n   " + (m_HatCapture.m_VictoryNumber - m_TotalHatTIme).ToString() + " sec left";
+
+
+                if (m_HatTimer < 0.0f)
+                {
+                    m_HatTimer = 1.0f;
+                    m_Score += 10;
+                    if (m_TotalHatTIme >= m_HatCapture.m_VictoryNumber)
+                    {
+                        m_Victory = true;
+                    }
+                }
+            }
 
             if (!m_SpawnManager)
                 m_SpawnManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<NetworkSpawnManager>();
-
-            if (!m_VehicleModel.activeInHierarchy)
-                m_VehicleModel.SetActive(true);
 
             if(m_InDeathZone)
             {

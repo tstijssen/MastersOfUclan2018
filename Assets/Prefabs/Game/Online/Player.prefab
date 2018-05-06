@@ -113,6 +113,13 @@ MonoBehaviour:
   - HAT-Arena
   - FFA-Tilt
   - FFA-Beach
+  skyBoxes:
+  - {fileID: 2100000, guid: 40f83780a14bd1d4bacceff76e077b76, type: 2}
+  - {fileID: 2100000, guid: 40f83780a14bd1d4bacceff76e077b76, type: 2}
+  - {fileID: 2100000, guid: 29488988e2229db4782771f3f37c4b6e, type: 2}
+  - {fileID: 2100000, guid: 29488988e2229db4782771f3f37c4b6e, type: 2}
+  - {fileID: 2100000, guid: 4cbe2142ce63fa7418ded6bb97877855, type: 2}
+  - {fileID: 2100000, guid: c7ef55dd67e91cb41880d310506b2462, type: 2}
 --- !u!114 &114283887292728108
 MonoBehaviour:
   m_ObjectHideFlags: 1

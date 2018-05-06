@@ -98,6 +98,7 @@ public class PlayerSetup : NetworkBehaviour {
 
     void Update()
     {
-        localCamera.transform.LookAt(transform);
+        if(localCamera)
+            localCamera.transform.LookAt(transform);
     }
 }

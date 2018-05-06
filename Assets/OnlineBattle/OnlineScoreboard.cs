@@ -12,22 +12,13 @@ public class OnlineScoreboard : MonoBehaviour {
     public int KillLimit = 0;
     OnlineFireControl[] m_Cars = new OnlineFireControl[4];
     bool initialized = false;
-
-	// Use this for initialization
-	void Start () {
-		
-
-
-	}
 	
 	// Update is called once per frame
 	void Update () {
 
-        if (m_Players.Length == 0)
-        {
-            m_Players = GameObject.FindGameObjectsWithTag("Player");
-        }
-        else
+        m_Players = GameObject.FindGameObjectsWithTag("Player");
+
+        if (m_Players.Length != 0)
         {
             if(!initialized)
             {
