@@ -34,6 +34,8 @@ public struct GunData
     public CarPooler BulletPool;
 
     public GameObject BeamBarrel;
+    public GameObject BeamBarrel2;
+
     public GameObject RamCollider;
     public bool altguns;
     public bool fired;
@@ -158,7 +160,9 @@ public class CarFireControl : MonoBehaviour {
                 {
                     Debug.Log("Shooting");
                     m_GunData.BeamBarrel.SetActive(true);
-                    if(!m_GunData.BeamBarrel.GetComponent<AudioSource>().isPlaying)
+                    m_GunData.BeamBarrel2.SetActive(true);
+
+                    if (!m_GunData.BeamBarrel.GetComponent<AudioSource>().isPlaying)
                     {
                         m_GunData.BeamBarrel.GetComponent<AudioSource>().Play();
                     }
@@ -196,6 +200,9 @@ public class CarFireControl : MonoBehaviour {
             if(m_Heat < (m_HeatFunction.HeatSlider.maxValue / 4) * 3)
                 m_GunData.fired = false;
             m_GunData.BeamBarrel.GetComponent<AudioSource>().Stop();
+            m_GunData.BeamBarrel2.GetComponent<AudioSource>().Stop();
+
+            m_GunData.BeamBarrel2.SetActive(false);
 
             m_GunData.BeamBarrel.SetActive(false);
         }
@@ -691,7 +698,7 @@ public class CarFireControl : MonoBehaviour {
                 }
             }
 
-            if(m_GunData.gunType == FireType.Beam && m_GunData.BeamBarrel.activeSelf && m_Heat < m_HeatFunction.HeatSlider.maxValue)
+            if(m_GunData.gunType == FireType.Beam && m_GunData.BeamBarrel.activeInHierarchy && m_Heat < m_HeatFunction.HeatSlider.maxValue)
             {
                 m_Heat += m_HeatFunction.BeamHeat * Time.deltaTime;
                 if(m_Heat >= m_HeatFunction.HeatSlider.maxValue)

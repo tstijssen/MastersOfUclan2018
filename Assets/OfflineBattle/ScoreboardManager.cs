@@ -29,7 +29,12 @@ public class ScoreboardManager : MonoBehaviour {
 
         KillLimit = PlayerPrefs.GetInt("FFAKillLimit");
         
-		for (int i = 0; i < m_Players.Length; ++i)
+		
+	}
+	
+	// Update is called once per frame
+	void Update () {
+        for (int i = 0; i < m_Players.Length; ++i)
         {
             if (m_Players[i].activeInHierarchy)
             {
@@ -68,13 +73,9 @@ public class ScoreboardManager : MonoBehaviour {
                             m_Items[i].m_Vehicle.sprite = m_CarSprites[3];
                             break;
                     }
-                }          
+                }
             }
         }
-	}
-	
-	// Update is called once per frame
-	void Update () {
         for (int i = 0; i < m_ScorePanels.Length; ++i)
         {
             if (m_ScorePanels[i].activeInHierarchy)

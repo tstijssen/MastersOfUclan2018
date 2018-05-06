@@ -8109,22 +8109,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1591273323922978
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4228888490914430}
-  - component: {fileID: 114555396411715496}
-  m_Layer: 0
-  m_Name: ShieldSpawn
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &1592320036008854
 GameObject:
   m_ObjectHideFlags: 1
@@ -16177,19 +16161,6 @@ Transform:
   m_Father: {fileID: 4131742352402070}
   m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4228888490914430
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1591273323922978}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.27, y: -0.06768012, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4267735432561660}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4230218829574582
 Transform:
   m_ObjectHideFlags: 1
@@ -16612,7 +16583,6 @@ Transform:
   - {fileID: 4205340497105052}
   - {fileID: 4691843960463454}
   - {fileID: 4622488051881868}
-  - {fileID: 4228888490914430}
   - {fileID: 4381553316667124}
   m_Father: {fileID: 4948841197689938}
   m_RootOrder: 4
@@ -17878,7 +17848,7 @@ Transform:
   - {fileID: 4755185029979032}
   - {fileID: 4127467533621366}
   m_Father: {fileID: 4267735432561660}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4383612056344702
 Transform:
@@ -63927,19 +63897,6 @@ MonoBehaviour:
   m_Script: {fileID: -1050975500, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114555396411715496
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1591273323922978}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af315f54601a57c44ad387459eb4206a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Pickup: {fileID: 0}
-  m_RespawnDuration: 8
 --- !u!114 &114565873770091888
 MonoBehaviour:
   m_ObjectHideFlags: 1

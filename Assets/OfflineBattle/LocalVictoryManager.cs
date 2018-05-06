@@ -24,6 +24,13 @@ public class LocalVictoryManager : MonoBehaviour {
         SceneManager.LoadSceneAsync("Menu");
     }
 
+    public void SetupFromOnline(int pNum, int pScore)
+    {
+        m_Panel.SetActive(true);
+        m_VictoryDesc.text = "Player " + pNum + " has won!";
+        m_VictoryData.text = "Score: " + pScore;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -66,7 +73,7 @@ public class LocalVictoryManager : MonoBehaviour {
                        
 
                         m_VictoryDesc.text = "Player " + (i + 1) + " has won!";
-                        //m_VictoryData.text = "Score: " + car.m_Score + "\nKills: " + car.m_Kills + "\nDeaths: " + car.m_Deaths;
+                        m_VictoryData.text = "Score: " + car.m_Score + "\nKills: " + car.m_Kills + "\nDeaths: " + car.m_Deaths;
                     }
                 }
             }

@@ -96,7 +96,7 @@ MonoBehaviour:
   rulesNumber: 0
   vehicles:
   - {fileID: 1657827691245122, guid: bd1e3e0fee670644ba7765e858900203, type: 2}
-  - {fileID: 1880217765586136, guid: 073ff601218119d44b51527574d8c631, type: 2}
+  - {fileID: 1157529558788890, guid: 906ed9a723efe3c4c946e02fdc109c98, type: 2}
   - {fileID: 1823493357491054, guid: 7f081ef4766e75443b3c965e6134526b, type: 2}
   - {fileID: 1755083280081346, guid: 7e317593ebb88c44fa74c74aa2f38aeb, type: 2}
   levelPrefabs:

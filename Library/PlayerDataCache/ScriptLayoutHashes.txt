@@ -153,7 +153,6 @@ ae68c699e230315ef36d0d7de7359937 Assembly-CSharp.dll:.Explosion
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.LightFlicker
 38f2aefc9dcf0f8107e7bd37238b3096 Assembly-CSharp-firstpass.dll:UnityStandardAssets.ImageEffects.Blur
 f5ce04d51633a5a2e05a731aa45ef200 Assembly-CSharp-firstpass.dll:UnityStandardAssets.ImageEffects.MotionBlur
-03561d99adbf0c0e6eae86f28a6dfa57 Assembly-CSharp.dll:.LocalVictoryManager
 c4a6e40e9b1c0d9665f47db4764cc7bb Assembly-CSharp.dll:.OnlineHoverMovement
 1231c6c8a919faf7bb7240135941e277 Assembly-CSharp.dll:.Music
 fc1e0f4d8439d9928083474691511a13 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkAnimator
@@ -245,7 +244,7 @@ e97ff9540a49b92b779792c195839d33 Assembly-CSharp-firstpass.dll:UnityStandardAsse
 a64e87ed7a324e280db3941fcdb19840 Assembly-CSharp-firstpass.dll:UnityStandardAssets.Vehicles.Car.CarAIControl
 787e2b9ae31dffd9c6c22a49250dbd1c Assembly-CSharp-firstpass.dll:UnityStandardAssets.Vehicles.Car.CarSelfRighting
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp-firstpass.dll:UnityStandardAssets.Water.WaterBasic
-c3f114d96881547a47cbe87204e6fcd3 Assembly-CSharp.dll:.OfflineControllerPlayer
+83009d2183927988602f1340a16b3bcc Assembly-CSharp.dll:.OfflineControllerPlayer
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp-firstpass.dll:UnityStandardAssets.Effects.FireLight
 0fbb3d25f280b43453fddf23439e1d19 Assembly-CSharp.dll:Prototype.NetworkLobby.LobbyTopPanel
 47c51e1349e3c26403dc7438019cd5f8 Assembly-CSharp.dll:Complete.UIDirectionControl
@@ -377,8 +376,9 @@ b3432dfe180f02232d7612fb366593d3 Assembly-CSharp-firstpass.dll:UnityStandardAsse
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.NetworkLobbyHook
 7ba1e84ad3d2d8813486668e75f842ce Assembly-CSharp.dll:UnityStandardAssets.Effects.ParticleSystemMultiplier
 3ae0dad0b55a80319e1d57c2dce28da7 Assembly-CSharp-firstpass.dll:UnityStandardAssets.ImageEffects.Tonemapping
-d883d04a1b1ee0c8f3acddd1a16b3e69 Assembly-CSharp.dll:.OnlineFireControl
+f50fa0b6eff247e84bd46b78a57e5a2f Assembly-CSharp.dll:.OnlineFireControl
 81ef37aa6dd2112fb47c4731c3ae3af9 Assembly-CSharp.dll:.OnlineCharacterSelect
 239d2cc8d353bbfcbefc27fa8f0221cc Assembly-CSharp.dll:Prototype.NetworkLobby.LobbyServerList
 a456f9a1077a7e95d5d0776cd7176b1f Assembly-CSharp.dll:.LevelSelection
 0f3d4bb7128a287827d041c696039525 Assembly-CSharp-firstpass.dll:UnityStandardAssets.Utility.AutoMobileShaderSwitch
+03561d99adbf0c0e6eae86f28a6dfa57 Assembly-CSharp.dll:.LocalVictoryManager

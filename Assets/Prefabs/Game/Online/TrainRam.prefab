@@ -8413,6 +8413,8 @@ MonoBehaviour:
     HeatDrain: 30
   m_BulletPrefab: {fileID: 0}
   m_HitIndicator: {fileID: 0}
+  m_EndOfGameScreen: {fileID: 1824464836830942, guid: 4a948bded1931314dbb4055a66f24c3b,
+    type: 2}
   m_Despawned: 0
   m_Alive: 0
   m_Score: 0
@@ -8427,7 +8429,9 @@ MonoBehaviour:
   - {fileID: 1223668407430588}
   m_PlayerNumber: 0
   m_VehicleModel: {fileID: 1248545221009612}
+  m_HatCapture: {fileID: 0}
   m_HatPosition: {fileID: 4199966369374662}
+  m_TotalHatTIme: 0
   m_Victory: 0
 --- !u!114 &114752785173926644
 MonoBehaviour:

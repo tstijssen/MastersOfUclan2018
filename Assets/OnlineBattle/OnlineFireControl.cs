@@ -12,6 +12,7 @@ public class OnlineFireControl : NetworkBehaviour {
     public HeatFunction m_HeatFunction;
     public GameObject m_BulletPrefab;
     public Image m_HitIndicator;
+    public GameObject m_EndOfGameScreen;
 
     private float m_SpawnTimer;
 
@@ -169,8 +170,11 @@ public class OnlineFireControl : NetworkBehaviour {
             if(m_Heat < (m_HeatFunction.HeatSlider.maxValue / 4) * 3)
                 m_Fired = false;
             m_GunData.BeamBarrel.GetComponent<AudioSource>().Stop();
+            m_GunData.BeamBarrel2.GetComponent<AudioSource>().Stop();
 
             m_GunData.BeamBarrel.SetActive(false);
+            m_GunData.BeamBarrel2.SetActive(false);
+
         }
 
         // shoot cannonballs NOT NETWORK CONVERTED
@@ -518,6 +522,13 @@ public class OnlineFireControl : NetworkBehaviour {
         m_CarData.DeathParticles.SetActive(true);
         m_CarData.Shield.SetActive(false);
         m_ShieldPowerUp = false;
+        int KillLimit = PlayerPrefs.GetInt("FFAKillLimit");
+
+        if (KillLimit != 0 && m_Deaths >= KillLimit)
+        {
+            m_Victory = true;
+            CmdEndOfGame((m_PlayerNumber + 1), m_Score);
+        }
     }
 
     private void Respawn()
@@ -552,6 +563,14 @@ public class OnlineFireControl : NetworkBehaviour {
         }
     }
 
+    [Command]
+    void CmdEndOfGame(int playerNum, int pScore)
+    {
+        GameObject go = Instantiate(m_EndOfGameScreen);
+        go.GetComponent<LocalVictoryManager>().SetupFromOnline(playerNum, pScore);
+        NetworkServer.Spawn(go);
+    }
+
     private void Update()
     {
         if (m_RumbleActive)
@@ -574,12 +593,18 @@ public class OnlineFireControl : NetworkBehaviour {
 
                 m_HatCapture.m_ScoreText.GetComponent<Text>().text = "Player" + (m_PlayerNumber + 1).ToString() + "\n   " + (int)(m_HatCapture.m_VictoryNumber - m_TotalHatTIme) + " sec left";
 
-
                 if (m_HatTimer < 0.0f)
                 {
                     m_HatTimer = 1.0f;
                     m_Score += 10;
                 }
+
+                int m_VictoryNumber = PlayerPrefs.GetInt("HATScoreLimit");
+                    if (m_TotalHatTIme >= m_VictoryNumber)
+                    {
+                        m_Victory = true;
+                        CmdEndOfGame((m_PlayerNumber + 1), m_Score);
+                    }
             }
 
             if (!m_SpawnManager)
@@ -667,6 +692,8 @@ public class OnlineFireControl : NetworkBehaviour {
             else if (m_GunData.gunType == FireType.Beam && m_Fired)
             {
                 m_GunData.BeamBarrel.SetActive(true);
+                m_GunData.BeamBarrel2.SetActive(true);
+
                 if (!m_GunData.BeamBarrel.GetComponent<AudioSource>().isPlaying)
                 {
                     m_GunData.BeamBarrel.GetComponent<AudioSource>().Play();
