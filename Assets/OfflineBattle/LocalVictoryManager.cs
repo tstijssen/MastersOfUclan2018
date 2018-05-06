@@ -12,6 +12,7 @@ public class LocalVictoryManager : MonoBehaviour {
     public Text m_VictoryDesc;
     public Text m_VictoryData;
     public Button m_MenuButton;
+    public GamePadState controllerState;
 
     void Start()
     {
@@ -26,14 +27,19 @@ public class LocalVictoryManager : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        controllerState = GamePad.GetState(PlayerIndex.One);
 
-        if(GetComponent<OfflineControllerPlayer>().controllerState.Buttons.A == ButtonState.Pressed)
+        if(m_Panel.activeInHierarchy)
         {
-            GetComponent<ScoreBoardToggle>().RestartGame();
+
+        if (controllerState.Buttons.A == ButtonState.Pressed)
+        {
+            SceneManager.LoadSceneAsync("OfflineBattle");
         }
-        if (GetComponent<OfflineControllerPlayer>().controllerState.Buttons.B == ButtonState.Pressed)
+        if (controllerState.Buttons.B == ButtonState.Pressed)
         {
-            GetComponent<ScoreBoardToggle>().GoToMenu();
+            LoadMenuScene();
+        }
         }
 
 
