@@ -80,6 +80,8 @@ public class OfflineLobbyPlayer : MonoBehaviour {
         PlayerPrefs.SetInt(m_PlayerPref, pCarChoice);
     }
 
+
+
     public void ReadyPlayer()
     {
         m_Ready = !m_Ready;

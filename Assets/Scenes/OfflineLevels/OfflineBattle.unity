@@ -566,7 +566,6 @@ MonoBehaviour:
   - {fileID: 1559219475}
   - {fileID: 2077682241}
   container: {fileID: 1375116484}
-  CharacterSelect: {fileID: 0}
   TeamSelect: {fileID: 0}
   SpawnSelect: {fileID: 1866794532}
   m_MenuPosition: {x: 0, y: 120, z: 0}
@@ -918,6 +917,11 @@ Prefab:
       propertyPath: m_Name
       value: Shipper (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 114951306700696840, guid: 6340c11e23bebb349b5c0a06df4bf8a7,
+        type: 2}
+      propertyPath: m_PlayerTeam
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6340c11e23bebb349b5c0a06df4bf8a7, type: 2}
   m_IsPrefabParent: 0
@@ -1014,6 +1018,7 @@ GameObject:
   m_Component:
   - component: {fileID: 308635877}
   - component: {fileID: 308635876}
+  - component: {fileID: 308635878}
   m_Layer: 0
   m_Name: Player4
   m_TagString: Untagged
@@ -1056,6 +1061,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &308635878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 308635875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30678ea83e7bbb04dbc6280baa1f9114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ListOfButtons:
+  - {fileID: 0}
+  - {fileID: 0}
+  ControllerIcon: {fileID: 0}
+  ControllerIndex: 3
+  ThumbstickMargin: 0
+  IndicatorColour: 0
+  CurrentButton: {fileID: 0}
 --- !u!1 &328986177
 GameObject:
   m_ObjectHideFlags: 0
@@ -2888,6 +2912,11 @@ Prefab:
       propertyPath: m_Name
       value: TwinGunCar (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 114859280796887486, guid: 90e69e8a4743a2c4f92fb7766287d4f1,
+        type: 2}
+      propertyPath: m_PlayerTeam
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 90e69e8a4743a2c4f92fb7766287d4f1, type: 2}
   m_IsPrefabParent: 0
@@ -3092,6 +3121,11 @@ Prefab:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1209599228}
+    - target: {fileID: 114148851182922300, guid: e9f4ebfd9fa8f464bad2803abc65d80e,
+        type: 2}
+      propertyPath: m_PlayerTeam
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e9f4ebfd9fa8f464bad2803abc65d80e, type: 2}
   m_IsPrefabParent: 0
@@ -3361,6 +3395,11 @@ Prefab:
     - target: {fileID: 1337453218631562, guid: d999e5ce4cb0f8b40b4417851a555822, type: 2}
       propertyPath: m_Name
       value: Beamer (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114121137079623080, guid: d999e5ce4cb0f8b40b4417851a555822,
+        type: 2}
+      propertyPath: m_PlayerTeam
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d999e5ce4cb0f8b40b4417851a555822, type: 2}
@@ -3907,6 +3946,11 @@ Prefab:
       propertyPath: m_Name
       value: TwinGunCar (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 114859280796887486, guid: 90e69e8a4743a2c4f92fb7766287d4f1,
+        type: 2}
+      propertyPath: m_PlayerTeam
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 90e69e8a4743a2c4f92fb7766287d4f1, type: 2}
   m_IsPrefabParent: 0
@@ -4219,7 +4263,6 @@ MonoBehaviour:
   - {fileID: 778838420}
   - {fileID: 214559302}
   container: {fileID: 1916965275}
-  CharacterSelect: {fileID: 0}
   TeamSelect: {fileID: 0}
   SpawnSelect: {fileID: 1558688379}
   m_MenuPosition: {x: 0, y: 120, z: 0}
@@ -4598,7 +4641,6 @@ MonoBehaviour:
   - {fileID: 2124106329}
   - {fileID: 951282938}
   container: {fileID: 2107812658}
-  CharacterSelect: {fileID: 0}
   TeamSelect: {fileID: 0}
   SpawnSelect: {fileID: 1643770800}
   m_MenuPosition: {x: 0, y: 120, z: 0}
@@ -5128,6 +5170,11 @@ Prefab:
       propertyPath: m_Name
       value: Beamer (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 114121137079623080, guid: d999e5ce4cb0f8b40b4417851a555822,
+        type: 2}
+      propertyPath: m_PlayerTeam
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d999e5ce4cb0f8b40b4417851a555822, type: 2}
   m_IsPrefabParent: 0
@@ -5234,6 +5281,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1375116486}
   - component: {fileID: 1375116485}
+  - component: {fileID: 1375116487}
   m_Layer: 0
   m_Name: Player3
   m_TagString: Untagged
@@ -5276,6 +5324,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1375116487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1375116484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30678ea83e7bbb04dbc6280baa1f9114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ListOfButtons: []
+  ControllerIcon: {fileID: 0}
+  ControllerIndex: 2
+  ThumbstickMargin: 0
+  IndicatorColour: 0
+  CurrentButton: {fileID: 0}
 --- !u!1 &1396471687
 GameObject:
   m_ObjectHideFlags: 0
@@ -5396,7 +5461,6 @@ MonoBehaviour:
   - {fileID: 1898632847}
   - {fileID: 1396833757}
   container: {fileID: 308635875}
-  CharacterSelect: {fileID: 0}
   TeamSelect: {fileID: 0}
   SpawnSelect: {fileID: 863259490}
   m_MenuPosition: {x: 0, y: 120, z: 0}
@@ -5520,6 +5584,11 @@ Prefab:
       propertyPath: m_Name
       value: Shipper (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 114951306700696840, guid: 6340c11e23bebb349b5c0a06df4bf8a7,
+        type: 2}
+      propertyPath: m_PlayerTeam
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6340c11e23bebb349b5c0a06df4bf8a7, type: 2}
   m_IsPrefabParent: 0
@@ -5585,6 +5654,11 @@ Prefab:
     - target: {fileID: 1337453218631562, guid: d999e5ce4cb0f8b40b4417851a555822, type: 2}
       propertyPath: m_Name
       value: Beamer (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114121137079623080, guid: d999e5ce4cb0f8b40b4417851a555822,
+        type: 2}
+      propertyPath: m_PlayerTeam
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d999e5ce4cb0f8b40b4417851a555822, type: 2}
@@ -6212,6 +6286,11 @@ Prefab:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1209599228}
+    - target: {fileID: 114148851182922300, guid: e9f4ebfd9fa8f464bad2803abc65d80e,
+        type: 2}
+      propertyPath: m_PlayerTeam
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e9f4ebfd9fa8f464bad2803abc65d80e, type: 2}
   m_IsPrefabParent: 0
@@ -7089,6 +7168,11 @@ Prefab:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1209599228}
+    - target: {fileID: 114148851182922300, guid: e9f4ebfd9fa8f464bad2803abc65d80e,
+        type: 2}
+      propertyPath: m_PlayerTeam
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e9f4ebfd9fa8f464bad2803abc65d80e, type: 2}
   m_IsPrefabParent: 0
@@ -7111,6 +7195,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1916965277}
   - component: {fileID: 1916965276}
+  - component: {fileID: 1916965278}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Untagged
@@ -7153,6 +7238,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1916965278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1916965275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30678ea83e7bbb04dbc6280baa1f9114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ListOfButtons: []
+  ControllerIcon: {fileID: 0}
+  ControllerIndex: 1
+  ThumbstickMargin: 0
+  IndicatorColour: 0
+  CurrentButton: {fileID: 0}
 --- !u!1 &1937096616
 GameObject:
   m_ObjectHideFlags: 0
@@ -7407,7 +7509,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1968772980
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7465,7 +7567,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1968772982}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 578634277}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1968772982
@@ -7857,6 +7970,11 @@ Prefab:
       propertyPath: m_Name
       value: TwinGunCar (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 114859280796887486, guid: 90e69e8a4743a2c4f92fb7766287d4f1,
+        type: 2}
+      propertyPath: m_PlayerTeam
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 90e69e8a4743a2c4f92fb7766287d4f1, type: 2}
   m_IsPrefabParent: 0
@@ -7978,6 +8096,11 @@ Prefab:
     - target: {fileID: 1264452832526180, guid: 6340c11e23bebb349b5c0a06df4bf8a7, type: 2}
       propertyPath: m_Name
       value: Shipper (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114951306700696840, guid: 6340c11e23bebb349b5c0a06df4bf8a7,
+        type: 2}
+      propertyPath: m_PlayerTeam
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6340c11e23bebb349b5c0a06df4bf8a7, type: 2}
@@ -8143,6 +8266,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2107812659}
   - component: {fileID: 2107812660}
+  - component: {fileID: 2107812661}
   m_Layer: 0
   m_Name: Player1
   m_TagString: Player
@@ -8185,6 +8309,26 @@ MonoBehaviour:
   m_VerticalMove: Vertical
   m_FireCommand: Fire1
   m_Camera: {fileID: 1209599227}
+--- !u!114 &2107812661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2107812658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30678ea83e7bbb04dbc6280baa1f9114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ListOfButtons:
+  - {fileID: 615523850}
+  - {fileID: 1968772981}
+  - {fileID: 1968772981}
+  ControllerIcon: {fileID: 0}
+  ControllerIndex: 0
+  ThumbstickMargin: 0
+  IndicatorColour: 0
+  CurrentButton: {fileID: 0}
 --- !u!1 &2111500254
 GameObject:
   m_ObjectHideFlags: 0

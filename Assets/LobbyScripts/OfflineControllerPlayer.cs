@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using XInputDotNetPure;
 
@@ -20,9 +21,13 @@ public class OfflineControllerPlayer : MonoBehaviour {
     float colourAmount;
     public GamePadState controllerState;
 
+    public GameObject pauseMenu;
+    bool paused;
 	// Use this for initialization
 	void Start ()
     {
+       
+
         CurrentButton = ListOfButtons[btnIndex];
         colourAmount = 0.07f;
         switch (IndicatorColour)
@@ -58,6 +63,16 @@ public class OfflineControllerPlayer : MonoBehaviour {
     // Update is called once per frame
     void LateUpdate ()
     {
+        if (SceneManager.GetActiveScene().name == "OfflineBattle")
+        {
+            Debug.Log("controller get");
+            controllerState = GamePad.GetState(PlayerIndex.One);
+        }
+
+        if (pauseMenu.activeInHierarchy)
+            Time.timeScale = 0f;
+        else
+            Time.timeScale = 1f;
 
         if (controllerState.IsConnected)
             ControllerIcon.SetActive(true);
@@ -89,6 +104,8 @@ public class OfflineControllerPlayer : MonoBehaviour {
                 canInteract = false;
                 StartCoroutine(ButtonClick());
             }
+            if(pauseMenu.activeInHierarchy)
+            {
 
             if (CurrentButton.interactable && controllerState.Buttons.A == ButtonState.Pressed)
             {
@@ -97,8 +114,14 @@ public class OfflineControllerPlayer : MonoBehaviour {
                 canInteract = false;
                 StartCoroutine(ButtonClick());
             }
+            }
         }
 	}
+
+    void Paused()
+    {
+        pauseMenu.SetActive(!pauseMenu.activeInHierarchy);
+    }
 
     IEnumerator ButtonClick()
     {
