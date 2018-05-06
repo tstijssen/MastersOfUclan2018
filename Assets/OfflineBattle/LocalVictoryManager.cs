@@ -16,15 +16,12 @@ public class LocalVictoryManager : MonoBehaviour {
 
     void Start()
     {
-        if(m_MenuButton)
-        {
-            m_MenuButton.onClick.AddListener(LoadMenuScene);
-        }
+        m_MenuButton.onClick.AddListener(LoadMenuScene);
     }
 
     void LoadMenuScene()
     {
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadSceneAsync("Menu");
     }
 
     // Update is called once per frame
@@ -34,15 +31,14 @@ public class LocalVictoryManager : MonoBehaviour {
 
         if(m_Panel.activeInHierarchy)
         {
-
-        if (controllerState.Buttons.A == ButtonState.Pressed)
-        {
-            SceneManager.LoadSceneAsync("OfflineBattle");
-        }
-        if (controllerState.Buttons.B == ButtonState.Pressed)
-        {
-            LoadMenuScene();
-        }
+            if (controllerState.Buttons.A == ButtonState.Pressed)
+            {
+                SceneManager.LoadScene("OfflineBattle");
+            }
+            if (controllerState.Buttons.B == ButtonState.Pressed)
+            {
+                SceneManager.LoadScene("Menu");
+            }
         }
 
 
@@ -57,41 +53,24 @@ public class LocalVictoryManager : MonoBehaviour {
                 if (m_Players[i].activeInHierarchy)
                 {
                     CarFireControl car = m_Players[i].GetComponentInChildren<CarFireControl>();
-                    if (car)
+                    if (car && car.gameObject.activeInHierarchy && car.m_Victory)
                     {
-                        if (car.gameObject.activeInHierarchy && car.m_Victory)
-                        {
-                            // a player has won the game
-                            m_Panel.SetActive(true);
+                        // a player has won the game
+                        m_Panel.SetActive(true);
 
-                            for (int p = 0; p < m_Players.Length; ++p)
-                            {
-                                m_Players[p].GetComponentInChildren<CarFireControl>().enabled = false;
-                            }
+                        //for (int p = 0; p < m_Players.Length; ++p)
+                        //{
+                        //    m_Players[p].GetComponentInChildren<CarFireControl>().Respawn();
+                        //}
 
-                            m_VictoryDesc.text = "Player " + (i + 1) + " has won!";
-                            m_VictoryData.text = "Score: " + car.m_Score + "\nKills: " + car.m_Kills + "\nDeaths: " + car.m_Deaths;
-                        }          
-                    }
-                    else
-                    {
-                        OnlineFireControl onlineCar = m_Players[i].GetComponent<OnlineFireControl>();
-                        if(onlineCar && onlineCar.gameObject.activeInHierarchy && onlineCar.m_Victory)
-                        {
-                            // a player has won the game
-                            m_Panel.SetActive(true);
+                       
 
-                            for (int p = 0; p < m_Players.Length; ++p)
-                            {
-                                m_Players[p].GetComponent<OnlineFireControl>().enabled = false;
-                            }
-
-                            m_VictoryDesc.text = "Player " + (i + 1) + " has won!";
-                            m_VictoryData.text = "Score: " + onlineCar.m_Score + "\nKills: " + onlineCar.m_Kills + "\nDeaths: " + onlineCar.m_Deaths;
-                        }
+                        m_VictoryDesc.text = "Player " + (i + 1) + " has won!";
+                        //m_VictoryData.text = "Score: " + car.m_Score + "\nKills: " + car.m_Kills + "\nDeaths: " + car.m_Deaths;
                     }
                 }
             }
-        }      
+        }
+        
     }
 }
