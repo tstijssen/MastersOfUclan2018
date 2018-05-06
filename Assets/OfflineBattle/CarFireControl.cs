@@ -692,10 +692,10 @@ public class CarFireControl : MonoBehaviour {
                 }
             }
 
-            if(m_GunData.gunType == FireType.Beam && m_GunData.BeamBarrel.activeInHierarchy && m_Heat < m_HeatFunction.HeatSlider.maxValue)
+            if(m_GunData.gunType == FireType.Beam && m_GunData.BeamBarrel.activeSelf && m_Heat < m_HeatFunction.HeatSlider.maxValue)
             {
                 m_Heat += m_HeatFunction.BeamHeat * Time.deltaTime;
-                if(m_Heat > m_HeatFunction.HeatSlider.maxValue)
+                if(m_Heat >= m_HeatFunction.HeatSlider.maxValue)
                 {
                     ShootRelease();
                 }

@@ -5,7 +5,6 @@ using UnityEngine;
 public class FollowCamera : MonoBehaviour {
     public GameObject[] targets;
     public GameObject container;
-    public GameObject CharacterSelect;
     public GameObject TeamSelect;
     public GameObject SpawnSelect;
     public Vector3 m_MenuPosition;
@@ -87,8 +86,6 @@ public class FollowCamera : MonoBehaviour {
     {
         m_Selection = (FireType)type;
         VehicleSelected = true;
-        CharacterSelect.SetActive(false);
-
     }
 
     public void SpawnPlayer(Vector3 position, Quaternion rotation)
