@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using XInputDotNetPure;
 
@@ -16,7 +17,7 @@ public class OfflineControllerPlayer : MonoBehaviour {
     private Button CurrentButton;
     
     int btnIndex = 1;
-    bool canInteract;
+    public bool canInteract;
     float colourAmount;
     public GamePadState controllerState;
 
@@ -26,6 +27,7 @@ public class OfflineControllerPlayer : MonoBehaviour {
         if(ListOfButtons.Length > 0)
         {
             CurrentButton = ListOfButtons[btnIndex];
+            ControllerIcon.SetActive(true);
         }
         colourAmount = 0.07f;
         switch (IndicatorColour)
@@ -43,8 +45,10 @@ public class OfflineControllerPlayer : MonoBehaviour {
                 ControllerIcon.GetComponent<Image>().color = Color.yellow;
                 break;
         }
-        ControllerIcon.transform.position = new Vector3(CurrentButton.transform.position.x - 1, CurrentButton.transform.position.y, CurrentButton.transform.position.z);
-
+        if(CurrentButton)
+        {
+            ControllerIcon.transform.position = new Vector3(CurrentButton.transform.position.x - 1, CurrentButton.transform.position.y, CurrentButton.transform.position.z);
+        }
     }
 
     public void SetButton()
@@ -61,11 +65,16 @@ public class OfflineControllerPlayer : MonoBehaviour {
     // Update is called once per frame
     void LateUpdate ()
     {
+        if (SceneManager.GetActiveScene().name == "OfflineBattle")
+        {
+        controllerState = GamePad.GetState(PlayerIndex.One);
+        }
 
-        if (controllerState.IsConnected)
-            ControllerIcon.SetActive(true);
-        else
-            ControllerIcon.SetActive(false);
+
+        //if (controllerState.IsConnected)
+        //    ControllerIcon.SetActive(true);
+        //else
+        //    ControllerIcon.SetActive(false);
 
         if (canInteract && controllerState.IsConnected)
         {
