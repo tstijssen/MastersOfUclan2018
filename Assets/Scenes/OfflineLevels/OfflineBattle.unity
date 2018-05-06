@@ -195,6 +195,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 44298418}
+  - component: {fileID: 44298419}
   m_Layer: 5
   m_Name: PauseMenu
   m_TagString: Untagged
@@ -213,6 +214,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1073519283}
+  - {fileID: 1733278247}
   - {fileID: 615523849}
   - {fileID: 1968772980}
   - {fileID: 488384783}
@@ -224,6 +226,26 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &44298419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 44298417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30678ea83e7bbb04dbc6280baa1f9114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ListOfButtons:
+  - {fileID: 488384784}
+  - {fileID: 1968772981}
+  - {fileID: 615523850}
+  ControllerIcon: {fileID: 1733278246}
+  ControllerIndex: 0
+  ThumbstickMargin: 0
+  IndicatorColour: 0
+  CurrentButton: {fileID: 0}
 --- !u!1 &58593456
 GameObject:
   m_ObjectHideFlags: 0
@@ -1018,7 +1040,6 @@ GameObject:
   m_Component:
   - component: {fileID: 308635877}
   - component: {fileID: 308635876}
-  - component: {fileID: 308635878}
   m_Layer: 0
   m_Name: Player4
   m_TagString: Untagged
@@ -1061,25 +1082,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &308635878
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 308635875}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30678ea83e7bbb04dbc6280baa1f9114, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ListOfButtons:
-  - {fileID: 0}
-  - {fileID: 0}
-  ControllerIcon: {fileID: 0}
-  ControllerIndex: 3
-  ThumbstickMargin: 0
-  IndicatorColour: 0
-  CurrentButton: {fileID: 0}
 --- !u!1 &328986177
 GameObject:
   m_ObjectHideFlags: 0
@@ -1885,7 +1887,7 @@ RectTransform:
   m_Children:
   - {fileID: 990039506}
   m_Father: {fileID: 44298418}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2601,7 +2603,7 @@ RectTransform:
   m_Children:
   - {fileID: 1486368845}
   m_Father: {fileID: 44298418}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5281,7 +5283,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1375116486}
   - component: {fileID: 1375116485}
-  - component: {fileID: 1375116487}
   m_Layer: 0
   m_Name: Player3
   m_TagString: Untagged
@@ -5324,23 +5325,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1375116487
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1375116484}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30678ea83e7bbb04dbc6280baa1f9114, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ListOfButtons: []
-  ControllerIcon: {fileID: 0}
-  ControllerIndex: 2
-  ThumbstickMargin: 0
-  IndicatorColour: 0
-  CurrentButton: {fileID: 0}
 --- !u!1 &1396471687
 GameObject:
   m_ObjectHideFlags: 0
@@ -6748,6 +6732,74 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6340c11e23bebb349b5c0a06df4bf8a7, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1733278246
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1733278247}
+  - component: {fileID: 1733278249}
+  - component: {fileID: 1733278248}
+  m_Layer: 0
+  m_Name: ControllerIndicator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1733278247
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1733278246}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -3.0200005}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 44298418}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -374, y: -231.391}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1733278248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1733278246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &1733278249
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1733278246}
 --- !u!1 &1796629562
 GameObject:
   m_ObjectHideFlags: 0
@@ -7195,7 +7247,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1916965277}
   - component: {fileID: 1916965276}
-  - component: {fileID: 1916965278}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Untagged
@@ -7238,23 +7289,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1916965278
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1916965275}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30678ea83e7bbb04dbc6280baa1f9114, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ListOfButtons: []
-  ControllerIcon: {fileID: 0}
-  ControllerIndex: 1
-  ThumbstickMargin: 0
-  IndicatorColour: 0
-  CurrentButton: {fileID: 0}
 --- !u!1 &1937096616
 GameObject:
   m_ObjectHideFlags: 0
@@ -7522,7 +7556,7 @@ RectTransform:
   m_Children:
   - {fileID: 1961748308}
   m_Father: {fileID: 44298418}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -7568,12 +7602,12 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 578634277}
-        m_MethodName: 
+      - m_Target: {fileID: 578634278}
+        m_MethodName: RestartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -8266,7 +8300,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2107812659}
   - component: {fileID: 2107812660}
-  - component: {fileID: 2107812661}
   m_Layer: 0
   m_Name: Player1
   m_TagString: Player
@@ -8309,26 +8342,6 @@ MonoBehaviour:
   m_VerticalMove: Vertical
   m_FireCommand: Fire1
   m_Camera: {fileID: 1209599227}
---- !u!114 &2107812661
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2107812658}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30678ea83e7bbb04dbc6280baa1f9114, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ListOfButtons:
-  - {fileID: 615523850}
-  - {fileID: 1968772981}
-  - {fileID: 1968772981}
-  ControllerIcon: {fileID: 0}
-  ControllerIndex: 0
-  ThumbstickMargin: 0
-  IndicatorColour: 0
-  CurrentButton: {fileID: 0}
 --- !u!1 &2111500254
 GameObject:
   m_ObjectHideFlags: 0

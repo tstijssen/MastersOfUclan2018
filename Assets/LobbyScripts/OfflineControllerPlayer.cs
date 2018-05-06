@@ -21,8 +21,6 @@ public class OfflineControllerPlayer : MonoBehaviour {
     float colourAmount;
     public GamePadState controllerState;
 
-    public GameObject pauseMenu;
-    bool paused;
 	// Use this for initialization
 	void Start ()
     {
@@ -69,10 +67,7 @@ public class OfflineControllerPlayer : MonoBehaviour {
             controllerState = GamePad.GetState(PlayerIndex.One);
         }
 
-        if (pauseMenu.activeInHierarchy)
-            Time.timeScale = 0f;
-        else
-            Time.timeScale = 1f;
+       
 
         if (controllerState.IsConnected)
             ControllerIcon.SetActive(true);
@@ -104,8 +99,7 @@ public class OfflineControllerPlayer : MonoBehaviour {
                 canInteract = false;
                 StartCoroutine(ButtonClick());
             }
-            if(pauseMenu.activeInHierarchy)
-            {
+
 
             if (CurrentButton.interactable && controllerState.Buttons.A == ButtonState.Pressed)
             {
@@ -114,14 +108,9 @@ public class OfflineControllerPlayer : MonoBehaviour {
                 canInteract = false;
                 StartCoroutine(ButtonClick());
             }
-            }
+            
         }
 	}
-
-    void Paused()
-    {
-        pauseMenu.SetActive(!pauseMenu.activeInHierarchy);
-    }
 
     IEnumerator ButtonClick()
     {

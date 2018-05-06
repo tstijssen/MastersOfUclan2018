@@ -40,8 +40,13 @@ public class ScoreBoardToggle : MonoBehaviour {
 
     public void ShowPauseMenu()
     {
-        pauseEnabled = !pauseEnabled;
-        pauseMenu.SetActive(pauseEnabled);
+       
+        pauseMenu.SetActive(!pauseMenu.activeInHierarchy);
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene("OfflineBattle");
     }
 
     public void GoToMenu()
