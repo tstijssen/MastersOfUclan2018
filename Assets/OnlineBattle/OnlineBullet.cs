@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class OnlineBullet : MonoBehaviour {
+public class OnlineBullet : NetworkBehaviour {
 
     public float m_Damage;    // once per bullet
     public float m_BulletSpeed;

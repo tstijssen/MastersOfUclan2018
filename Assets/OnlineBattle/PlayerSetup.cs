@@ -36,7 +36,6 @@ public class PlayerSetup : NetworkBehaviour {
 
         Debug.Log("camera done");
     }
-
     private void Start()
     {
         fireControl.m_PlayerNumber = playerNumber;

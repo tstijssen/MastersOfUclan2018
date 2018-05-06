@@ -20,14 +20,12 @@ public class OnlineScoreboard : MonoBehaviour {
 
         if (m_Players.Length != 0)
         {
-            if(!initialized)
-            {
                 for (int i = 0; i < m_Players.Length; ++i)
                 {
                     if (m_Players[i].activeInHierarchy)
                     {
                         m_ScorePanels[i].SetActive(true);
-                        m_Cars[i] = m_Players[i].GetComponentInChildren<OnlineFireControl>();
+                        m_Cars[i] = m_Players[i].GetComponent<OnlineFireControl>();
                         if (m_Cars[i])
                         {
                             switch (m_Cars[i].m_PlayerTeam)
@@ -64,10 +62,6 @@ public class OnlineScoreboard : MonoBehaviour {
                         }
                     }
                 }
-                initialized = true;
-            }
-            else
-            {
                 for (int i = 0; i < m_ScorePanels.Length; ++i)
                 {
                     if (m_ScorePanels[i].activeInHierarchy)
@@ -76,21 +70,31 @@ public class OnlineScoreboard : MonoBehaviour {
                         {
                             m_Items[i].m_Score.text = m_Cars[i].m_Score.ToString();
 
-                            if (KillLimit > 0)
-                                m_Items[i].m_Kills.text = m_Cars[i].m_Kills.ToString() + "/" + KillLimit;
-                            else
-                                m_Items[i].m_Kills.text = m_Cars[i].m_Kills.ToString();
 
-                            m_Items[i].m_Deaths.text = m_Cars[i].m_Deaths.ToString();
+                            m_Items[i].m_Kills.text = "...";
+
+                            if (KillLimit > 0)
+                                m_Items[i].m_Deaths.text = m_Cars[i].m_Deaths.ToString() + "/" + KillLimit;
+                            else
+                                m_Items[i].m_Deaths.text = m_Cars[i].m_Deaths.ToString();
                             Debug.Log("Populating scoreboard");
-                            if (KillLimit != 0 && m_Cars[i].m_Score >= KillLimit)
+
+                        if(m_Cars[i].m_HatCapture)
+                        {
+                            if (m_Cars[i].m_TotalHatTIme >= m_Cars[i].m_HatCapture.m_VictoryNumber)
+                            {
+                                m_Cars[i].m_Victory = true;
+                            }
+                        }
+
+
+                        if (KillLimit != 0 && m_Cars[i].m_Deaths >= KillLimit)
                             {
                                 m_Cars[i].m_Victory = true;
                             }
                         }
                     }
                 }
-            }
         }
 
 	}

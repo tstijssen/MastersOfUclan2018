@@ -21,8 +21,9 @@ public class OnlineFireControl : NetworkBehaviour {
     public bool m_Alive;
     [SyncVar]
     public int m_Score;
-    [SyncVar]
+
     public int m_Kills;
+
     [SyncVar]
     public int m_Deaths;
 
@@ -54,11 +55,6 @@ public class OnlineFireControl : NetworkBehaviour {
     private bool m_HitActive = false;
     private float m_IndicatorDuration = 0.0f;
 
-    private bool m_HasFlag = false;
-    FlagCaptureScript m_FlagData = null;
-
-    Text m_FlagScoreText;
-
     Rigidbody rb;
     public NetworkSpawnManager  m_SpawnManager;
     Vector3 previousPos;
@@ -70,11 +66,14 @@ public class OnlineFireControl : NetworkBehaviour {
     public int m_PlayerNumber;
     public GameObject m_VehicleModel;
 
-    HatCaptureScript m_HatCapture = null;
+    public HatCaptureScript m_HatCapture = null;
     public Transform m_HatPosition;
+
+    [SyncVar]
     bool m_HasHat = false;
+
     float m_HatTimer = 0.0f;
-    float m_TotalHatTIme = 0.0f;
+    public float m_TotalHatTIme = 0.0f;
 
     [SyncVar]
     public bool m_Victory;  // determines whether this player has achieved victory
@@ -284,8 +283,7 @@ public class OnlineFireControl : NetworkBehaviour {
                     {
                         m_HP -= other.GetComponent<OnlineBullet>().m_Damage;
                         if (m_CarData.Health <= 0.0f)
-                        {
-                            other.GetComponent<OnlineBullet>().m_Owner.RecordKill(this);
+                        {      
                             Death();
                         }
                     }
@@ -332,7 +330,7 @@ public class OnlineFireControl : NetworkBehaviour {
                     RotateHitIndicator(other.transform.position);
 
                 }
-                other.transform.parent.parent.parent.GetComponentInParent<OnlineFireControl>().RecordKill(this);
+                //CmdRecordKill(other.transform.parent.parent.parent.GetComponentInParent<NetworkIdentity>().netId);
                 Death();
             }
             else if (other.tag == "Hazard")
@@ -351,31 +349,6 @@ public class OnlineFireControl : NetworkBehaviour {
                 m_InDeathZone = true;
                 m_DeathZoneTimer = m_DeathZoneDuration;
                 Debug.Log("In Death Zone");
-            }
-            else if (other.tag == "Flag")
-            {
-                if (m_HasFlag)
-                {
-                    if (other.GetComponent<FlagCaptureScript>().m_FlagColour == m_PlayerTeam)
-                    {
-                        m_FlagData.CaptureFlag(other.GetComponent<FlagCaptureScript>().m_FlagColour);
-                        m_Score += 20;
-
-                        int teamScore = int.Parse(m_FlagScoreText.text);
-                        teamScore++;
-                        m_FlagScoreText.text = teamScore.ToString();
-
-                        //if (teamScore >= other.GetComponent<FlagCaptureScript>().m_VictoryNumber) TODO
-                        //{
-                        //    // VICTORY
-                        //    m_Victory = true;
-                        //}
-
-
-                        m_HasFlag = false;
-                        m_FlagData = null;
-                    }
-                }
             }
         }
     }
@@ -404,7 +377,7 @@ public class OnlineFireControl : NetworkBehaviour {
                     m_HP -= (other.GetComponent<laserScript>().m_Damage * Time.deltaTime);
                     if (m_HP <= 0.0f)
                     {
-                        other.transform.parent.GetComponentInParent<OnlineFireControl>().RecordKill(this);
+                        //CmdRecordKill(other.transform.parent.GetComponentInParent<NetworkIdentity>().netId);
                         Death();
                     }
                 }
@@ -417,6 +390,13 @@ public class OnlineFireControl : NetworkBehaviour {
         }
 
     }
+
+    //[Command]
+    //public void CmdRecordKill(NetworkInstanceId netId)
+    //{
+    //    GameObject player = NetworkServer.FindLocalObject(netId);
+    //    player.GetComponent<OnlineFireControl>().RpcRecordKill();
+    //}
 
     public void RumblePlayer(float amount)
     {
@@ -458,26 +438,13 @@ public class OnlineFireControl : NetworkBehaviour {
         m_HitIndicator.rectTransform.localRotation = Quaternion.Euler(0, 0, rot);
     }
 
-    public void FlagTaken(FlagCaptureScript flag)
-    {
-        m_FlagData = flag;
-        m_HasFlag = true;
-    }
-
-    public void RecordKill(OnlineFireControl car)
-    {
-        if (car.m_PlayerTeam == m_PlayerTeam)
-        {
-            // teamkill!
-            m_Kills--;
-            m_Score -= 10;
-        }
-        else
-        {
-            m_Kills++;
-            m_Score += 10;
-        }
-    }
+    //[ClientRpc]
+    //public void RpcRecordKill()
+    //{
+    //    Debug.Log("Got kill");
+    //    m_Kills++;
+    //    m_Score += 10;
+    //}
 
     public void ColourInPlayer()
     {
@@ -492,30 +459,18 @@ public class OnlineFireControl : NetworkBehaviour {
             if(GetComponent<PlayerSetup>().playerColor == Color.red)
             {
                 mat.color = Color.red;
-                if (GameObject.FindGameObjectWithTag("RedScore"))
-                {
-                    m_FlagScoreText = GameObject.FindGameObjectWithTag("RedScore").GetComponent<Text>();
-
-                }
-
             }
             else if (GetComponent<PlayerSetup>().playerColor == Color.blue)
             {
                 mat.color = Color.blue;
-                if (GameObject.FindGameObjectWithTag("BlueScore"))
-                {
-                    m_FlagScoreText = GameObject.FindGameObjectWithTag("BlueScore").GetComponent<Text>();
-                }
             }
             else if (GetComponent<PlayerSetup>().playerColor == Color.green)
             {
                 mat.color = Color.green;
-
             }
             else if (GetComponent<PlayerSetup>().playerColor == Color.yellow)
             {
                 mat.color = Color.yellow;
-
             }
         }
     }
@@ -544,12 +499,6 @@ public class OnlineFireControl : NetworkBehaviour {
     private void Death()
     {
         RumblePlayer(0.5f);
-        if (m_HasFlag)
-        {
-            m_FlagData.DropFlag();
-            m_FlagData = null;
-            m_HasFlag = false;
-        }
 
         if (m_HasHat)
         {
@@ -589,13 +538,17 @@ public class OnlineFireControl : NetworkBehaviour {
     {
         if(isLocalPlayer)
         {
-            Transform spawnPoint;
+            Transform spawnPoint = null;
 
             GameObject[] spawnPoints = GameObject.FindGameObjectsWithTag("Spawn");
-            spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)].transform;
+            if(spawnPoints.Length > 0)
+            {
+                spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)].transform;
+                transform.position = new Vector3(spawnPoint.position.x, spawnPoint.position.y + 1.0f, spawnPoint.position.z);
+                transform.rotation = spawnPoint.rotation;
+            }
 
-            transform.position = new Vector3(spawnPoint.position.x, spawnPoint.position.y + 1.0f, spawnPoint.position.z);
-            transform.rotation = spawnPoint.rotation;
+
         }
     }
 
@@ -619,17 +572,13 @@ public class OnlineFireControl : NetworkBehaviour {
                 m_HatTimer -= Time.deltaTime;
                 m_TotalHatTIme += Time.deltaTime;
 
-                m_HatCapture.m_ScoreText.GetComponent<Text>().text = "Player" + (m_PlayerNumber + 1).ToString() + "\n   " + (m_HatCapture.m_VictoryNumber - m_TotalHatTIme).ToString() + " sec left";
+                m_HatCapture.m_ScoreText.GetComponent<Text>().text = "Player" + (m_PlayerNumber + 1).ToString() + "\n   " + (int)(m_HatCapture.m_VictoryNumber - m_TotalHatTIme) + " sec left";
 
 
                 if (m_HatTimer < 0.0f)
                 {
                     m_HatTimer = 1.0f;
                     m_Score += 10;
-                    if (m_TotalHatTIme >= m_HatCapture.m_VictoryNumber)
-                    {
-                        m_Victory = true;
-                    }
                 }
             }
 

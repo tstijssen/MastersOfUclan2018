@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public enum FlagState { Home, Taken, Dropped };
+
 public class HatCaptureScript : MonoBehaviour {
 
     public FlagState m_State;

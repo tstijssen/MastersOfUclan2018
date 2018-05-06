@@ -722,10 +722,11 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 426944846}
+  - component: {fileID: 426944848}
   - component: {fileID: 426944845}
   - component: {fileID: 426944847}
   m_Layer: 0
-  m_Name: MusicPlayer
+  m_Name: LevelLoad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -841,6 +842,31 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &426944848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 426944844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cf3ae358545a9c41949a53f37f677c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levels:
+  - {fileID: 1875413569274768, guid: e798a730b7d806f4db2e8eb24a64ae6a, type: 2}
+  - {fileID: 1970898325059208, guid: 7fd20b6b28919684f8dab691382102eb, type: 2}
+  - {fileID: 1512275437794492, guid: d5ccd4c1cae54ee409a05cc5f7264a5f, type: 2}
+  - {fileID: 1856447985409446, guid: 49d55e72ddef6b847ab757011409525f, type: 2}
+  - {fileID: 1807569405813156, guid: ef694c6a7eb00ca43adcf8d25b6c0f91, type: 2}
+  - {fileID: 1183432577919910, guid: ffb76ae59fb39324e852a3325ca42c7d, type: 2}
+  skyBoxes:
+  - {fileID: 2100000, guid: 40f83780a14bd1d4bacceff76e077b76, type: 2}
+  - {fileID: 2100000, guid: 40f83780a14bd1d4bacceff76e077b76, type: 2}
+  - {fileID: 2100000, guid: 29488988e2229db4782771f3f37c4b6e, type: 2}
+  - {fileID: 2100000, guid: 29488988e2229db4782771f3f37c4b6e, type: 2}
+  - {fileID: 2100000, guid: 4cbe2142ce63fa7418ded6bb97877855, type: 2}
+  - {fileID: 2100000, guid: c7ef55dd67e91cb41880d310506b2462, type: 2}
 --- !u!1 &494907506
 GameObject:
   m_ObjectHideFlags: 0

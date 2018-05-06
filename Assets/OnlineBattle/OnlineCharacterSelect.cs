@@ -23,7 +23,7 @@ public class OnlineCharacterSelect : NetworkBehaviour {
     public GameObject[] vehicles;
     public GameObject[] levelPrefabs;
     public string[] levelNames;
-    GameObject go = null;
+    GameObject map = null;
     public Material[] skyBoxes;
 
     [Command]
@@ -44,11 +44,6 @@ public class OnlineCharacterSelect : NetworkBehaviour {
 
     void Update()
     {
-        if (!go)
-        {
-            go = Instantiate(levelPrefabs[levelNumber]);
-            RenderSettings.skybox = skyBoxes[levelNumber];
-
             string levelType = levelNames[levelNumber].Substring(0, 3); // first 3 chars in name is type (e.g. FFA, CTF)
 
             switch (levelType)
@@ -73,8 +68,6 @@ public class OnlineCharacterSelect : NetworkBehaviour {
                     break;
             }
             Debug.Log("Spawning level " + levelNumber);
-        }
-        else
             Cmd_ReplacePlayer();
 
     }

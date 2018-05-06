@@ -26,7 +26,7 @@ public class Music : MonoBehaviour {
         }
         else
         {
-            musicChoice++;
+            musicChoice = (musicChoice + 1) & levelMusic.Length;
         }
     }
 }

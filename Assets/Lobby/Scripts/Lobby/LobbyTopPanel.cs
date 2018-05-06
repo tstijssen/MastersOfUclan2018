@@ -72,7 +72,6 @@ namespace Prototype.NetworkLobby
 
         IEnumerator ButtonClick()
         {
-            Debug.Log("Delaying");
             yield return new WaitForSeconds(0.25f);
             canInteract = true;   // After the wait is over, the player can interact with the menu again.
         }

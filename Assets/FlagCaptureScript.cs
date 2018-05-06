@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public enum FlagState { Home, Taken, Dropped };
+
 
 public class FlagCaptureScript : MonoBehaviour {
     public float m_ReturnTime;
@@ -56,28 +55,7 @@ public class FlagCaptureScript : MonoBehaviour {
     {
         if (other.tag == "Player")
         {
-            OnlineFireControl car = other.GetComponent<OnlineFireControl>();
-            if (car.m_Alive)
-            {
-                if (m_State == FlagState.Home)
-                {
-                    if (car.m_PlayerTeam != m_FlagColour)
-                    {
-                        TakeFlag(car);
-                    }
-                }
-                else if (m_State == FlagState.Dropped)
-                {
-                    if (car.m_PlayerTeam == m_FlagColour)
-                    {
-                        ResetFlag();
-                    }
-                    else
-                    {
-                        TakeFlag(car);
-                    }
-                }
-            }  
+
         }
         else if (other.tag == "Hazard")
         {
@@ -92,14 +70,6 @@ public class FlagCaptureScript : MonoBehaviour {
         m_State = FlagState.Home;
         this.transform.position = m_HomePos;
         this.transform.rotation = m_HomeRot;
-    }
-
-    private void TakeFlag(OnlineFireControl player)
-    {
-        Debug.Log("taking flag");
-        player.FlagTaken(this);
-        transform.parent = player.transform;
-        m_State = FlagState.Taken;
     }
 
     public void CaptureFlag(TeamColours team)

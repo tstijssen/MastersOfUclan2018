@@ -31,7 +31,6 @@ public class SelectorMove : MonoBehaviour {
 	void Update ()
     {
         gamePad = GameObject.Find("MenuControl").GetComponent<MenuControllerDetect>().state[0];
-        Debug.Log(gamePad.IsConnected);
         if(!interactInitialized)
         {
             canInteract = mainMenuControl.canInteract;
