@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using XInputDotNetPure;
 
 public class LocalVictoryManager : MonoBehaviour {
 
@@ -25,7 +26,18 @@ public class LocalVictoryManager : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if(m_Players.Length == 0)
+
+        if(GetComponent<OfflineControllerPlayer>().controllerState.Buttons.A == ButtonState.Pressed)
+        {
+            GetComponent<ScoreBoardToggle>().RestartGame();
+        }
+        if (GetComponent<OfflineControllerPlayer>().controllerState.Buttons.B == ButtonState.Pressed)
+        {
+            GetComponent<ScoreBoardToggle>().GoToMenu();
+        }
+
+
+        if (m_Players.Length == 0)
         {
             m_Players = GameObject.FindGameObjectsWithTag("Player");
         }

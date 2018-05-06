@@ -12,6 +12,8 @@ public class ControllerDetection : MonoBehaviour {
     GamePadState[] state;
     GamePadState prevState;
     int numOfPlayers = 0;
+    public GameObject pauseMenu;
+    public GameObject pauseCam;
     // Use this for initialization
     void Start () {
         state = new GamePadState[players.Length];
@@ -19,7 +21,9 @@ public class ControllerDetection : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        
+
+        pauseCam.SetActive(pauseMenu.activeInHierarchy);
+
         if (!playerIndexSet || prevState.IsConnected)
         {
             for (int i = 0; i < 4; ++i)
@@ -52,6 +56,7 @@ public class ControllerDetection : MonoBehaviour {
                 numOfPlayers++;
                 GetComponent<SplitSceen>().NumOfPlayers = numOfPlayers;
                 GetComponent<SplitSceen>().cams[i].gameObject.SetActive(true);
+                players[i].gameObject.SetActive(!pauseMenu.activeInHierarchy);
             }
         }
     }

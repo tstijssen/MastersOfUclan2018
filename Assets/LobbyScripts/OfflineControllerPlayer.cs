@@ -74,6 +74,7 @@ public class OfflineControllerPlayer : MonoBehaviour {
         else
             ControllerIcon.SetActive(false);
 
+
         if (canInteract && controllerState.IsConnected)
         {
             if(controllerState.ThumbSticks.Left.Y > ThumbstickMargin)
