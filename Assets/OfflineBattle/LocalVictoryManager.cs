@@ -41,15 +41,15 @@ public class LocalVictoryManager : MonoBehaviour {
                         // a player has won the game
                         m_Panel.SetActive(true);
 
-                        for (int p = 0; p < m_Players.Length; ++p)
-                        {
-                            m_Players[p].GetComponentInChildren<CarFireControl>().Respawn();
-                        }
+                        //for (int p = 0; p < m_Players.Length; ++p)
+                        //{
+                        //    m_Players[p].GetComponentInChildren<CarFireControl>().Respawn();
+                        //}
 
                        
 
                         m_VictoryDesc.text = "Player " + (i + 1) + " has won!";
-                        m_VictoryData.text = "Score: " + car.m_Score + "\nKills: " + car.m_Kills + "\nDeaths: " + car.m_Deaths;
+                        //m_VictoryData.text = "Score: " + car.m_Score + "\nKills: " + car.m_Kills + "\nDeaths: " + car.m_Deaths;
                     }
                 }
             }

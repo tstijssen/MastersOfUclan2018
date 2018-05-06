@@ -43,9 +43,9 @@ public class SplitSceen : MonoBehaviour {
                     {
                         index++;
                         if (index == 1)
-                            cams[i].rect = new Rect(0f, 0f, 0.5f, 1f);
+                            cams[i].rect = new Rect(0f, 0f, 1f, 0.5f);
                         else
-                            cams[i].rect = new Rect(0f, 0.5f, 0.5f, 1f);
+                            cams[i].rect = new Rect(0f, 0.5f, 1f, 0.5f);
                     }
                 }
                 backupCam.gameObject.SetActive(false);

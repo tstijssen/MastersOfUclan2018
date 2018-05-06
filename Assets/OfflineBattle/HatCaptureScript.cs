@@ -8,6 +8,8 @@ public class HatCaptureScript : MonoBehaviour {
     Vector3 m_HomePos;
     Quaternion m_HomeRot;
     public int m_VictoryNumber;
+    float timer;
+
     // Use this for initialization
     void Start () {
         m_HomePos = this.transform.position;
@@ -21,6 +23,7 @@ public class HatCaptureScript : MonoBehaviour {
         if(m_State != FlagState.Taken)
         {
             transform.Rotate(transform.up * 10.0f * Time.deltaTime);
+
         }
     }
 
@@ -53,6 +56,7 @@ public class HatCaptureScript : MonoBehaviour {
     }
     public void DropHat()
     {
+        timer = 0f;
         Debug.Log("Dropping flag");
         m_State = FlagState.Dropped;
         transform.parent = null;
