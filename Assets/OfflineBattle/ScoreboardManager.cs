@@ -90,7 +90,7 @@ public class ScoreboardManager : MonoBehaviour {
 
                     m_Items[i].m_Deaths.text = m_Cars[i].m_Deaths.ToString();
                     Debug.Log("Populating scoreboard");
-                    if (KillLimit != 0 && m_Cars[i].m_Score >= KillLimit)
+                    if (KillLimit != 0 && m_Cars[i].m_Kills >= KillLimit)
                     {
                         m_Cars[i].m_Victory = true;
                     }

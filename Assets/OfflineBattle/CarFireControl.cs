@@ -479,13 +479,7 @@ public class CarFireControl : MonoBehaviour {
 
     public void RecordKill(CarFireControl car)
     {
-        if (car.m_PlayerTeam == m_PlayerTeam)
-        {
-            // teamkill!
-            m_Kills--;
-            m_Score -= 10;
-        }
-        else
+        if (car.m_PlayerTeam != m_PlayerTeam)
         {
             m_Kills++;
             m_Score += 10;

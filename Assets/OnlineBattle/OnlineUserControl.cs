@@ -63,7 +63,6 @@ namespace UnityStandardAssets.Vehicles.Car
                         v = -1f;
                     else
                         v = 0f;
-                    Debug.Log(v);
 
                     if (triggerFire > 0.5f)
                     {

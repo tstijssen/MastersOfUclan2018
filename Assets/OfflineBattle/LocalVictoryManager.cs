@@ -36,18 +36,38 @@ public class LocalVictoryManager : MonoBehaviour {
                 if (m_Players[i].activeInHierarchy)
                 {
                     CarFireControl car = m_Players[i].GetComponentInChildren<CarFireControl>();
-                    if (car && car.gameObject.activeInHierarchy && car.m_Victory)
+                    if (car)
                     {
-                        // a player has won the game
-                        m_Panel.SetActive(true);
-
-                        for (int p = 0; p < m_Players.Length; ++p)
+                        if (car.gameObject.activeInHierarchy && car.m_Victory)
                         {
-                            m_Players[p].GetComponentInChildren<CarFireControl>().Respawn();
+                            // a player has won the game
+                            m_Panel.SetActive(true);
+
+                            for (int p = 0; p < m_Players.Length; ++p)
+                            {
+                                m_Players[p].GetComponentInChildren<CarFireControl>().enabled = false;
+                            }
+
+                            m_VictoryDesc.text = "Player " + (i + 1) + " has won!";
+                            m_VictoryData.text = "Score: " + car.m_Score + "\nKills: " + car.m_Kills + "\nDeaths: " + car.m_Deaths;
+                        }          
+                    }
+                    else
+                    {
+                        OnlineFireControl onlineCar = m_Players[i].GetComponent<OnlineFireControl>();
+                        if(onlineCar && onlineCar.gameObject.activeInHierarchy && onlineCar.m_Victory)
+                        {
+                            // a player has won the game
+                            m_Panel.SetActive(true);
+
+                            for (int p = 0; p < m_Players.Length; ++p)
+                            {
+                                m_Players[p].GetComponent<OnlineFireControl>().enabled = false;
+                            }
+
+                            m_VictoryDesc.text = "Player " + (i + 1) + " has won!";
+                            m_VictoryData.text = "Score: " + onlineCar.m_Score + "\nKills: " + onlineCar.m_Kills + "\nDeaths: " + onlineCar.m_Deaths;
                         }
-                      
-                        m_VictoryDesc.text = "Player " + (i + 1) + " has won!";
-                        m_VictoryData.text = "Score: " + car.m_Score + "\nKills: " + car.m_Kills + "\nDeaths: " + car.m_Deaths;
                     }
                 }
             }

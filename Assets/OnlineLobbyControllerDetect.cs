@@ -21,6 +21,5 @@ public class OnlineLobbyControllerDetect : MonoBehaviour {
             controllerUser.ControllerIcon.SetActive(false);
         }
         controllerUser.controllerState = currentState;
-
     }
 }
