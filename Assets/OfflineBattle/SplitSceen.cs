@@ -34,7 +34,7 @@ public class SplitSceen : MonoBehaviour {
                         cams[i].rect = new Rect(0, 0, 1, 1);
                     }
                 }
-                backupCam.gameObject.SetActive(false);
+                //backupCam.gameObject.SetActive(false);
                 break;
             case 2: // two cameras one above the other
                 for (int i = 0; i < cams.Length; ++i)
@@ -43,12 +43,12 @@ public class SplitSceen : MonoBehaviour {
                     {
                         index++;
                         if (index == 1)
-                            cams[i].rect = new Rect(0f, 0f, 0.5f, 1f);
+                            cams[i].rect = new Rect(0f, 0f, 1f, 0.5f);
                         else
-                            cams[i].rect = new Rect(0f, 0.5f, 0.5f, 1f);
+                            cams[i].rect = new Rect(0f, 0.5f, 1f, 0.5f);
                     }
                 }
-                backupCam.gameObject.SetActive(false);
+                //backupCam.gameObject.SetActive(false);
 
                 break;
 
@@ -87,7 +87,7 @@ public class SplitSceen : MonoBehaviour {
                             cams[i].rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
                     }
                 }
-                backupCam.gameObject.SetActive(false);
+                //backupCam.gameObject.SetActive(false);
 
                 break;
             default:

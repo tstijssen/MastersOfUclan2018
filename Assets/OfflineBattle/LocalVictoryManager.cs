@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using XInputDotNetPure;
 
 public class LocalVictoryManager : MonoBehaviour {
 
@@ -11,6 +12,7 @@ public class LocalVictoryManager : MonoBehaviour {
     public Text m_VictoryDesc;
     public Text m_VictoryData;
     public Button m_MenuButton;
+    public GamePadState controllerState;
 
     void Start()
     {
@@ -28,7 +30,23 @@ public class LocalVictoryManager : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if(m_Players.Length == 0)
+        controllerState = GamePad.GetState(PlayerIndex.One);
+
+        if(m_Panel.activeInHierarchy)
+        {
+
+        if (controllerState.Buttons.A == ButtonState.Pressed)
+        {
+            SceneManager.LoadSceneAsync("OfflineBattle");
+        }
+        if (controllerState.Buttons.B == ButtonState.Pressed)
+        {
+            LoadMenuScene();
+        }
+        }
+
+
+        if (m_Players.Length == 0)
         {
             m_Players = GameObject.FindGameObjectsWithTag("Player");
         }
