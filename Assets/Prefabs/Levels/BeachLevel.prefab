@@ -124,6 +124,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4029913852117938}
   - component: {fileID: 114421629979670394}
+  - component: {fileID: 114763760612816108}
   m_Layer: 0
   m_Name: PlayerSpawn (1)
   m_TagString: Spawn
@@ -226,6 +227,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4321546105657732}
   - component: {fileID: 114251777748917880}
+  - component: {fileID: 114309942802493618}
   m_Layer: 0
   m_Name: PlayerSpawn
   m_TagString: Spawn
@@ -242,6 +244,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4105806000199432}
   - component: {fileID: 114330668127001300}
+  - component: {fileID: 114552144564402362}
   m_Layer: 0
   m_Name: PlayerSpawn (2)
   m_TagString: Spawn
@@ -311,6 +314,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4860213712287748}
   - component: {fileID: 114883904853617726}
+  - component: {fileID: 114128842349901586}
   m_Layer: 0
   m_Name: PlayerSpawn (3)
   m_TagString: Spawn
@@ -2639,6 +2643,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114128842349901586
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1537969866488352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1050975500, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114251777748917880
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2651,6 +2666,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TeamNumber: -1
+--- !u!114 &114309942802493618
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1365975169981480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1050975500, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114330668127001300
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2696,6 +2722,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TeamNumber: -1
+--- !u!114 &114552144564402362
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1367681374570988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1050975500, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114763760612816108
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1184827987077656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1050975500, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114883904853617726
 MonoBehaviour:
   m_ObjectHideFlags: 1

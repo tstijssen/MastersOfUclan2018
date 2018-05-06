@@ -101,9 +101,9 @@ MonoBehaviour:
   - {fileID: 1755083280081346, guid: 7e317593ebb88c44fa74c74aa2f38aeb, type: 2}
   levelPrefabs:
   - {fileID: 1875413569274768, guid: e798a730b7d806f4db2e8eb24a64ae6a, type: 2}
-  - {fileID: 1236471425079990, guid: 7fd20b6b28919684f8dab691382102eb, type: 2}
-  - {fileID: 1045529418233652, guid: 6e7bce12a1f91d6458bb7e7de025f3cb, type: 2}
-  - {fileID: 1266069409618602, guid: 13a39447d8da8a44492631028f4dcb64, type: 2}
+  - {fileID: 1970898325059208, guid: 7fd20b6b28919684f8dab691382102eb, type: 2}
+  - {fileID: 1512275437794492, guid: d5ccd4c1cae54ee409a05cc5f7264a5f, type: 2}
+  - {fileID: 1856447985409446, guid: 49d55e72ddef6b847ab757011409525f, type: 2}
   - {fileID: 1807569405813156, guid: ef694c6a7eb00ca43adcf8d25b6c0f91, type: 2}
   - {fileID: 1183432577919910, guid: ffb76ae59fb39324e852a3325ca42c7d, type: 2}
   levelNames:

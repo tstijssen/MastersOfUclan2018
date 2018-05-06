@@ -38,6 +38,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4280955598051570}
   - component: {fileID: 114994300210343812}
+  - component: {fileID: 114490360174648424}
   m_Layer: 0
   m_Name: PlayerSpawn (1)
   m_TagString: Spawn
@@ -120,6 +121,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4974554220742836}
   - component: {fileID: 114995280429652964}
+  - component: {fileID: 114044113778813752}
   m_Layer: 0
   m_Name: PlayerSpawn (3)
   m_TagString: Spawn
@@ -5047,6 +5049,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4585023489784814}
   - component: {fileID: 114923164023756404}
+  - component: {fileID: 114565873770091888}
   m_Layer: 0
   m_Name: PlayerSpawn (2)
   m_TagString: Spawn
@@ -13306,6 +13309,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4389014184941282}
   - component: {fileID: 114938784512993956}
+  - component: {fileID: 114040521884791294}
   m_Layer: 0
   m_Name: PlayerSpawn
   m_TagString: Spawn
@@ -63734,6 +63738,28 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114040521884791294
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1978799651123620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1050975500, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114044113778813752
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1005177540985340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1050975500, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114097169741053146
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -63773,6 +63799,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Pickup: {fileID: 1270783985959618}
   m_RespawnDuration: 8
+--- !u!114 &114490360174648424
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000605851230020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1050975500, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114555396411715496
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -63786,6 +63823,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Pickup: {fileID: 0}
   m_RespawnDuration: 8
+--- !u!114 &114565873770091888
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1373241273940284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1050975500, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114681786106176992
 MonoBehaviour:
   m_ObjectHideFlags: 1

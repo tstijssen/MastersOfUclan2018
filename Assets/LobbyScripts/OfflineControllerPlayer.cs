@@ -23,7 +23,10 @@ public class OfflineControllerPlayer : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        CurrentButton = ListOfButtons[btnIndex];
+        if(ListOfButtons.Length > 0)
+        {
+            CurrentButton = ListOfButtons[btnIndex];
+        }
         colourAmount = 0.07f;
         switch (IndicatorColour)
         {
