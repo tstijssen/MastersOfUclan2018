@@ -917,6 +917,11 @@ Prefab:
       propertyPath: m_Name
       value: Shipper (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 114951306700696840, guid: 6340c11e23bebb349b5c0a06df4bf8a7,
+        type: 2}
+      propertyPath: m_PlayerTeam
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6340c11e23bebb349b5c0a06df4bf8a7, type: 2}
   m_IsPrefabParent: 0
@@ -3237,6 +3242,11 @@ Prefab:
       propertyPath: m_Name
       value: TwinGunCar (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 114859280796887486, guid: 90e69e8a4743a2c4f92fb7766287d4f1,
+        type: 2}
+      propertyPath: m_PlayerTeam
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 90e69e8a4743a2c4f92fb7766287d4f1, type: 2}
   m_IsPrefabParent: 0
@@ -3616,6 +3626,11 @@ Prefab:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1108327167}
+    - target: {fileID: 114148851182922300, guid: e9f4ebfd9fa8f464bad2803abc65d80e,
+        type: 2}
+      propertyPath: m_PlayerTeam
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e9f4ebfd9fa8f464bad2803abc65d80e, type: 2}
   m_IsPrefabParent: 0
@@ -4364,6 +4379,11 @@ Prefab:
     - target: {fileID: 1657827691245122, guid: 90e69e8a4743a2c4f92fb7766287d4f1, type: 2}
       propertyPath: m_Name
       value: TwinGunCar (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114859280796887486, guid: 90e69e8a4743a2c4f92fb7766287d4f1,
+        type: 2}
+      propertyPath: m_PlayerTeam
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 90e69e8a4743a2c4f92fb7766287d4f1, type: 2}
@@ -5909,6 +5929,11 @@ Prefab:
       propertyPath: m_Name
       value: Shipper (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 114951306700696840, guid: 6340c11e23bebb349b5c0a06df4bf8a7,
+        type: 2}
+      propertyPath: m_PlayerTeam
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6340c11e23bebb349b5c0a06df4bf8a7, type: 2}
   m_IsPrefabParent: 0
@@ -6634,6 +6659,11 @@ Prefab:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 163125879}
+    - target: {fileID: 114148851182922300, guid: e9f4ebfd9fa8f464bad2803abc65d80e,
+        type: 2}
+      propertyPath: m_PlayerTeam
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e9f4ebfd9fa8f464bad2803abc65d80e, type: 2}
   m_IsPrefabParent: 0
@@ -7535,6 +7565,11 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114148851182922300, guid: e9f4ebfd9fa8f464bad2803abc65d80e,
+        type: 2}
+      propertyPath: m_PlayerTeam
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e9f4ebfd9fa8f464bad2803abc65d80e, type: 2}
   m_IsPrefabParent: 0
@@ -8303,6 +8338,11 @@ Prefab:
       propertyPath: m_Name
       value: TwinGunCar (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 114859280796887486, guid: 90e69e8a4743a2c4f92fb7766287d4f1,
+        type: 2}
+      propertyPath: m_PlayerTeam
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 90e69e8a4743a2c4f92fb7766287d4f1, type: 2}
   m_IsPrefabParent: 0
@@ -8424,6 +8464,11 @@ Prefab:
     - target: {fileID: 1264452832526180, guid: 6340c11e23bebb349b5c0a06df4bf8a7, type: 2}
       propertyPath: m_Name
       value: Shipper (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114951306700696840, guid: 6340c11e23bebb349b5c0a06df4bf8a7,
+        type: 2}
+      propertyPath: m_PlayerTeam
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6340c11e23bebb349b5c0a06df4bf8a7, type: 2}

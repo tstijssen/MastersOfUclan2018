@@ -45,15 +45,12 @@ public class LocalVictoryManager : MonoBehaviour {
                         {
                             m_Players[p].GetComponentInChildren<CarFireControl>().Respawn();
                         }
-
-                       
-
+                      
                         m_VictoryDesc.text = "Player " + (i + 1) + " has won!";
                         m_VictoryData.text = "Score: " + car.m_Score + "\nKills: " + car.m_Kills + "\nDeaths: " + car.m_Deaths;
                     }
                 }
             }
-        }
-        
+        }      
     }
 }
