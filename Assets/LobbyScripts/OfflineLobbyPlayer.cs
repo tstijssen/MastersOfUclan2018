@@ -18,8 +18,9 @@ public class OfflineLobbyPlayer : MonoBehaviour {
     void Start ()
     {
         playerCarChoices[pCarChoice].SetActive(true);
-        m_PlayerPref = "PVehicle" + m_PlayerNumber;
-        PlayerPrefs.SetInt("m_PlayerPref", pCarChoice);
+        m_PlayerPref = "m_PlayerPref" + m_PlayerNumber.ToString();
+        Debug.Log(m_PlayerPref);
+        PlayerPrefs.SetInt(m_PlayerPref, pCarChoice);
     }
 	
 	// Update is called once per frame
@@ -76,7 +77,7 @@ public class OfflineLobbyPlayer : MonoBehaviour {
         pCarChoice++;
         if (pCarChoice > 3)
             pCarChoice = 0;
-        PlayerPrefs.SetInt("m_PlayerPref", pCarChoice);
+        PlayerPrefs.SetInt(m_PlayerPref, pCarChoice);
     }
 
     public void ReadyPlayer()

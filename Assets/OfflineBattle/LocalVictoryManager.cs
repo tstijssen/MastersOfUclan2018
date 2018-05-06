@@ -46,25 +46,9 @@ public class LocalVictoryManager : MonoBehaviour {
                             m_Players[p].GetComponentInChildren<CarFireControl>().Respawn();
                         }
 
-                        string victorColour = "";
+                       
 
-                        switch (car.m_PlayerTeam)
-                        {
-                            case TeamColours.Red:
-                                victorColour = "RED";
-                                break;
-                            case TeamColours.Blue:
-                                victorColour = "BLUE";
-                                break;
-                            case TeamColours.Green:
-                                victorColour = "GREEN";
-                                break;
-                            case TeamColours.Yellow:
-                                victorColour = "YELLOW";
-                                break;
-                        }
-
-                        m_VictoryDesc.text = "Player " + (i + 1) + " has won \n for team " + victorColour;
+                        m_VictoryDesc.text = "Player " + (i + 1) + " has won!";
                         m_VictoryData.text = "Score: " + car.m_Score + "\nKills: " + car.m_Kills + "\nDeaths: " + car.m_Deaths;
                     }
                 }
