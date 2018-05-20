@@ -610,12 +610,12 @@ public class CarFireControl : MonoBehaviour {
         if(m_Alive)
         {
             // if player has the hat, increase score by 10 each second
-            if(m_HasHat)
+            if(m_HasHat && !m_Victory)
             {
                 m_HatTimer -= Time.deltaTime;
                 m_TotalHatTIme += Time.deltaTime;
 
-                m_HatCapture.m_ScoreText.GetComponent<Text>().text = transform.parent.name + "\n   " + (m_HatCapture.m_VictoryNumber - m_TotalHatTIme).ToString() + " sec left";
+                m_HatCapture.m_ScoreText.GetComponent<Text>().text = transform.parent.name + "\n   " + (m_HatCapture.m_VictoryNumber - m_TotalHatTIme).ToString("F2") + " sec left";
 
                 if (m_HatTimer < 0.0f)
                 {

@@ -57,16 +57,16 @@ public class LevelSelect : MonoBehaviour {
                 PlayerPrefs.SetInt("FFAKillLimit", rulesNumber);
 
                 levelName.transform.parent.GetComponent<Text>().text = "FFA Castle";
-                if (SceneManager.GetActiveScene().name == "OnlineLobby")
-                {
+                //if (SceneManager.GetActiveScene().name == "OnlineLobby")
+                //{
                     rulesText.text = "First to " + rulesNumber + " deaths";
                     rulesText.transform.parent.GetComponent<Text>().text = "First to " + rulesNumber + " deaths";
-                }
-                else
-                {
-                    rulesText.text = "First to " + rulesNumber + " kills";
-                    rulesText.transform.parent.GetComponent<Text>().text = "First to " + rulesNumber + " kills";
-                }
+                //}
+                //else
+                //{
+                //    rulesText.text = "First to " + rulesNumber + " kills";
+                //    rulesText.transform.parent.GetComponent<Text>().text = "First to " + rulesNumber + " kills";
+                //}
 
                 //place ffa rule increment buttons to be directly over the number in the ui
                 if (rulesNumber > 9)
@@ -107,16 +107,16 @@ public class LevelSelect : MonoBehaviour {
                 PlayerPrefs.SetInt("FFAKillLimit", rulesNumber);
 
                 levelName.transform.parent.GetComponent<Text>().text = "FFA Arena";
-                if (SceneManager.GetActiveScene().name == "OnlineLobby")
-                {
+                //if (SceneManager.GetActiveScene().name == "OnlineLobby")
+                //{
                     rulesText.text = "First to " + rulesNumber + " deaths";
                     rulesText.transform.parent.GetComponent<Text>().text = "First to " + rulesNumber + " deaths";
-                }
-                else
-                {
-                    rulesText.text = "First to " + rulesNumber + " kills";
-                    rulesText.transform.parent.GetComponent<Text>().text = "First to " + rulesNumber + " kills";
-                }
+                //}
+                //else
+                //{
+                //    rulesText.text = "First to " + rulesNumber + " kills";
+                //    rulesText.transform.parent.GetComponent<Text>().text = "First to " + rulesNumber + " kills";
+                //}
 
                 //place ffa rule increment buttons to be directly over the number in the ui
                 if (rulesNumber > 9)
@@ -157,16 +157,16 @@ public class LevelSelect : MonoBehaviour {
                 PlayerPrefs.SetInt("FFAKillLimit", rulesNumber);
 
                 levelName.transform.parent.GetComponent<Text>().text = "FFA Tilt";
-                if(SceneManager.GetActiveScene().name == "OnlineLobby")
-                {
+                //if(SceneManager.GetActiveScene().name == "OnlineLobby")
+                //{
                     rulesText.text = "First to " + rulesNumber + " deaths";
                     rulesText.transform.parent.GetComponent<Text>().text = "First to " + rulesNumber + " deaths";
-                }               
-                else
-                {
-                    rulesText.text = "First to " + rulesNumber + " kills";
-                    rulesText.transform.parent.GetComponent<Text>().text = "First to " + rulesNumber + " kills";
-                }
+                //}               
+                //else
+                //{
+                //    rulesText.text = "First to " + rulesNumber + " kills";
+                //    rulesText.transform.parent.GetComponent<Text>().text = "First to " + rulesNumber + " kills";
+                //}
 
 
                 //place ffa rule increment buttons to be directly over the number in the ui
@@ -187,16 +187,16 @@ public class LevelSelect : MonoBehaviour {
                 PlayerPrefs.SetInt("FFAKillLimit", rulesNumber);
 
                 levelName.transform.parent.GetComponent<Text>().text = "FFA Beach";
-                if (SceneManager.GetActiveScene().name == "OnlineLobby")
-                {
+                //if (SceneManager.GetActiveScene().name == "OnlineLobby")
+                //{
                     rulesText.text = "First to " + rulesNumber + " deaths";
                     rulesText.transform.parent.GetComponent<Text>().text = "First to " + rulesNumber + " deaths";
-                }
-                else
-                {
-                    rulesText.text = "First to " + rulesNumber + " kills";
-                    rulesText.transform.parent.GetComponent<Text>().text = "First to " + rulesNumber + " kills";
-                }
+                //}
+                //else
+                //{
+                //    rulesText.text = "First to " + rulesNumber + " kills";
+                //    rulesText.transform.parent.GetComponent<Text>().text = "First to " + rulesNumber + " kills";
+                //}
 
                 //place ffa rule increment buttons to be directly over the number in the ui
                 if (rulesNumber > 9)

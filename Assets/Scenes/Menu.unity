@@ -40829,10 +40829,10 @@ MonoBehaviour:
   rulesNumber: 5
   NumOfMaps: 6
   FFARuleButtonPositions:
-  - {x: 10.3, y: 9.7}
-  - {x: 15.6, y: 10.4}
-  - {x: 10.3, y: -12}
-  - {x: 15.6, y: -11.3}
+  - {x: 10.3, y: 17}
+  - {x: 15.6, y: 17}
+  - {x: 10.3, y: -7}
+  - {x: 15.6, y: -7}
   HATRuleButtonPositions:
   - {x: 54.4, y: 16.8}
   - {x: 60.5, y: 16.6}

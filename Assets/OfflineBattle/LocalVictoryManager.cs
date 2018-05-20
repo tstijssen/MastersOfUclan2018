@@ -13,10 +13,22 @@ public class LocalVictoryManager : MonoBehaviour {
     public Text m_VictoryData;
     public Button m_MenuButton;
     public GamePadState controllerState;
+    public int KillLimit = 0;
+    public bool canInteract;
 
     void Start()
     {
         m_MenuButton.onClick.AddListener(LoadMenuScene);
+        KillLimit = PlayerPrefs.GetInt("FFAKillLimit");
+        canInteract = false;
+        StartCoroutine(ButtonClick());
+    }
+
+    IEnumerator ButtonClick()
+    {
+        Debug.Log("Delaying");
+        yield return new WaitForSeconds(0.35f);
+        canInteract = true;   // After the wait is over, the player can interact with the menu again.
     }
 
     void LoadMenuScene()
@@ -36,7 +48,7 @@ public class LocalVictoryManager : MonoBehaviour {
     {
         controllerState = GamePad.GetState(PlayerIndex.One);
 
-        if(m_Panel.activeInHierarchy)
+        if(m_Panel.activeInHierarchy && canInteract)
         {
             if (controllerState.Buttons.A == ButtonState.Pressed)
             {
@@ -60,19 +72,28 @@ public class LocalVictoryManager : MonoBehaviour {
                 if (m_Players[i].activeInHierarchy)
                 {
                     CarFireControl car = m_Players[i].GetComponentInChildren<CarFireControl>();
+
+                    if(car && KillLimit > 0 && car.m_Deaths >= KillLimit)
+                    {
+                        car.m_Victory = true;
+                    }
+
                     if (car && car.gameObject.activeInHierarchy && car.m_Victory)
                     {
                         // a player has won the game
                         m_Panel.SetActive(true);
 
-                        //for (int p = 0; p < m_Players.Length; ++p)
-                        //{
-                        //    m_Players[p].GetComponentInChildren<CarFireControl>().Respawn();
-                        //}
+                        canInteract = false;
+                        StartCoroutine(ButtonClick());
 
-                       
-
-                        m_VictoryDesc.text = "Player " + (i + 1) + " has won!";
+                        if (KillLimit > 0)
+                        {
+                            m_VictoryDesc.text = "Player " + (i + 1) + " has lost!";
+                        }
+                        else
+                        {
+                            m_VictoryDesc.text = "Player " + (i + 1) + " has won!";
+                        }
                         m_VictoryData.text = "Score: " + car.m_Score + "\nKills: " + car.m_Kills + "\nDeaths: " + car.m_Deaths;
                     }
                 }

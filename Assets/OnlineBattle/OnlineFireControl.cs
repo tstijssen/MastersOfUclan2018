@@ -704,13 +704,18 @@ public class OnlineFireControl : NetworkBehaviour {
             {
                 float vol = Random.Range(volLowRange, volHighRange);
 
-                m_GunData.Barrel1.GetComponent<AudioSource>().volume = vol;
-                m_GunData.Barrel1.GetComponent<AudioSource>().Play();
-                m_GunData.Barrel1.transform.GetChild(0).gameObject.SetActive(true);
+                // if one is not playing both are not playing as they are activated together.
+                if(!m_GunData.Barrel1.GetComponent<AudioSource>().isPlaying)
+                {
+                    m_GunData.Barrel1.GetComponent<AudioSource>().volume = vol;
+                    m_GunData.Barrel1.GetComponent<AudioSource>().Play();
+                    m_GunData.Barrel1.transform.GetChild(0).gameObject.SetActive(true);
 
-                m_GunData.Barrel2.GetComponent<AudioSource>().volume = vol;
-                m_GunData.Barrel2.GetComponent<AudioSource>().Play();
-                m_GunData.Barrel2.transform.GetChild(0).gameObject.SetActive(true);
+                    m_GunData.Barrel2.GetComponent<AudioSource>().volume = vol;
+                    m_GunData.Barrel2.GetComponent<AudioSource>().Play();
+                    m_GunData.Barrel2.transform.GetChild(0).gameObject.SetActive(true);
+                }
+
             }
 
             if (m_GunData.gunType == FireType.Cannon && m_GunData.fired)
